@@ -7,5 +7,6 @@ namespace DAL.Entities
 {
     public class User : IdentityUser
     {
+        public ICollection<Event> Event { get; set; }
     }
 }

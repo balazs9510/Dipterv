@@ -11,11 +11,13 @@ namespace DAL.Entities
         [Required]
         public DateTime Date { get; set; }
         [Required]
-        public Guid LayoutPositionId { get; set; }
+        public Guid PositionId { get; set; }
+        public ServicePlacePosition Position { get; set; }
         [Required]
         public Guid ScheduleId { get; set; }
+        public EvenSchedule Schedule { get; set; }
         [Required]
         public Guid UserId { get; set; }
-        // TODO nav propertyk
+        public User User { get; set; }
     }
 }
