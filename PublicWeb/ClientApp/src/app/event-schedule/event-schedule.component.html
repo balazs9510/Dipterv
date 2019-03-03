@@ -1,0 +1,15 @@
+<div class="container" *ngIf="schedule; else elseBlock">
+  <table class="table table-stripped table-bordered">
+    <tr> 
+      <td *ngFor="let spp of schedule.servicePlace.layout" (click)="positionSelected(spp)">
+        <div *ngIf="containsPending(spp); else notContains">
+            <label class="pending" >{{spp.name}}</label>
+        </div>
+        <ng-template #notContains> <label [ngClass]="{'active' : isSelected(spp)}" >{{spp.name}}</label></ng-template>
+      </td>
+    </tr>
+  </table>
+  <label for="">Kiválasziott helye: <span *ngFor="let selectedPosition of selectedPositions">{{selectedPosition.name}} <br></span></label>
+  <button type="button" class="btn btn-primary" (click)="createPendingBooking()" >Foglalás</button>
+</div>
+<ng-template #elseBlock>A töltés folyamatban.</ng-template>

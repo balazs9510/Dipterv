@@ -4,14 +4,16 @@ using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(BookingSystemDbContext))]
-    partial class BookingSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190302224731_updateSchema4")]
+    partial class updateSchema4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +56,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ServicePlacePositionId");
 
-                    b.ToTable("BookingPositions");
+                    b.ToTable("BookingPosition");
                 });
 
             modelBuilder.Entity("DAL.Entities.EvenSchedule", b =>
@@ -87,7 +89,7 @@ namespace DAL.Migrations
                     b.ToTable("EvenSchedules");
 
                     b.HasData(
-                        new { Id = new Guid("6decccc2-0f7e-4b4d-b8f5-f3d9b086aa53"), Description = "Shazam bemutató", EventId = new Guid("5265774b-eefc-4a99-b5a2-0dbc7301b07b"), From = new DateTime(2019, 3, 3, 0, 58, 59, 469, DateTimeKind.Local), ServiceId = new Guid("86ca092e-7898-444a-87ba-a4ee417c6b4b"), ServicePlaceId = new Guid("cfdf34ab-d53b-42d7-ba64-a6fefbb4af77"), To = new DateTime(2019, 3, 3, 2, 58, 59, 471, DateTimeKind.Local) }
+                        new { Id = new Guid("8b1d6b18-844e-470c-9094-d479e3ee2ee1"), Description = "Shazam bemutató", EventId = new Guid("69dd301f-c77d-43e0-8688-cf01aef5b774"), From = new DateTime(2019, 3, 2, 23, 47, 31, 80, DateTimeKind.Local), ServiceId = new Guid("28d1d1f4-3328-4711-95c2-1cb1fb2997ac"), ServicePlaceId = new Guid("06f091a1-b043-428b-8365-42121cbd0c0b"), To = new DateTime(2019, 3, 3, 1, 47, 31, 82, DateTimeKind.Local) }
                     );
                 });
 
@@ -115,8 +117,8 @@ namespace DAL.Migrations
                     b.ToTable("Events");
 
                     b.HasData(
-                        new { Id = new Guid("5265774b-eefc-4a99-b5a2-0dbc7301b07b"), Name = "Shazam!", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
-                        new { Id = new Guid("48449950-e67d-40c1-99d1-cd9c45fd21b0"), Name = "Négyszögletű Kerek Erdő", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" }
+                        new { Id = new Guid("69dd301f-c77d-43e0-8688-cf01aef5b774"), Name = "Shazam!", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
+                        new { Id = new Guid("aa6c2d2f-2111-4e72-bbc1-f2888093c00a"), Name = "Négyszögletű Kerek Erdő", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" }
                     );
                 });
 
@@ -148,7 +150,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ServicePlacePositionId");
 
-                    b.ToTable("PendingBookingPositions");
+                    b.ToTable("PendingBookingPosition");
                 });
 
             modelBuilder.Entity("DAL.Entities.Service", b =>
@@ -180,9 +182,9 @@ namespace DAL.Migrations
                     b.ToTable("Services");
 
                     b.HasData(
-                        new { Id = new Guid("86ca092e-7898-444a-87ba-a4ee417c6b4b"), City = "Budapest", Description = "Allee Cinema City mozi", Name = "Allee CC", Street = "Október huszonharmadika u. 8-10", TypeId = new Guid("d5c70e36-e38c-4031-8741-a942af771594") },
-                        new { Id = new Guid("b64a4451-b343-46c4-b662-e88840b371f9"), City = "Pécs", Description = "Pécs Cinema City mozi", Name = "Pécs Plaza CC", Street = "Megyeri út 76.", TypeId = new Guid("d5c70e36-e38c-4031-8741-a942af771594") },
-                        new { Id = new Guid("7fbba624-157e-455c-9cde-f989b57f1379"), City = "Budapest", Name = "Madách Színház", Street = "Erzsébet krt. 29-33.", TypeId = new Guid("5f651d8f-b91d-49e3-9c80-29d80835766d") }
+                        new { Id = new Guid("28d1d1f4-3328-4711-95c2-1cb1fb2997ac"), City = "Budapest", Description = "Allee Cinema City mozi", Name = "Allee CC", Street = "Október huszonharmadika u. 8-10", TypeId = new Guid("5aa1af02-2f97-48e6-8c2b-8277be819514") },
+                        new { Id = new Guid("7c3d45cc-70e7-4c80-851d-b16a7f7e0576"), City = "Pécs", Description = "Pécs Cinema City mozi", Name = "Pécs Plaza CC", Street = "Megyeri út 76.", TypeId = new Guid("5aa1af02-2f97-48e6-8c2b-8277be819514") },
+                        new { Id = new Guid("4760c873-1128-4bfc-a580-8fc030086290"), City = "Budapest", Name = "Madách Színház", Street = "Erzsébet krt. 29-33.", TypeId = new Guid("6accdc9f-a496-4ab8-88f0-f01221cf7b0f") }
                     );
                 });
 
@@ -204,7 +206,7 @@ namespace DAL.Migrations
                     b.ToTable("ServicePlaces");
 
                     b.HasData(
-                        new { Id = new Guid("cfdf34ab-d53b-42d7-ba64-a6fefbb4af77"), Name = "Anyád", ServiceId = new Guid("86ca092e-7898-444a-87ba-a4ee417c6b4b") }
+                        new { Id = new Guid("06f091a1-b043-428b-8365-42121cbd0c0b"), Name = "Anyád", ServiceId = new Guid("28d1d1f4-3328-4711-95c2-1cb1fb2997ac") }
                     );
                 });
 
@@ -226,10 +228,10 @@ namespace DAL.Migrations
                     b.ToTable("ServicePlacePositions");
 
                     b.HasData(
-                        new { Id = new Guid("21fe9b50-1dc5-49be-8d25-34a2772a6747"), Name = "I1", ServicePlaceId = new Guid("cfdf34ab-d53b-42d7-ba64-a6fefbb4af77") },
-                        new { Id = new Guid("578bef4b-ed40-48c8-af67-79957f42bd49"), Name = "I2", ServicePlaceId = new Guid("cfdf34ab-d53b-42d7-ba64-a6fefbb4af77") },
-                        new { Id = new Guid("8ccaf0d2-435e-40df-9d8a-71c31dc55914"), Name = "I3", ServicePlaceId = new Guid("cfdf34ab-d53b-42d7-ba64-a6fefbb4af77") },
-                        new { Id = new Guid("dfc33be9-15d8-44b0-8be5-df3c236bc26e"), Name = "I4", ServicePlaceId = new Guid("cfdf34ab-d53b-42d7-ba64-a6fefbb4af77") }
+                        new { Id = new Guid("09cae3a9-7ab9-4705-b479-5dba58f1ac8e"), Name = "I1", ServicePlaceId = new Guid("06f091a1-b043-428b-8365-42121cbd0c0b") },
+                        new { Id = new Guid("1e4b94f9-9331-4c4f-ba3b-c72065c919b7"), Name = "I2", ServicePlaceId = new Guid("06f091a1-b043-428b-8365-42121cbd0c0b") },
+                        new { Id = new Guid("4575bf5f-2edb-4636-8d0a-5a5659e6ac4c"), Name = "I3", ServicePlaceId = new Guid("06f091a1-b043-428b-8365-42121cbd0c0b") },
+                        new { Id = new Guid("1dfd1c6e-08e3-4c8c-899a-2a986ef86149"), Name = "I4", ServicePlaceId = new Guid("06f091a1-b043-428b-8365-42121cbd0c0b") }
                     );
                 });
 
@@ -247,8 +249,8 @@ namespace DAL.Migrations
                     b.ToTable("ServiceTypes");
 
                     b.HasData(
-                        new { Id = new Guid("d5c70e36-e38c-4031-8741-a942af771594"), Name = "Mozi" },
-                        new { Id = new Guid("5f651d8f-b91d-49e3-9c80-29d80835766d"), Name = "Színház" }
+                        new { Id = new Guid("5aa1af02-2f97-48e6-8c2b-8277be819514"), Name = "Mozi" },
+                        new { Id = new Guid("6accdc9f-a496-4ab8-88f0-f01221cf7b0f"), Name = "Színház" }
                     );
                 });
 
@@ -303,7 +305,7 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575", AccessFailedCount = 0, ConcurrencyStamp = "dcc3e7c2-425d-4db5-8deb-8b4d26f191e1", Email = "admin@admin.hu", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "admin@admin.hu", NormalizedUserName = "admin", PasswordHash = "AQAAAAEAACcQAAAAEG0thBx+Dl2aocbAAwF0mXXvcKFa29tAOLFduSd3HacaEGpXTOBS02xjXABZIK4cEg==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "admin" }
+                        new { Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575", AccessFailedCount = 0, ConcurrencyStamp = "669b0ce7-d677-47be-bd51-16e023b8a873", Email = "admin@admin.hu", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "admin@admin.hu", NormalizedUserName = "admin", PasswordHash = "AQAAAAEAACcQAAAAEKyU72BHHg/8L1y2+T8k+gkYwdpYM7B/4PMvg2excx3eBEzIDO6A5KdG2QWDgaXziw==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "admin" }
                     );
                 });
 
@@ -331,7 +333,7 @@ namespace DAL.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575", ConcurrencyStamp = "7b8f7ac7-11fc-481a-a3b7-2f0650c0f3f0", Name = "admin", NormalizedName = "admin" }
+                        new { Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575", ConcurrencyStamp = "cb2579d7-0000-4588-9860-c08fefba606f", Name = "admin", NormalizedName = "admin" }
                     );
                 });
 

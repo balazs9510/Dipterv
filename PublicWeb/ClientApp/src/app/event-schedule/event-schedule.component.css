@@ -1,0 +1,6 @@
+label.active{
+    color: rebeccapurple;
+}
+label.pending{
+    background-color: yellow; 
+}

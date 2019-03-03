@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Entities
@@ -12,5 +13,7 @@ namespace DAL.Entities
         [Required]
         public Guid ServicePlaceId { get; set; }
         public ServicePlace ServicePlace { get; set; }
+        public ICollection<BookingPosition> BookingPositions { get; set; }
+        public ICollection<PendingBookingPosition> PendingBookingPositions { get; set; }
     }
 }

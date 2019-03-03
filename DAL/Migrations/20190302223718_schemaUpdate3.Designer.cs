@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(BookingSystemDbContext))]
-    [Migration("20190220140348_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190302223718_schemaUpdate3")]
+    partial class schemaUpdate3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,21 +28,20 @@ namespace DAL.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<Guid>("PositionId");
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("Phone")
+                        .IsRequired();
 
                     b.Property<Guid>("ScheduleId");
 
-                    b.Property<Guid>("UserId");
-
-                    b.Property<string>("UserId1");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PositionId");
-
                     b.HasIndex("ScheduleId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Bookings");
                 });
@@ -58,9 +57,13 @@ namespace DAL.Migrations
 
                     b.Property<Guid>("EventId");
 
+                    b.Property<DateTime>("From");
+
                     b.Property<Guid>("ServiceId");
 
                     b.Property<Guid>("ServicePlaceId");
+
+                    b.Property<DateTime?>("To");
 
                     b.HasKey("Id");
 
@@ -71,6 +74,10 @@ namespace DAL.Migrations
                     b.HasIndex("ServicePlaceId");
 
                     b.ToTable("EvenSchedules");
+
+                    b.HasData(
+                        new { Id = new Guid("d396dbe9-411a-4cab-a7c0-2a08fae8f02b"), Description = "Shazam bemutató", EventId = new Guid("35945c3d-c5b5-4fda-8507-d8da96c31535"), From = new DateTime(2019, 3, 2, 23, 37, 18, 397, DateTimeKind.Local), ServiceId = new Guid("279f8688-327a-417e-9d8e-43c7f0a7e898"), ServicePlaceId = new Guid("98d5b02b-7d3f-4dbc-b1a4-87cd0b8a99ec"), To = new DateTime(2019, 3, 3, 1, 37, 18, 399, DateTimeKind.Local) }
+                    );
                 });
 
             modelBuilder.Entity("DAL.Entities.Event", b =>
@@ -97,9 +104,27 @@ namespace DAL.Migrations
                     b.ToTable("Events");
 
                     b.HasData(
-                        new { Id = new Guid("54771086-e043-4b63-b028-88832c8191c6"), Name = "Shazam!", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
-                        new { Id = new Guid("1174a745-fe22-409b-8a03-dcd210ae2996"), Name = "Négyszögletű Kerek Erdő", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" }
+                        new { Id = new Guid("35945c3d-c5b5-4fda-8507-d8da96c31535"), Name = "Shazam!", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
+                        new { Id = new Guid("a86d76a0-1d28-49cc-ae1c-eac7359057a1"), Name = "Négyszögletű Kerek Erdő", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" }
                     );
+                });
+
+            modelBuilder.Entity("DAL.Entities.PendingBooking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<Guid>("EvenScheduleId");
+
+                    b.Property<DateTime>("ExpirationDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EvenScheduleId");
+
+                    b.ToTable("PendingBookings");
                 });
 
             modelBuilder.Entity("DAL.Entities.Service", b =>
@@ -131,9 +156,9 @@ namespace DAL.Migrations
                     b.ToTable("Services");
 
                     b.HasData(
-                        new { Id = new Guid("d935a88c-44a9-4eb2-8cc1-f6e73c887892"), City = "Budapest", Description = "Allee Cinema City mozi", Name = "Allee CC", Street = "Október huszonharmadika u. 8-10", TypeId = new Guid("3fe0cc87-d811-4034-856f-dbcf35bfd2b5") },
-                        new { Id = new Guid("04504dd1-b63d-41ab-b141-fdeaf013924c"), City = "Pécs", Description = "Pécs Cinema City mozi", Name = "Pécs Plaza CC", Street = "Megyeri út 76.", TypeId = new Guid("3fe0cc87-d811-4034-856f-dbcf35bfd2b5") },
-                        new { Id = new Guid("34324759-afeb-4cf7-8fa2-ac359e0c6d86"), City = "Budapest", Name = "Madách Színház", Street = "Erzsébet krt. 29-33.", TypeId = new Guid("7512666e-ec3d-4917-9f42-a4ae9d4c9ef9") }
+                        new { Id = new Guid("279f8688-327a-417e-9d8e-43c7f0a7e898"), City = "Budapest", Description = "Allee Cinema City mozi", Name = "Allee CC", Street = "Október huszonharmadika u. 8-10", TypeId = new Guid("38243888-072a-4b3c-8351-5e04e5aac884") },
+                        new { Id = new Guid("fa89d61b-f006-407e-9d7f-159171c2313b"), City = "Pécs", Description = "Pécs Cinema City mozi", Name = "Pécs Plaza CC", Street = "Megyeri út 76.", TypeId = new Guid("38243888-072a-4b3c-8351-5e04e5aac884") },
+                        new { Id = new Guid("5be381fc-6161-496c-a936-2fe3297d6106"), City = "Budapest", Name = "Madách Színház", Street = "Erzsébet krt. 29-33.", TypeId = new Guid("af7206fa-fa27-4c02-8a65-b1c4ff98a776") }
                     );
                 });
 
@@ -153,6 +178,10 @@ namespace DAL.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("ServicePlaces");
+
+                    b.HasData(
+                        new { Id = new Guid("98d5b02b-7d3f-4dbc-b1a4-87cd0b8a99ec"), Name = "Anyád", ServiceId = new Guid("279f8688-327a-417e-9d8e-43c7f0a7e898") }
+                    );
                 });
 
             modelBuilder.Entity("DAL.Entities.ServicePlacePosition", b =>
@@ -160,17 +189,32 @@ namespace DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid?>("BookingId");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(10);
+
+                    b.Property<Guid?>("PendingBookingId");
 
                     b.Property<Guid>("ServicePlaceId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BookingId");
+
+                    b.HasIndex("PendingBookingId");
+
                     b.HasIndex("ServicePlaceId");
 
                     b.ToTable("ServicePlacePositions");
+
+                    b.HasData(
+                        new { Id = new Guid("e3f4dddc-f90e-4b39-a13c-43c44c6f7be8"), Name = "I1", ServicePlaceId = new Guid("98d5b02b-7d3f-4dbc-b1a4-87cd0b8a99ec") },
+                        new { Id = new Guid("6062109c-86eb-429c-9f9d-3e3d119e4ab7"), Name = "I2", ServicePlaceId = new Guid("98d5b02b-7d3f-4dbc-b1a4-87cd0b8a99ec") },
+                        new { Id = new Guid("6214ad6c-56a8-40ec-a7ea-3f0c2b2bd08c"), Name = "I3", ServicePlaceId = new Guid("98d5b02b-7d3f-4dbc-b1a4-87cd0b8a99ec") },
+                        new { Id = new Guid("0ab5bb22-9a6b-4375-a56f-7adbdec1e47a"), Name = "I4", ServicePlaceId = new Guid("98d5b02b-7d3f-4dbc-b1a4-87cd0b8a99ec") }
+                    );
                 });
 
             modelBuilder.Entity("DAL.Entities.ServiceType", b =>
@@ -187,8 +231,8 @@ namespace DAL.Migrations
                     b.ToTable("ServiceTypes");
 
                     b.HasData(
-                        new { Id = new Guid("3fe0cc87-d811-4034-856f-dbcf35bfd2b5"), Name = "Mozi" },
-                        new { Id = new Guid("7512666e-ec3d-4917-9f42-a4ae9d4c9ef9"), Name = "Színház" }
+                        new { Id = new Guid("38243888-072a-4b3c-8351-5e04e5aac884"), Name = "Mozi" },
+                        new { Id = new Guid("af7206fa-fa27-4c02-8a65-b1c4ff98a776"), Name = "Színház" }
                     );
                 });
 
@@ -243,7 +287,7 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575", AccessFailedCount = 0, ConcurrencyStamp = "c627a5ce-5606-4152-8dfd-68e3d3a80680", Email = "admin@admin.hu", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "admin@admin.hu", NormalizedUserName = "admin", PasswordHash = "AQAAAAEAACcQAAAAEDS/s5JK3hY0LjKKb8McX7zU+LZaD9uqFnmS/Gj7VwnYdraRWMy+USnU7D1qB1JSag==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "admin" }
+                        new { Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575", AccessFailedCount = 0, ConcurrencyStamp = "612850a4-1a7c-4478-b22e-f2d5bd7c264a", Email = "admin@admin.hu", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "admin@admin.hu", NormalizedUserName = "admin", PasswordHash = "AQAAAAEAACcQAAAAEOR8tCheZ/MX2idKcrPkDbZ2mLGdmG5ipdt0ipbK/IRSJsQ0MUtpULsj/axZMmTnkA==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "admin" }
                     );
                 });
 
@@ -271,7 +315,7 @@ namespace DAL.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575", ConcurrencyStamp = "c8ddead1-31e6-488e-8bbf-6e71f986757c", Name = "admin", NormalizedName = "admin" }
+                        new { Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575", ConcurrencyStamp = "67e0d40f-d767-40f2-a41e-d17ae7cef210", Name = "admin", NormalizedName = "admin" }
                     );
                 });
 
@@ -367,19 +411,10 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.Booking", b =>
                 {
-                    b.HasOne("DAL.Entities.ServicePlacePosition", "Position")
-                        .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("DAL.Entities.EvenSchedule", "Schedule")
                         .WithMany("Bookings")
                         .HasForeignKey("ScheduleId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("DAL.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("DAL.Entities.EvenSchedule", b =>
@@ -408,6 +443,14 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("DAL.Entities.PendingBooking", b =>
+                {
+                    b.HasOne("DAL.Entities.EvenSchedule", "Schedule")
+                        .WithMany()
+                        .HasForeignKey("EvenScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("DAL.Entities.Service", b =>
                 {
                     b.HasOne("DAL.Entities.ServiceType", "Type")
@@ -426,6 +469,14 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.ServicePlacePosition", b =>
                 {
+                    b.HasOne("DAL.Entities.Booking")
+                        .WithMany("Position")
+                        .HasForeignKey("BookingId");
+
+                    b.HasOne("DAL.Entities.PendingBooking")
+                        .WithMany("Position")
+                        .HasForeignKey("PendingBookingId");
+
                     b.HasOne("DAL.Entities.ServicePlace", "ServicePlace")
                         .WithMany("Layout")
                         .HasForeignKey("ServicePlaceId")

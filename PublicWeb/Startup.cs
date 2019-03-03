@@ -1,9 +1,14 @@
+using BLL.Services;
+using DAL.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PublicWeb.Hubs;
 
 namespace PublicWeb
 {
@@ -26,6 +31,12 @@ namespace PublicWeb
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddSignalR();
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=BookingSystem;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddDbContext<BookingSystemDbContext>
+                (options => options.UseSqlServer(connection));
+            services.AddTransient<IEventScheduleService, EventScheduleService>();
+            services.AddTransient<IBookingService, BookingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,14 +53,17 @@ namespace PublicWeb
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<BookingHub>("/bookingHub");
+            });
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -61,6 +75,11 @@ namespace PublicWeb
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
+            });
+            app.Use(async (context, next) =>
+            {
+                var hubContext = context.RequestServices
+                                        .GetRequiredService<IHubContext<BookingHub, IBookingHub>>();
             });
         }
     }

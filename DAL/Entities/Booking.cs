@@ -11,13 +11,14 @@ namespace DAL.Entities
         [Required]
         public DateTime Date { get; set; }
         [Required]
-        public Guid PositionId { get; set; }
-        public ServicePlacePosition Position { get; set; }
-        [Required]
         public Guid ScheduleId { get; set; }
         public EvenSchedule Schedule { get; set; }
         [Required]
-        public Guid UserId { get; set; }
-        public User User { get; set; }
+        public string Name { get; set; }
+        [Required]
+        public string Phone { get; set; }
+        [Required]
+        public string Email { get; set; }
+        public ICollection<BookingPosition> BookingPositions { get; set; }
     }
 }

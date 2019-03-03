@@ -9,6 +9,9 @@ namespace DAL.Entities
     {
         public Guid Id { get; set; }
         [Required]
+        public DateTime From { get; set; }
+        public DateTime? To { get; set; }
+        [Required]
         [StringLength(200)]
         public string Description { get; set; }
         [Required]
@@ -21,5 +24,6 @@ namespace DAL.Entities
         public Guid ServicePlaceId { get; set; }
         public ServicePlace ServicePlace { get; set; }
         public ICollection<Booking> Bookings { get; set; }
+        public ICollection<PendingBooking> PendingBookings { get; set; }
     }
 }

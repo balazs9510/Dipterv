@@ -12,17 +12,41 @@ namespace DAL.Entities
         private const string ROLE_ID = ADMIN_ID;
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<EvenSchedule> EvenSchedules { get; set; }
+        public DbSet<PendingBooking> PendingBookings { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<ServicePlace> ServicePlaces { get; set; }
         public DbSet<ServicePlacePosition> ServicePlacePositions { get; set; }
         public DbSet<ServiceType> ServiceTypes { get; set; }
+        public DbSet<PendingBookingPosition> PendingBookingPositions { get; set; }
+        public DbSet<BookingPosition> BookingPositions { get; set; }
         public BookingSystemDbContext(DbContextOptions<BookingSystemDbContext> options)
             : base(options)
         { }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<BookingPosition>()
+                .HasKey(x => new { x.BookingId, x.ServicePlacePositionId });
+            builder.Entity<BookingPosition>()
+               .HasOne(bc => bc.Booking)
+               .WithMany(b => b.BookingPositions)
+               .HasForeignKey(bc => bc.BookingId);
+            builder.Entity<BookingPosition>()
+              .HasOne(bc => bc.ServicePlacePosition)
+              .WithMany(b => b.BookingPositions)
+              .HasForeignKey(bc => bc.ServicePlacePositionId);
+
+            builder.Entity<PendingBookingPosition>()
+           .HasKey(x => new { x.PendingBookingId, x.ServicePlacePositionId });
+            builder.Entity<PendingBookingPosition>()
+               .HasOne(bc => bc.PendingBooking)
+               .WithMany(b => b.PendingBookingPositions)
+               .HasForeignKey(bc => bc.PendingBookingId);
+            builder.Entity<PendingBookingPosition>()
+              .HasOne(bc => bc.ServicePlacePosition)
+              .WithMany(b => b.PendingBookingPositions)
+              .HasForeignKey(bc => bc.ServicePlacePositionId);
             SeedAdminIdentity(builder);
             SeedOtherData(builder);
         }
@@ -71,7 +95,8 @@ namespace DAL.Entities
                     Name = "Színház"
                 }
             };
-            builder.Entity<ServiceType>().HasData(types.ToArray());
+
+
             List<Service> services = new List<Service>
             {
                 new Service
@@ -81,7 +106,8 @@ namespace DAL.Entities
                     City = "Budapest",
                     Description = "Allee Cinema City mozi",
                     Street = "Október huszonharmadika u. 8-10",
-                    TypeId = types[0].Id
+                    TypeId = types[0].Id,
+
                 },
                 new Service
                 {
@@ -116,7 +142,58 @@ namespace DAL.Entities
                     UserId = ADMIN_ID
                 },
             };
+
+            ServicePlace place = new ServicePlace
+            {
+                Id = Guid.NewGuid(),
+                ServiceId = services[0].Id
+            };
+            place.Name = "Anyád";
+
+            List<ServicePlacePosition> layout = new List<ServicePlacePosition>
+            {
+                new ServicePlacePosition
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "I1",
+                    ServicePlaceId = place.Id
+                },
+                new ServicePlacePosition
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "I2",
+                    ServicePlaceId = place.Id
+                },
+                new ServicePlacePosition
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "I3",
+                    ServicePlaceId = place.Id
+                },
+                new ServicePlacePosition
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "I4",
+                    ServicePlaceId = place.Id
+                }
+            };
+
+
+            EvenSchedule schedule = new EvenSchedule
+            {
+                Id = Guid.NewGuid(),
+                Description = "Shazam bemutató",
+                ServiceId = services[0].Id,
+                EventId = events[0].Id,
+                ServicePlaceId = place.Id,
+                From = DateTime.Now,
+                To = DateTime.Now.AddHours(2)
+            };
+            builder.Entity<ServiceType>().HasData(types.ToArray());
+            builder.Entity<ServicePlace>().HasData(new ServicePlace[] { place });
             builder.Entity<Service>().HasData(services.ToArray());
+            builder.Entity<ServicePlacePosition>().HasData(layout.ToArray());
+            builder.Entity<EvenSchedule>().HasData(new EvenSchedule[] { schedule });
             builder.Entity<Event>().HasData(events.ToArray());
         }
     }
