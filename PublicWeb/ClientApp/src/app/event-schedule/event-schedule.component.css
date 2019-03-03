@@ -1,6 +1,9 @@
-label.active{
-    color: rebeccapurple;
+td.active{
+    color: green;
 }
-label.pending{
+td.pending{
     background-color: yellow; 
+}
+td.booking{
+    background-color: red;
 }

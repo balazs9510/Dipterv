@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { EventSchedule } from '../models/event-schedule';
 import { EventScheduleService } from '../services/event-schedule.service';
@@ -18,13 +18,14 @@ import * as signalR from "@aspnet/signalr";
 export class EventScheduleComponent extends BaseComponent {
   schedule: EventSchedule;
   selectedPositions: ServicePlacePosition[];
-  baseUrl : string;
+  baseUrl: string;
   constructor(
     public dialog: MatDialog,
     private bookingService: BookingService,
     private scheduleService: EventScheduleService,
     @Inject('BASE_URL') baseUrl: string,
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location) {
     super(dialog);
     this.selectedPositions = [];
@@ -33,10 +34,10 @@ export class EventScheduleComponent extends BaseComponent {
 
   ngOnInit() {
     const connection = new signalR.HubConnectionBuilder()
-    .withUrl(`${this.baseUrl}bookingHub`)
-    .build();
+      .withUrl(`${this.baseUrl}bookingHub`)
+      .build();
     connection.start().catch(err => document.write(err));
-    connection.on("RecieveNewPendingBooking", (pendingBooking : PendingBooking) => {
+    connection.on("RecieveNewPendingBooking", (pendingBooking: PendingBooking) => {
       this.schedule.pendingBookings.push(pendingBooking);
     });
     const id = this.route.snapshot.paramMap.get('id');
@@ -53,13 +54,19 @@ export class EventScheduleComponent extends BaseComponent {
   createPendingBooking() {
     let pBooking = { eventScheduleId: this.schedule.id, positions: this.selectedPositions } as PendingBooking;
     this.bookingService.createPendingBooking(pBooking).subscribe(res => {
-      console.log(res);
+      if (res.success) {
+       this.router.navigate(['/booking', res.result]);
+      } else {
+        this.openDialog("A foglalás indítása sikertelen.");
+      }
     }, error => {
       this.openDialog("Hiba a kérés során.");
       console.error(error);
     })
   }
   positionSelected(position: ServicePlacePosition) {
+    if (this.containsBooking(position))
+    return;
     if (this.containsPending(position))
       return;
     let containedElement = this.selectedPositions.find(x => x.id == position.id);
@@ -76,6 +83,15 @@ export class EventScheduleComponent extends BaseComponent {
     let result = false;
     let currentTime = new Date();
     this.schedule.pendingBookings.filter(x => new Date(x.expirationDate) > currentTime).forEach(element => {
+      if (element.positions.find(x => x.id == position.id))
+        result = true;
+    });
+    return result;
+  }
+  containsBooking(position: ServicePlacePosition): boolean {
+    let result = false;
+    let currentTime = new Date();
+    this.schedule.bookings.forEach(element => {
       if (element.positions.find(x => x.id == position.id))
         result = true;
     });

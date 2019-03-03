@@ -26,7 +26,9 @@ namespace PublicWeb.Controllers
                 cfg.CreateMap<ServicePlaceDTO, ServicePlace>();
                 cfg.CreateMap<EventScheduleDTO, EvenSchedule>();
                 cfg.CreateMap<PendingBooking, PendingBookingDTO>()
-                .ForMember(x => x.Positions, opt => opt.MapFrom(src => src.PendingBookingPositions.Select(y => y.ServicePlacePosition)));
+                    .ForMember(x => x.Positions, opt => opt.MapFrom(src => src.PendingBookingPositions.Select(y => y.ServicePlacePosition)));
+                cfg.CreateMap<Booking, BookingDTO>()
+                    .ForMember(x => x.Positions, opt => opt.MapFrom(src => src.BookingPositions.Select(y => y.ServicePlacePosition)));
                 cfg.CreateMap<ServicePlacePositionDTO, ServicePlacePosition>();
             }).CreateMapper();
         }
@@ -47,6 +49,14 @@ namespace PublicWeb.Controllers
                         .PendingBookings
                         .FirstOrDefault(x => x.Id == pBooking.Id)
                         .PendingBookingPositions
+                        .Select(x => _mapper.Map<ServicePlacePosition, ServicePlacePositionDTO>(x.ServicePlacePosition)).ToList();
+                }
+                foreach (var booking in esDto.Bookings)
+                {
+                    booking.Positions = eventSchedule
+                        .Bookings
+                        .FirstOrDefault(x => x.Id == booking.Id)
+                        .BookingPositions
                         .Select(x => _mapper.Map<ServicePlacePosition, ServicePlacePositionDTO>(x.ServicePlacePosition)).ToList();
                 }
                 esDto.ServicePlace.Layout = esDto.ServicePlace.Layout.OrderBy(x => x.Name).ToList();

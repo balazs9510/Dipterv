@@ -10,7 +10,8 @@ namespace BLL.Services
     {
         PendingBooking CreatePendingBooking(PendingBooking pendingBooking);
         Task<PendingBooking> CreatePendingBookingAsync(PendingBooking pendingBooking);
-        void CreateBooking(Booking booking);
-        Task CreateBookingAsync(Booking booking);
+        Booking CreateBooking(Booking booking);
+        Task<Booking> CreateBookingAsync(Booking booking);
+        Task<PendingBooking> GetPendingBookingByClientIdAsync(Guid id);
     }
 }

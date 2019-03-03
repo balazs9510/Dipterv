@@ -13,5 +13,6 @@ namespace PublicWeb.DTOs
         public string Description { get; set; }
         public ServicePlaceDTO ServicePlace { get; set; }
         public List<PendingBookingDTO> PendingBookings { get; set; }
+        public List<BookingDTO> Bookings { get; set; }
     }
 }

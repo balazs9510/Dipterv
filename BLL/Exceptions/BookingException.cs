@@ -4,9 +4,9 @@ using System.Text;
 
 namespace BLL.Exceptions
 {
-    public class PendingBookingException : Exception
+    public class BookingException : Exception
     {
-        public PendingBookingException(string message) : base(message)
+        public BookingException(string message) : base(message)
         {
         }
     }

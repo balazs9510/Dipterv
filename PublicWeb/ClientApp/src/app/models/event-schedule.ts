@@ -1,5 +1,6 @@
 import { ServicePlace } from "./service-place";
 import { PendingBooking } from "./pending-booking";
+import { Booking } from "./booking";
 
 export interface EventSchedule{
     id: string,
@@ -8,4 +9,5 @@ export interface EventSchedule{
     description : string,
     servicePlace: ServicePlace,
     pendingBookings: PendingBooking[]
+    bookings: Booking[]
 }

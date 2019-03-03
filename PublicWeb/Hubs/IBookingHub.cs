@@ -9,5 +9,6 @@ namespace PublicWeb.Hubs
     public interface IBookingHub
     {
         Task RecieveNewPendingBooking(PendingBookingDTO pendingBooking);
+        Task RecieveNewBooking(BookingDTO booking);
     }
 }

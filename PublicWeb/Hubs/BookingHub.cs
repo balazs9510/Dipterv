@@ -13,5 +13,9 @@ namespace PublicWeb.Hubs
         {
             await Clients.All.RecieveNewPendingBooking(pendingBooking);
         }
+        public async Task SendBooking(BookingDTO booking)
+        {
+            await Clients.All.RecieveNewBooking(booking);
+        }
     }
 }

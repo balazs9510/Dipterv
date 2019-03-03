@@ -1,0 +1,37 @@
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CreateBooking } from '../models/create-booking';
+import { BookingService } from '../services/booking.service';
+import { BaseComponent } from '../base/base.component';
+import { MatDialog } from '@angular/material';
+
+@Component({
+  selector: 'app-booking',
+  templateUrl: './booking.component.html',
+  styleUrls: ['./booking.component.css']
+})
+export class BookingComponent extends BaseComponent {
+  model : CreateBooking;
+  submitted = false;
+  constructor(private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private router: Router,
+    private bookingService: BookingService,) {
+      super(dialog);
+     }
+
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.model = new CreateBooking(id,"", "","");
+  }
+  onSubmit(){
+    this.bookingService.createBooking(this.model).subscribe(res => {
+      if(res.success){
+        this.submitted = true;
+      }
+    }, err => {
+      this.openDialog("Váratlan hiba a foglalás során.")
+      console.log(err)
+    })
+  }
+}

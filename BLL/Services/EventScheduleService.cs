@@ -22,6 +22,8 @@ namespace BLL.Services
                     .ThenInclude(x => x.PendingBookingPositions)
                         .ThenInclude(x => x.ServicePlacePosition)
                 .Include(x => x.Bookings)
+                    .ThenInclude(x => x.BookingPositions)
+                                .ThenInclude(x => x.ServicePlacePosition)
                 .Include(x => x.ServicePlace)
                     .ThenInclude(x => x.Layout)
                 .FirstOrDefault(x => x.Id == id);
@@ -36,6 +38,8 @@ namespace BLL.Services
                     .ThenInclude(x => x.PendingBookingPositions)
                         .ThenInclude(x => x.ServicePlacePosition)
                 .Include(x => x.Bookings)
+                    .ThenInclude(x => x.BookingPositions)
+                            .ThenInclude(x => x.ServicePlacePosition)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
     }

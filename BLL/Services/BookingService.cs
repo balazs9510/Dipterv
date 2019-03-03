@@ -16,14 +16,26 @@ namespace BLL.Services
         {
             _context = context;
         }
-        public void CreateBooking(Booking booking)
+        public Booking CreateBooking(Booking booking)
         {
             throw new NotImplementedException();
         }
 
-        public Task CreateBookingAsync(Booking booking)
+        public async Task<Booking> CreateBookingAsync(Booking booking)
         {
-            throw new NotImplementedException();
+            // TODO pendingekre is
+            foreach (var position in booking.BookingPositions)
+            {
+               if(_context.BookingPositions
+                    .Include(x => x.Booking)
+                    .Any(x => x.Booking.ScheduleId == booking.ScheduleId
+                            && x.ServicePlacePositionId == position.ServicePlacePositionId))
+                    throw new BookingException("Already extists booking for that place.");
+            }
+            _context.BookingPositions.AddRange(booking.BookingPositions);
+            _context.Bookings.Add(booking);
+            await _context.SaveChangesAsync();
+            return await _context.Bookings.Include(x => x.BookingPositions).ThenInclude(x => x.ServicePlacePosition).FirstOrDefaultAsync(x => x.Id == booking.Id);
         }
 
         public PendingBooking CreatePendingBooking(PendingBooking pendingBooking)
@@ -40,7 +52,7 @@ namespace BLL.Services
                     .Any(x => x.PendingBooking.EvenScheduleId == pendingBooking.EvenScheduleId 
                          && x.PendingBooking.ExpirationDate > DateTime.Now
                          && x.ServicePlacePositionId == position.ServicePlacePositionId))
-                    throw new PendingBookingException("Already extists booking for that place.");
+                    throw new BookingException("Already extists booking for that place.");
             }
             _context.PendingBookingPositions.AddRange(pendingBooking.PendingBookingPositions);
             _context.PendingBookings.Add(pendingBooking);
@@ -48,17 +60,12 @@ namespace BLL.Services
             return await _context.PendingBookings.Include(x => x.PendingBookingPositions).ThenInclude(x => x.ServicePlacePosition).FirstOrDefaultAsync(x => x.Id == pendingBooking.Id);
         }
 
-        public List<PendingBooking> GetPendingBookingsForEventSchedule(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<PendingBooking>> GetPendingBookingsForEventScheduleAsync(Guid id)
+        public async Task<PendingBooking> GetPendingBookingByClientIdAsync(Guid id)
         {
             return await _context.PendingBookings
                 .Include(x => x.PendingBookingPositions)
-                .ThenInclude(y => y.ServicePlacePosition)
-                .Where(x => x.EvenScheduleId == id).ToListAsync();
+                    .ThenInclude(y => y.ServicePlacePosition)
+                .FirstOrDefaultAsync(x => x.ClientId == id);
         }
     }
 }
