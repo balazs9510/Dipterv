@@ -34,12 +34,49 @@ namespace PublicWeb.Controllers
         }
 
         [HttpGet("{id}")]
-        public virtual async Task<IActionResult> GetEvenSchedule(Guid id)
+        public virtual async Task<IActionResult> GetEvenSchedule(Guid? id)
         {
             var result = new JsonResult<EventScheduleDTO>();
             try
             {
                 var eventSchedule = await _service.GetEvenScheduleAsync(id);
+                if (eventSchedule == null)
+                    return BadRequest();
+                var esDto = _mapper.Map<EvenSchedule, EventScheduleDTO>(eventSchedule);
+                foreach (var pBooking in esDto.PendingBookings)
+                {
+                    pBooking.Positions = eventSchedule
+                        .PendingBookings
+                        .FirstOrDefault(x => x.Id == pBooking.Id)
+                        .PendingBookingPositions
+                        .Select(x => _mapper.Map<ServicePlacePosition, ServicePlacePositionDTO>(x.ServicePlacePosition)).ToList();
+                }
+                foreach (var booking in esDto.Bookings)
+                {
+                    booking.Positions = eventSchedule
+                        .Bookings
+                        .FirstOrDefault(x => x.Id == booking.Id)
+                        .BookingPositions
+                        .Select(x => _mapper.Map<ServicePlacePosition, ServicePlacePositionDTO>(x.ServicePlacePosition)).ToList();
+                }
+                esDto.ServicePlace.Layout = esDto.ServicePlace.Layout.OrderBy(x => x.Name).ToList();
+                result.Result = esDto;
+                result.Success = true;
+            }
+            catch
+            {
+                // TODO log
+                result.Message = "Váratlan hiba az esemény lekérdezése során.";
+            }
+            return Ok(result);
+        }
+        [HttpGet]
+        public virtual async Task<IActionResult> GetEvenSchedule()
+        {
+            var result = new JsonResult<EventScheduleDTO>();
+            try
+            {
+                var eventSchedule = await _service.GetEvenScheduleAsync(null);
                 if (eventSchedule == null)
                     return BadRequest();
                 var esDto = _mapper.Map<EvenSchedule, EventScheduleDTO>(eventSchedule);

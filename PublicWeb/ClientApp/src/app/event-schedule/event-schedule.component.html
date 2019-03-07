@@ -2,7 +2,7 @@
   <table class="table table-stripped table-bordered">
     <tr> 
       <td *ngFor="let spp of schedule.servicePlace.layout" 
-        [ngClass]="{'active' : isSelected(spp), 'pending': containsPending(spp), 'booking' : containsBooking(spp)}"
+        [ngClass]="{'active' : isSelected(spp),  'booking' : containsBooking(spp) , 'pending': containsPending(spp)}"
         (click)="positionSelected(spp)">
           <p>{{spp.name}}</p>
       </td>

@@ -12,7 +12,10 @@ export class EventScheduleService {
     this.url = baseUrl;
     this.httpClient = http;
   }
-  getSchedule(id: string) : Observable<JsonResult<EventSchedule>> {
-    return this.httpClient.get<JsonResult<EventSchedule>>(this.url + `api/EventSchedule/${id}`);
+  getSchedule(id: string): Observable<JsonResult<EventSchedule>> {
+    if (id)
+      return this.httpClient.get<JsonResult<EventSchedule>>(this.url + `api/EventSchedule/${id}`);
+    else
+      return this.httpClient.get<JsonResult<EventSchedule>>(this.url + `api/EventSchedule/`);
   }
 }

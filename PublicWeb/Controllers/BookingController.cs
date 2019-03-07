@@ -45,8 +45,6 @@ namespace PublicWeb.Controllers
                                        y => new BookingPosition { BookingId = src.Id.Value, ServicePlacePositionId = y.Id })));
             }).CreateMapper();
         }
-        [HttpGet]
-        public IActionResult Get() => Ok("nem megy ez a szar");
 
         [HttpPost]
         [Route("[action]")]

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.Entities;
+﻿using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -29,8 +27,20 @@ namespace BLL.Services
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<EvenSchedule> GetEvenScheduleAsync(Guid id)
+        public async Task<EvenSchedule> GetEvenScheduleAsync(Guid? id)
         {
+            // todo remove
+            if (!id.HasValue)
+                return await _ctx.EvenSchedules
+                    .Include(x => x.ServicePlace)
+                    .ThenInclude(x => x.Layout)
+                .Include(x => x.PendingBookings)
+                    .ThenInclude(x => x.PendingBookingPositions)
+                        .ThenInclude(x => x.ServicePlacePosition)
+                .Include(x => x.Bookings)
+                    .ThenInclude(x => x.BookingPositions)
+                            .ThenInclude(x => x.ServicePlacePosition)
+                  .FirstOrDefaultAsync();
             return await _ctx.EvenSchedules
                 .Include(x => x.ServicePlace)
                     .ThenInclude(x => x.Layout)

@@ -36,7 +36,8 @@ import { BookingComponent } from './booking/booking.component';
     OverlayModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'event-schedule/:id', component: EventScheduleComponent },
+      { path: 'event-schedule', component: EventScheduleComponent },
+      { path: 'event-schedule/:id', component: EventScheduleComponent, pathMatch: 'full' },
       { path: 'booking/:id', component: BookingComponent}
     ])
   ],

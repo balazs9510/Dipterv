@@ -10,6 +10,7 @@ import { ServicePlacePosition } from '../models/service-place-position';
 import { BookingService } from '../services/booking.service';
 import { PendingBooking } from '../models/pending-booking';
 import * as signalR from "@aspnet/signalr";
+import { Booking } from '../models/booking';
 @Component({
   selector: 'app-event-schedule',
   templateUrl: './event-schedule.component.html',
@@ -36,9 +37,12 @@ export class EventScheduleComponent extends BaseComponent {
     const connection = new signalR.HubConnectionBuilder()
       .withUrl(`${this.baseUrl}bookingHub`)
       .build();
-    connection.start().catch(err => document.write(err));
+    connection.start().catch(err => /*document.write(err)*/ console.log(err));
     connection.on("RecieveNewPendingBooking", (pendingBooking: PendingBooking) => {
       this.schedule.pendingBookings.push(pendingBooking);
+    });
+    connection.on("RecieveNewBooking", (booking: Booking) => {
+      this.schedule.bookings.push(booking);
     });
     const id = this.route.snapshot.paramMap.get('id');
     this.scheduleService.getSchedule(id).subscribe(result => {
@@ -90,7 +94,6 @@ export class EventScheduleComponent extends BaseComponent {
   }
   containsBooking(position: ServicePlacePosition): boolean {
     let result = false;
-    let currentTime = new Date();
     this.schedule.bookings.forEach(element => {
       if (element.positions.find(x => x.id == position.id))
         result = true;

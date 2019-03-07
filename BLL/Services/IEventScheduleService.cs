@@ -9,6 +9,6 @@ namespace BLL.Services
     public interface IEventScheduleService
     {
         EvenSchedule GetEvenSchedule(Guid id);
-        Task<EvenSchedule> GetEvenScheduleAsync(Guid id);
+        Task<EvenSchedule> GetEvenScheduleAsync(Guid? id);
     }
 }
