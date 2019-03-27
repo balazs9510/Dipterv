@@ -14,7 +14,10 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular
 import { OverlayModule } from '@angular/cdk/overlay';
 import { BaseComponent, DialogDataExampleDialog } from './base/base.component';
 import { BookingService } from './services/booking.service';
+import { ServiceService } from './services/service.service';
 import { BookingComponent } from './booking/booking.component';
+import { ServiceListComponent } from './service-list/service-list.component';
+import { ServiceTypeListComponent } from './service-type-list/service-type-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { BookingComponent } from './booking/booking.component';
     EventScheduleComponent,
     BaseComponent,
     DialogDataExampleDialog,
-    BookingComponent        
+    BookingComponent,
+    ServiceListComponent,
+    ServiceTypeListComponent        
   ],
   entryComponents: [DialogDataExampleDialog],
   imports: [
@@ -35,7 +40,7 @@ import { BookingComponent } from './booking/booking.component';
     FormsModule,
     OverlayModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: ServiceTypeListComponent, pathMatch: 'full' },
       { path: 'event-schedule', component: EventScheduleComponent },
       { path: 'event-schedule/:id', component: EventScheduleComponent, pathMatch: 'full' },
       { path: 'booking/:id', component: BookingComponent}
@@ -43,7 +48,8 @@ import { BookingComponent } from './booking/booking.component';
   ],
   providers: [ 
     EventScheduleService,
-    BookingService
+    BookingService,
+    ServiceService
   ],
   bootstrap: [AppComponent]
 })
