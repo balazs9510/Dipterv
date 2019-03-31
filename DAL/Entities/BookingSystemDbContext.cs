@@ -38,7 +38,7 @@ namespace DAL.Entities
               .HasForeignKey(bc => bc.ServicePlacePositionId);
 
             builder.Entity<PendingBookingPosition>()
-           .HasKey(x => new { x.PendingBookingId, x.ServicePlacePositionId });
+               .HasKey(x => new { x.PendingBookingId, x.ServicePlacePositionId });
             builder.Entity<PendingBookingPosition>()
                .HasOne(bc => bc.PendingBooking)
                .WithMany(b => b.PendingBookingPositions)
@@ -47,6 +47,18 @@ namespace DAL.Entities
               .HasOne(bc => bc.ServicePlacePosition)
               .WithMany(b => b.PendingBookingPositions)
               .HasForeignKey(bc => bc.ServicePlacePositionId);
+
+            builder.Entity<ServiceEvent>()
+               .HasKey(x => new { x.EventId, x.ServiceId });
+            builder.Entity<ServiceEvent>()
+               .HasOne(bc => bc.Event)
+               .WithMany(b => b.ServiceEvents)
+               .HasForeignKey(bc => bc.EventId);
+            builder.Entity<ServiceEvent>()
+              .HasOne(bc => bc.Service)
+              .WithMany(b => b.ServiceEvents)
+              .HasForeignKey(bc => bc.ServiceId);
+
             SeedAdminIdentity(builder);
             SeedOtherData(builder);
         }
@@ -127,6 +139,18 @@ namespace DAL.Entities
                     TypeId = types[1].Id
                 },
             };
+            for (int i = 0; i < 10; i++)
+            {
+                services.Add(new Service
+                {
+                    Id = Guid.NewGuid(),
+                    Name = $"Teszt {i}",
+                    City = "Tesz város",
+                    Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                    Street = "Teszt utca 95.",
+                    TypeId = types[i %= 2].Id
+                });
+            }
             List<Event> events = new List<Event>
             {
                 new Event
@@ -142,7 +166,23 @@ namespace DAL.Entities
                     UserId = ADMIN_ID
                 },
             };
-
+            for (int i = 0; i < 10; i++)
+            {
+                events.Add(new Event {
+                    Id = Guid.NewGuid(),
+                    Name = $"Teszt {i}",
+                    UserId = ADMIN_ID
+                });
+            }
+            List<ServiceEvent> serviceEvents = new List<ServiceEvent>();
+            for (int i = 0; i < 10; i++)
+            {
+                serviceEvents.Add(new ServiceEvent
+                {
+                    EventId = events[i].Id,
+                    ServiceId = services[i].Id
+                });
+            }
             ServicePlace place = new ServicePlace
             {
                 Id = Guid.NewGuid(),
@@ -195,6 +235,7 @@ namespace DAL.Entities
             builder.Entity<ServicePlacePosition>().HasData(layout.ToArray());
             builder.Entity<EvenSchedule>().HasData(new EvenSchedule[] { schedule });
             builder.Entity<Event>().HasData(events.ToArray());
+            builder.Entity<ServiceEvent>().HasData(serviceEvents.ToArray());
         }
     }
 }

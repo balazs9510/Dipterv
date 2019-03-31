@@ -29,19 +29,19 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Szolgáltatások <span class="sr-only">(current)</span></a>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+        <ul class="navbar-nav">
+          <li class="nav-item active" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link" [routerLink]='["/service"]'>Szolgáltatások <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Események</a>
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link" [routerLink]='["/event"]'>Események</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Bejelentkezés</a>
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link" [routerLink]='["/"]'>Bejelentkezés</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Regisztráció</a>
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link" [routerLink]='["/"]'>Regisztráció</a>
           </li>
         </ul>
         <!-- <form class="form-inline my-2 my-lg-0">

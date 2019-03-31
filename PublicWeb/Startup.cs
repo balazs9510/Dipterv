@@ -37,6 +37,7 @@ namespace PublicWeb
                 (options => options.UseSqlServer(connection));
             services.AddTransient<IEventScheduleService, EventScheduleService>();
             services.AddTransient<IBookingService, BookingService>();
+            services.AddTransient<IServiceService, ServiceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

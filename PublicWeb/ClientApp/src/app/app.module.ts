@@ -18,6 +18,7 @@ import { ServiceService } from './services/service.service';
 import { BookingComponent } from './booking/booking.component';
 import { ServiceListComponent } from './service-list/service-list.component';
 import { ServiceTypeListComponent } from './service-type-list/service-type-list.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -39,10 +40,13 @@ import { ServiceTypeListComponent } from './service-type-list/service-type-list.
     BrowserAnimationsModule,
     FormsModule,
     OverlayModule,
+    NgxPaginationModule,
     RouterModule.forRoot([
       { path: '', component: ServiceTypeListComponent, pathMatch: 'full' },
       { path: 'event-schedule', component: EventScheduleComponent },
       { path: 'event-schedule/:id', component: EventScheduleComponent, pathMatch: 'full' },
+      { path: 'service', component: ServiceListComponent },
+      { path: 'service/:name/:id', component: ServiceListComponent, pathMatch: 'full' },
       { path: 'booking/:id', component: BookingComponent}
     ])
   ],

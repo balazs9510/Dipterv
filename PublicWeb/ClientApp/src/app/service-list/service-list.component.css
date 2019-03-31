@@ -1,0 +1,26 @@
+.centered {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    width: 50%;
+    background: black;
+    transform: translate(-50%, -50%);
+}
+
+.centered label {
+    display: block;
+    color: white;
+    font-size: 20;
+    font-weight: 600;
+}
+
+.adress {
+    font-size: 12px;
+    font-weight: 200;
+}
+.pager /deep/ .ngx-pagination .current {
+    border: black solid 1px !important;
+    border-radius: 3px;
+    color: black !important;
+    cursor: default;
+  }

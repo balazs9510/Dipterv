@@ -1,3 +1,35 @@
-<p>
-  service-list works!
-</p>
+<div class="container mt-3">
+  <h2>Szolgáltatások
+    <span *ngIf="serviceTypeName">> {{serviceTypeName}}</span>
+  </h2>
+
+  <form #searchForm="ngForm" (ngSubmit)="onSearch()">
+    <div class="form-row">
+      <div class=" form-group col-lg-3">
+        <label for="name">Szolgáltatás neve</label>
+        <input type="text" name="name" id="name" class="form-control" [(ngModel)]="serviceSearchParameter.name" />
+      </div>
+      <div class=" form-group col-lg-3">
+        <label for="city">Város</label>
+        <input type="text" name="city" id="city" class="form-control" [(ngModel)]="serviceSearchParameter.city" />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success">Keresés</button>
+  </form>
+
+  <div class="row text-center mt-5">
+    <div class="col-lg-3  mb-3 grow" *ngFor="let service of services | paginate: { itemsPerPage: 8, currentPage: page }">
+      <img class="img-responsive" src="https://via.placeholder.com/200x300" alt="">
+      <div class="centered">
+        <label class="mb-0">{{service.name}}</label>
+        <label class="adress">{{service.city}},{{service.street}}</label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-end">
+  <div class="col-lg-3">
+      <pagination-controls (pageChange)="page = $event" previousLabel="Előző" nextLabel="Következő" class="pager">
+      </pagination-controls>
+  </div>
+</div>

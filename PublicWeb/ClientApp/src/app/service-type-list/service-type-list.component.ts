@@ -13,12 +13,15 @@ export class ServiceTypeListComponent implements OnInit {
   constructor(private serviceService: ServiceService,) { }
 
   ngOnInit() {
-    let res = this.serviceService.getServiceTypes();
-    if(res.success){
-      this.serviceTypes = res.result;
-    }else{
-
-    }
+    this.serviceService.getServiceTypes().subscribe(result => {
+      if (!result.success) {
+        //TODO
+      }
+      this.serviceTypes = result.result;
+    }, error => {
+      //TODO
+      console.error(error);
+    });
   }
 
 }

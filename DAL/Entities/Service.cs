@@ -23,5 +23,6 @@ namespace DAL.Entities
         public Guid TypeId { get; set; }
         public ServiceType Type { get; set; }
         public ICollection<ServicePlace> Places { get; set; }
+        public ICollection<ServiceEvent> ServiceEvents { get; set; }
     }
 }

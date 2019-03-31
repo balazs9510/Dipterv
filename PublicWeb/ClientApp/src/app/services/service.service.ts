@@ -1,14 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { JsonResult } from '../models/JsonResult';
 import { ServiceType } from '../models/service-type';
+import { HttpClient } from '@angular/common/http';
+import { Service } from '../models/service';
+import { ServiceSearchParamter } from '../models/search-paramters/service-search-paramter';
 
 @Injectable()
 export class ServiceService {
-
-  constructor() { }
-  getServiceTypes() : JsonResult<ServiceType[]>{
-    
-    return {message: "", success: true, result: [{id : "1", name : "teszt"},{id : "2", name : "teszt 2"}]};
+  httpClient: HttpClient;
+  url: string;
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    this.url = baseUrl;
+    this.httpClient = http;
+  }
+  getServiceTypes(): Observable<JsonResult<ServiceType[]>> {
+    return this.httpClient.get<JsonResult<ServiceType[]>>(this.url + `api/Service/GetServiceTypes`);
+  }
+  getServices(searchParamter: ServiceSearchParamter): Observable<JsonResult<Service[]>> {
+      return this.httpClient.post<JsonResult<Service[]>>(this.url + `api/Service`, searchParamter);
   }
 }

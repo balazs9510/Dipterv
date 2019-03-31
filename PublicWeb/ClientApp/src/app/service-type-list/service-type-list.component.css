@@ -1,14 +1,17 @@
 /* Centered text */
+
 .centered {
     position: absolute;
     top: 80%;
     left: 50%;
-    width: 100%;
-    background: tomato;
+    width: 50%;
+    background: black;
     transform: translate(-50%, -50%);
-  }
-  .centered a{
-      color: white;
-      font-size: 20;
-      font-weight: 600;
-  }
+}
+
+.centered label {
+    color: white;
+    font-size: 20;
+    font-weight: 600;
+}
+
