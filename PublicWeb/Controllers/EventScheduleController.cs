@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using BLL.Models;
 using BLL.Services;
 using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 using PublicWeb.DTOs;
 using PublicWeb.DTOs.JSON;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,12 +31,13 @@ namespace PublicWeb.Controllers
                     .ForMember(x => x.Positions, opt => opt.MapFrom(src => src.PendingBookingPositions.Select(y => y.ServicePlacePosition)));
                 cfg.CreateMap<Booking, BookingDTO>()
                     .ForMember(x => x.Positions, opt => opt.MapFrom(src => src.BookingPositions.Select(y => y.ServicePlacePosition)));
+                cfg.CreateMap<EventScheduleDateGroup, EventScheduleDateGroupDTO>();
                 cfg.CreateMap<ServicePlacePositionDTO, ServicePlacePosition>();
             }).CreateMapper();
         }
 
         [HttpGet("{id}")]
-        public virtual async Task<IActionResult> GetEvenSchedule(Guid? id)
+        public virtual async Task<IActionResult> GetEventSchedule(Guid? id)
         {
             var result = new JsonResult<EventScheduleDTO>();
             try
@@ -71,7 +74,7 @@ namespace PublicWeb.Controllers
             return Ok(result);
         }
         [HttpGet]
-        public virtual async Task<IActionResult> GetEvenSchedule()
+        public virtual async Task<IActionResult> GetEventSchedule()
         {
             var result = new JsonResult<EventScheduleDTO>();
             try
@@ -104,6 +107,21 @@ namespace PublicWeb.Controllers
             {
                 // TODO log
                 result.Message = "Váratlan hiba az esemény lekérdezése során.";
+            }
+            return Ok(result);
+        }
+        [Route("[action]")]
+        public virtual async Task<IActionResult> GetEventEventShedules(Guid eventId)
+        {
+            var result = new JsonResult<List<EventScheduleDateGroupDTO>>();
+            try
+            {
+                result.Result = (await _service.GetEventSchedulesGroupByDate(eventId)).Select(x => _mapper.Map<EventScheduleDateGroup, EventScheduleDateGroupDTO>(x)).ToList();
+                result.Success = true;
+            }
+            catch
+            {
+                result.Message = "Váratlan hiba az esemény időpontjainak lekérdezése során.";
             }
             return Ok(result);
         }

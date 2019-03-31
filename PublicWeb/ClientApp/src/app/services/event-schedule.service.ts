@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { EventSchedule } from '../models/event-schedule';
 import { Observable } from 'rxjs/Observable';
 import { JsonResult } from '../models/JsonResult';
+import { EventScheduleDateGroup } from '../models/eventschedule-dategroup';
 
 @Injectable()
 export class EventScheduleService {
@@ -17,5 +18,8 @@ export class EventScheduleService {
       return this.httpClient.get<JsonResult<EventSchedule>>(this.url + `api/EventSchedule/${id}`);
     else
       return this.httpClient.get<JsonResult<EventSchedule>>(this.url + `api/EventSchedule/`);
+  }
+  getEventDateGroups(eventId: string): Observable<JsonResult<EventScheduleDateGroup[]>> {
+      return this.httpClient.get<JsonResult<EventScheduleDateGroup[]>>(this.url + `api/EventSchedule/GetEventEventShedules?eventId=${eventId}`);
   }
 }

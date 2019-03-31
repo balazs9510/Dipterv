@@ -18,7 +18,7 @@
   </form>
 
   <div class="row text-center mt-5">
-    <div class="col-lg-3  mb-3 grow" *ngFor="let service of services | paginate: { itemsPerPage: 8, currentPage: page }">
+    <div class="col-lg-3  mb-3 grow" *ngFor="let service of services | paginate: { itemsPerPage: 8, currentPage: page }" [routerLink]="['/event-list', service.id]">
       <img class="img-responsive" src="https://via.placeholder.com/200x300" alt="">
       <div class="centered">
         <label class="mb-0">{{service.name}}</label>

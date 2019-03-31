@@ -1,6 +1,8 @@
-﻿using DAL.Entities;
+﻿using BLL.Models;
+using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -51,6 +53,14 @@ namespace BLL.Services
                     .ThenInclude(x => x.BookingPositions)
                             .ThenInclude(x => x.ServicePlacePosition)
                 .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<List<EventScheduleDateGroup>> GetEventSchedulesGroupByDate(Guid eventId)
+        {
+            return await _ctx.EvenSchedules
+                .Where(x => x.EventId == eventId)
+                .GroupBy(x => x.From.Date)
+                .Select(x => new EventScheduleDateGroup { Date = x.Key, EventSchedules = x.ToList() }).ToListAsync();
         }
     }
 }

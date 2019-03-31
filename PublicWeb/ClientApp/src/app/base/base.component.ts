@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, Input} from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 @Component({
   selector: 'app-base',
@@ -6,18 +6,9 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
   styleUrls: ['./base.component.css']
 })
 export class BaseComponent implements OnInit {
-  constructor(public dialog: MatDialog) {}
+  loading: boolean = false;
+  constructor() {}
 
   ngOnInit() {
   }
-  openDialog(msg: string) {
-    this.dialog.open(DialogDataExampleDialog, { data : msg});
-  }
-}
-@Component({
-  // selector: 'dialog-data-example-dialog',
-  templateUrl: 'error-dialog.html',
-})
-export class DialogDataExampleDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 }

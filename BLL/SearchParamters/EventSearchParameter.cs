@@ -9,6 +9,5 @@ namespace BLL.SearchParamters
         public string Name { get; set; }
         public Guid? ServiceId { get; set; }
         public DateTime? BeginDate { get; set; }
-        public DateTime? EndDate { get; set; }
     }
 }

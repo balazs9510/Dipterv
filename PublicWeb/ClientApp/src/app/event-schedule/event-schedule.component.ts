@@ -16,7 +16,7 @@ import { Booking } from '../models/booking';
   templateUrl: './event-schedule.component.html',
   styleUrls: ['./event-schedule.component.css']
 })
-export class EventScheduleComponent extends BaseComponent {
+export class EventScheduleComponent {
   schedule: EventSchedule;
   selectedPositions: ServicePlacePosition[];
   baseUrl: string;
@@ -28,7 +28,6 @@ export class EventScheduleComponent extends BaseComponent {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location) {
-    super(dialog);
     this.selectedPositions = [];
     this.baseUrl = baseUrl;
   }
@@ -47,11 +46,11 @@ export class EventScheduleComponent extends BaseComponent {
     const id = this.route.snapshot.paramMap.get('id');
     this.scheduleService.getSchedule(id).subscribe(result => {
       if (!result.success) {
-        this.openDialog(result.message);
+        //todo
       }
       this.schedule = result.result;
     }, error => {
-      this.openDialog("Hiba a kérés során.");
+      //todo
       console.error(error);
     });
   }
@@ -61,10 +60,10 @@ export class EventScheduleComponent extends BaseComponent {
       if (res.success) {
        this.router.navigate(['/booking', res.result]);
       } else {
-        this.openDialog("A foglalás indítása sikertelen.");
+        //todo
       }
     }, error => {
-      this.openDialog("Hiba a kérés során.");
+      //todo
       console.error(error);
     })
   }

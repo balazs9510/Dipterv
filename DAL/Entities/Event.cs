@@ -9,7 +9,7 @@ namespace DAL.Entities
         public Guid Id { get; set; }
         [StringLength(500)]
         public string Description { get; set; }
-        public byte[] EventImage { get; set; }
+        public string EventImage { get; set; }
         [Required]
         [StringLength(250)]
         public string Name { get; set; }
@@ -17,5 +17,6 @@ namespace DAL.Entities
         public string UserId { get; set; }
         public User User { get; set; }
         public List<ServiceEvent> ServiceEvents { get; set; }
+        public List<EvenSchedule> EvenSchedules { get; set; }
     }
 }

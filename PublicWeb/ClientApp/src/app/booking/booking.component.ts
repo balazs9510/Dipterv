@@ -10,14 +10,13 @@ import { MatDialog } from '@angular/material';
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.css']
 })
-export class BookingComponent extends BaseComponent {
+export class BookingComponent {
   model : CreateBooking;
   submitted = false;
   constructor(private route: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
     private bookingService: BookingService,) {
-      super(dialog);
      }
 
   ngOnInit() {
@@ -30,7 +29,7 @@ export class BookingComponent extends BaseComponent {
         this.submitted = true;
       }
     }, err => {
-      this.openDialog("Váratlan hiba a foglalás során.")
+     //todo
       console.log(err)
     })
   }

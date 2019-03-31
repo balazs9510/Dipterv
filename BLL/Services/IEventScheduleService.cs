@@ -1,4 +1,5 @@
-﻿using DAL.Entities;
+﻿using BLL.Models;
+using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,5 +11,6 @@ namespace BLL.Services
     {
         EvenSchedule GetEvenSchedule(Guid id);
         Task<EvenSchedule> GetEvenScheduleAsync(Guid? id);
+        Task<List<EventScheduleDateGroup>> GetEventSchedulesGroupByDate(Guid eventId);
     }
 }
