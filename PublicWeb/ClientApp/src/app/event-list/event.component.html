@@ -36,5 +36,5 @@
     </div>
 </div>
 
-<app-event *ngIf="selectedEvent" [event]="selectedEvent"></app-event>
+<app-event *ngIf="selectedEvent" [event]="selectedEvent" (load)="onLoading($event)"></app-event>
 <app-load [loading]="loading"></app-load>

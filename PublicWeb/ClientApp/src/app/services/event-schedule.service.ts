@@ -19,7 +19,7 @@ export class EventScheduleService {
     else
       return this.httpClient.get<JsonResult<EventSchedule>>(this.url + `api/EventSchedule/`);
   }
-  getEventDateGroups(eventId: string): Observable<JsonResult<EventScheduleDateGroup[]>> {
-      return this.httpClient.get<JsonResult<EventScheduleDateGroup[]>>(this.url + `api/EventSchedule/GetEventEventShedules?eventId=${eventId}`);
+  getEventDateGroups(eventId: string, serviceId: string): Observable<JsonResult<EventScheduleDateGroup[]>> {
+      return this.httpClient.get<JsonResult<EventScheduleDateGroup[]>>(this.url + `api/EventSchedule/GetEventEventShedules?eventId=${eventId}&serviceId=${serviceId}`);
   }
 }

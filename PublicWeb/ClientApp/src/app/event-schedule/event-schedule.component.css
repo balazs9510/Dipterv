@@ -1,9 +1,22 @@
-td.active{
-    color: green;
+td.active {
+    background-color: green;
 }
-td.pending{
-    background-color: yellow; 
+
+td.pending {
+    background-color: yellow;
 }
-td.booking{
+
+td.booking {
     background-color: red;
+}
+
+td:not(.booking){
+    cursor: pointer;
+}
+
+td:not(.booking) .position:hover {
+    color: greenyellow;
+}
+td.active .position:hover {
+    color: purple;
 }

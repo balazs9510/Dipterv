@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
-import { Event as MyEvent} from '../models/event';
+import { Event as MyEvent } from '../models/event';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../services/event.service';
 import { EventSearchParameter } from '../models/search-paramters/event-search-paramter';
@@ -49,8 +49,14 @@ export class EventListComponent implements OnInit {
       console.error(error);
     });
   }
-  onEventSelect(selected: MyEvent){
+  onEventSelect(selected: MyEvent) {
     console.log(selected);
     this.selectedEvent = selected;
+  }
+  onLoading(event) {
+    if (event)
+      this.loading = true;
+    else
+      this.loading = false;
   }
 }

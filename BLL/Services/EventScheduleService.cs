@@ -55,10 +55,10 @@ namespace BLL.Services
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<List<EventScheduleDateGroup>> GetEventSchedulesGroupByDate(Guid eventId)
+        public async Task<List<EventScheduleDateGroup>> GetEventSchedulesGroupByDate(Guid eventId, Guid serviceId)
         {
             return await _ctx.EvenSchedules
-                .Where(x => x.EventId == eventId)
+                .Where(x => x.EventId == eventId && x.ServiceId == serviceId)
                 .GroupBy(x => x.From.Date)
                 .Select(x => new EventScheduleDateGroup { Date = x.Key, EventSchedules = x.ToList() }).ToListAsync();
         }

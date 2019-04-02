@@ -16,6 +16,11 @@ namespace BLL.Services
             _ctx = context;
         }
 
+        public async Task<List<Service>> GetServiceOfEventAsync(Guid eventId)
+        {
+            return await _ctx.Services.Include(x => x.ServiceEvents).Where(x => x.ServiceEvents.Any(y => y.EventId == eventId)).ToListAsync();
+        }
+
         public async Task<List<Service>> GetServicesAsync(ServiceSearchParameter searchParameter)
         {
             IQueryable<Service> q = _ctx.Services;

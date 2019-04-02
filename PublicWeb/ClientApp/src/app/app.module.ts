@@ -29,7 +29,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadComponent } from './load/load.component';
 import { EventComponent } from './event/event.component';
-
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -59,6 +59,7 @@ import { EventComponent } from './event/event.component';
     FormsModule,
     ReactiveFormsModule,
     OverlayModule,
+    MatSelectModule,
     NgxPaginationModule,
     RouterModule.forRoot([
       { path: '', component: ServiceTypeListComponent, pathMatch: 'full' },

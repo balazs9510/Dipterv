@@ -11,6 +11,6 @@ namespace BLL.Services
     {
         EvenSchedule GetEvenSchedule(Guid id);
         Task<EvenSchedule> GetEvenScheduleAsync(Guid? id);
-        Task<List<EventScheduleDateGroup>> GetEventSchedulesGroupByDate(Guid eventId);
+        Task<List<EventScheduleDateGroup>> GetEventSchedulesGroupByDate(Guid eventId, Guid servicecId);
     }
 }

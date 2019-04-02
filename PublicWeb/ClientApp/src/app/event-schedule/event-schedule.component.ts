@@ -20,6 +20,7 @@ export class EventScheduleComponent {
   schedule: EventSchedule;
   selectedPositions: ServicePlacePosition[];
   baseUrl: string;
+  loading: boolean = false;
   constructor(
     public dialog: MatDialog,
     private bookingService: BookingService,
@@ -44,10 +45,12 @@ export class EventScheduleComponent {
       this.schedule.bookings.push(booking);
     });
     const id = this.route.snapshot.paramMap.get('id');
+    this.loading = true;
     this.scheduleService.getSchedule(id).subscribe(result => {
       if (!result.success) {
         //todo
       }
+      this.loading = false;
       this.schedule = result.result;
     }, error => {
       //todo
@@ -55,6 +58,7 @@ export class EventScheduleComponent {
     });
   }
   createPendingBooking() {
+    this.loading = true;
     let pBooking = { eventScheduleId: this.schedule.id, positions: this.selectedPositions } as PendingBooking;
     this.bookingService.createPendingBooking(pBooking).subscribe(res => {
       if (res.success) {

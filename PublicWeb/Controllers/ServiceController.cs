@@ -59,5 +59,21 @@ namespace PublicWeb.Controllers
             }
             return Ok(result);
         }
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetServiceOfEvent(Guid eventId)
+        {
+            var result = new JsonResult<List<ServiceDTO>>();
+            try
+            {
+                result.Result = (await _service.GetServiceOfEventAsync(eventId)).Select(x => _mapper.Map<Service, ServiceDTO>(x)).ToList();
+                result.Success = true;
+            }
+            catch
+            {
+                result.Message = "Ismeretlen hiba az eseményekhez tartozó szolgáltatások letöltése során.";
+            }
+            return Ok(result);
+        }
     }
 }

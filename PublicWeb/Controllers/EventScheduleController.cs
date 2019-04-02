@@ -111,12 +111,12 @@ namespace PublicWeb.Controllers
             return Ok(result);
         }
         [Route("[action]")]
-        public virtual async Task<IActionResult> GetEventEventShedules(Guid eventId)
+        public virtual async Task<IActionResult> GetEventEventShedules(Guid eventId, Guid serviceId)
         {
             var result = new JsonResult<List<EventScheduleDateGroupDTO>>();
             try
             {
-                result.Result = (await _service.GetEventSchedulesGroupByDate(eventId)).Select(x => _mapper.Map<EventScheduleDateGroup, EventScheduleDateGroupDTO>(x)).ToList();
+                result.Result = (await _service.GetEventSchedulesGroupByDate(eventId, serviceId)).Select(x => _mapper.Map<EventScheduleDateGroup, EventScheduleDateGroupDTO>(x)).ToList();
                 result.Success = true;
             }
             catch

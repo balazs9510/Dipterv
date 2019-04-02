@@ -18,6 +18,9 @@ export class ServiceService {
     return this.httpClient.get<JsonResult<ServiceType[]>>(this.url + `api/Service/GetServiceTypes`);
   }
   getServices(searchParamter: ServiceSearchParamter): Observable<JsonResult<Service[]>> {
-      return this.httpClient.post<JsonResult<Service[]>>(this.url + `api/Service`, searchParamter);
+    return this.httpClient.post<JsonResult<Service[]>>(this.url + `api/Service`, searchParamter);
+  }
+  getServicesOfEvent(id: string): Observable<JsonResult<Service[]>> {
+    return this.httpClient.get<JsonResult<Service[]>>(this.url + `api/Service/GetServiceOfEvent?eventId=${id}`);
   }
 }
