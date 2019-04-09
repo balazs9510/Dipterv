@@ -1,6 +1,7 @@
 ﻿using BLL.SearchParamters;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,9 +16,17 @@ namespace BLL.Services
             _ctx = context;
         }
 
+        public byte[] GetEventImage(Guid eventId)
+        {
+            return _ctx.Events.Include(x => x.Image).FirstOrDefault(x => x.Id == eventId).Image.Content;
+        }
+
         public async Task<List<Event>> GetEventsAsync(EventSearchParameter searchParameter)
         {
-            IQueryable<Event> q = _ctx.Events.Include(x => x.EvenSchedules).Include(x => x.ServiceEvents).ThenInclude(y => y.Event);
+            IQueryable<Event> q = _ctx.Events
+                .Include(x => x.Image)
+                .Include(x => x.EvenSchedules)
+                .Include(x => x.ServiceEvents);
             if (searchParameter.ServiceId.HasValue)
                 q = q.Where(x => x.ServiceEvents.Any(y => y.ServiceId == searchParameter.ServiceId));
             if (!string.IsNullOrEmpty(searchParameter.Name))

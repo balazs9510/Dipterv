@@ -11,5 +11,6 @@ namespace PublicWeb.DTOs
         public string Description { get; set; }
         public string EventImage { get; set; }
         public string Name { get; set; }
+        public ImageDTO Image { get; set; }
     }
 }

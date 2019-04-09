@@ -5,9 +5,12 @@ using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 using PublicWeb.DTOs;
 using PublicWeb.DTOs.JSON;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace PublicWeb.Controllers
 {
@@ -23,6 +26,7 @@ namespace PublicWeb.Controllers
             _mapper = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Event, EventDTO>();
+                cfg.CreateMap<Image, ImageDTO>();
             }).CreateMapper();
         }
         [HttpPost]
@@ -39,6 +43,21 @@ namespace PublicWeb.Controllers
                 result.Message = "Váratlan hiba az események letöltése során.";
             }
             return Ok(result);
+        }
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult GetEventImage(Guid eventId)
+        {
+            try
+            {
+                var memoryStream = new MemoryStream(_service.GetEventImage(eventId));
+                return File(memoryStream, "image/jpeg");
+            }
+            catch
+            {
+                // log
+            }
+            return BadRequest();
         }
     }
 }

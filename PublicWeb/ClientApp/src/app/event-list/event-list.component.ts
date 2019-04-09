@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { BaseComponent } from '../base/base.component';
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
+import { Image } from '../models/image';
 
 @Component({
   selector: 'app-event-list',
@@ -42,13 +43,28 @@ export class EventListComponent implements OnInit {
         //TODO
       }
       this.events = result.result;
+      for(let i = 0; i < this.events.length; i++){
+        let item = this.events[i];
+        this.createImageFromBlob(item.image);
+      }
       console.log(result.result);
+      console.log(this.events);
       this.loading = false;
     }, error => {
       //TODO
       console.error(error);
     });
   }
+  createImageFromBlob(image: Image) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      image.display = reader.result;
+    }, false);
+    if (image) {
+       let blob = new Blob([image.content], { type : `image/jpeg`});
+       reader.readAsDataURL(blob);
+    }
+ }
   onEventSelect(selected: MyEvent) {
     console.log(selected);
     this.selectedEvent = selected;

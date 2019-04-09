@@ -22,7 +22,7 @@
   </form>
   <div class="row text-center mt-5">
     <div class="col-lg-3  mb-3 grow" *ngFor="let myevent of events | paginate: { itemsPerPage: 8, currentPage: page }" (click)="onEventSelect(myevent)">
-      <img class="img-responsive" src="{{myevent.eventImage}}" alt="" >
+      <img class="img-responsive" src="/api/event/geteventimage/?eventId={{myevent.id}}" alt="" >
       <div class="centered">
         <label class="mb-0">{{myevent.name}}</label>
       </div>

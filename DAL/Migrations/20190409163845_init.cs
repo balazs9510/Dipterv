@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class again : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,15 +48,17 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceTypes",
+                name: "Images",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(maxLength: 200, nullable: false)
+                    Content = table.Column<byte[]>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Extension = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ServiceTypes", x => x.Id);
+                    table.PrimaryKey("PK_Images", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,7 +79,7 @@ namespace DAL.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,7 +100,7 @@ namespace DAL.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,7 +120,7 @@ namespace DAL.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -136,13 +138,13 @@ namespace DAL.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -162,7 +164,7 @@ namespace DAL.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,19 +173,44 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Description = table.Column<string>(maxLength: 500, nullable: true),
-                    EventImage = table.Column<byte[]>(nullable: true),
                     Name = table.Column<string>(maxLength: 250, nullable: false),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
+                    ImageId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Events", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Events_Images_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
                         name: "FK_Events_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServiceTypes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    ImageId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServiceTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ServiceTypes_Images_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,17 +222,24 @@ namespace DAL.Migrations
                     Name = table.Column<string>(maxLength: 250, nullable: false),
                     City = table.Column<string>(maxLength: 250, nullable: false),
                     Street = table.Column<string>(maxLength: 300, nullable: false),
-                    TypeId = table.Column<Guid>(nullable: false)
+                    TypeId = table.Column<Guid>(nullable: false),
+                    ImageId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Services", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Services_Images_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Services_ServiceTypes_TypeId",
                         column: x => x.TypeId,
                         principalTable: "ServiceTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,13 +257,13 @@ namespace DAL.Migrations
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_ServiceEvent_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -248,7 +282,7 @@ namespace DAL.Migrations
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -271,13 +305,13 @@ namespace DAL.Migrations
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_EvenSchedules_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_EvenSchedules_ServicePlaces_ServicePlaceId",
                         column: x => x.ServicePlaceId,
@@ -302,7 +336,7 @@ namespace DAL.Migrations
                         column: x => x.ServicePlaceId,
                         principalTable: "ServicePlaces",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -324,7 +358,7 @@ namespace DAL.Migrations
                         column: x => x.ScheduleId,
                         principalTable: "EvenSchedules",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -345,7 +379,7 @@ namespace DAL.Migrations
                         column: x => x.EvenScheduleId,
                         principalTable: "EvenSchedules",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -363,7 +397,7 @@ namespace DAL.Migrations
                         column: x => x.BookingId,
                         principalTable: "Bookings",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_BookingPositions_ServicePlacePositions_ServicePlacePositionId",
                         column: x => x.ServicePlacePositionId,
@@ -387,7 +421,7 @@ namespace DAL.Migrations
                         column: x => x.PendingBookingId,
                         principalTable: "PendingBookings",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_PendingBookingPositions_ServicePlacePositions_ServicePlacePositionId",
                         column: x => x.ServicePlacePositionId,
@@ -399,20 +433,29 @@ namespace DAL.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "3bdeec53-2ed2-45a3-bd4a-a24b52ba9506", "admin", "admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "0fe4169b-aca1-4418-8089-ed17c5ad8b29", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "8bc24b4f-6455-4d0d-bc2c-697c18dbc550", "admin@admin.hu", true, false, null, "admin@admin.hu", "admin", "AQAAAAEAACcQAAAAEPG2ahIlDhzsh/601JetD1/PxyGYH8ApotNH/fx8pc+PEqnaIrQI65jKI8IsqtXo3A==", null, false, "", false, "admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "fc239f1a-2280-4d55-bd24-14c91fb31419", "admin@admin.hu", true, false, null, "admin@admin.hu", "admin", "AQAAAAEAACcQAAAAEKzONXXUKX8rrMGUG63472fs2RzRO00B6V9ZraC3sXZrzXFlSD85ldiQEZxym64fJQ==", null, false, "", false, "admin" });
+
+            migrationBuilder.InsertData(
+                table: "Images",
+                columns: new[] { "Id", "Content", "Extension", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("d75b4eb8-7bd5-4ac7-8b33-0a999347b881"), null, "jpg", "Shazam.jpg" },
+                    { new Guid("4abbe9a2-316b-4bda-bdf7-1f7eebc86ba0"), null, "jpg", "Negyszogletu.jpg" }
+                });
 
             migrationBuilder.InsertData(
                 table: "ServiceTypes",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "Id", "ImageId", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("83727b9b-277a-4cae-a4c4-ea4dc42aa694"), "Mozi" },
-                    { new Guid("ebec169a-b5fe-445d-9e35-d5583c8afe2a"), "Színház" }
+                    { new Guid("79c61293-825d-4f62-8a92-e1bbe107e1e9"), null, "Mozi" },
+                    { new Guid("20c73139-a4ad-466f-949f-e03db03e23bc"), null, "Színház" }
                 });
 
             migrationBuilder.InsertData(
@@ -422,42 +465,52 @@ namespace DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "Events",
-                columns: new[] { "Id", "Description", "EventImage", "Name", "UserId" },
+                columns: new[] { "Id", "Description", "ImageId", "Name", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("ecefdaf5-957d-433d-965b-21909f6ccd10"), null, null, "Shazam!", "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
-                    { new Guid("b3ade006-caf6-458f-b04a-769eb8275c37"), null, null, "Négyszögletű Kerek Erdő", "a18be9c0-aa65-4af8-bd17-00bd9344e575" }
+                    { new Guid("b0ae14c8-0170-4b1a-9110-0d0e2114c6a6"), null, new Guid("d75b4eb8-7bd5-4ac7-8b33-0a999347b881"), "Shazam!", "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
+                    { new Guid("9ff6d57f-9892-4310-8325-da990f864cd8"), null, new Guid("4abbe9a2-316b-4bda-bdf7-1f7eebc86ba0"), "Négyszögletű Kerek Erdő", "a18be9c0-aa65-4af8-bd17-00bd9344e575" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Services",
-                columns: new[] { "Id", "City", "Description", "Name", "Street", "TypeId" },
+                columns: new[] { "Id", "City", "Description", "ImageId", "Name", "Street", "TypeId" },
                 values: new object[,]
                 {
-                    { new Guid("f266bf2d-ccf8-4492-8f63-7464dcbbbc5d"), "Budapest", "Allee Cinema City mozi", "Allee CC", "Október huszonharmadika u. 8-10", new Guid("83727b9b-277a-4cae-a4c4-ea4dc42aa694") },
-                    { new Guid("0f9a0bcb-4f55-444b-9b1e-a47598c818b4"), "Pécs", "Pécs Cinema City mozi", "Pécs Plaza CC", "Megyeri út 76.", new Guid("83727b9b-277a-4cae-a4c4-ea4dc42aa694") },
-                    { new Guid("d917cb95-e6cb-453b-bcaa-6a0b4da0c829"), "Budapest", null, "Madách Színház", "Erzsébet krt. 29-33.", new Guid("ebec169a-b5fe-445d-9e35-d5583c8afe2a") }
+                    { new Guid("c81efe43-7df1-416f-b55a-b5107c5e8549"), "Budapest", "Allee Cinema City mozi", null, "Allee CC", "Október huszonharmadika u. 8-10", new Guid("79c61293-825d-4f62-8a92-e1bbe107e1e9") },
+                    { new Guid("7d869ffd-29ba-477c-9f1b-2b04ebac1bc0"), "Pécs", "Pécs Cinema City mozi", null, "Pécs Plaza CC", "Megyeri út 76.", new Guid("79c61293-825d-4f62-8a92-e1bbe107e1e9") },
+                    { new Guid("ad9cc55d-628b-40af-8de5-ff6bc96905d8"), "Budapest", null, null, "Madách Színház", "Erzsébet krt. 29-33.", new Guid("20c73139-a4ad-466f-949f-e03db03e23bc") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ServiceEvent",
+                columns: new[] { "EventId", "ServiceId" },
+                values: new object[,]
+                {
+                    { new Guid("b0ae14c8-0170-4b1a-9110-0d0e2114c6a6"), new Guid("c81efe43-7df1-416f-b55a-b5107c5e8549") },
+                    { new Guid("b0ae14c8-0170-4b1a-9110-0d0e2114c6a6"), new Guid("7d869ffd-29ba-477c-9f1b-2b04ebac1bc0") },
+                    { new Guid("9ff6d57f-9892-4310-8325-da990f864cd8"), new Guid("ad9cc55d-628b-40af-8de5-ff6bc96905d8") }
                 });
 
             migrationBuilder.InsertData(
                 table: "ServicePlaces",
                 columns: new[] { "Id", "Name", "ServiceId" },
-                values: new object[] { new Guid("9636bf29-fff0-4807-96de-6c749d26b05b"), "Anyád", new Guid("f266bf2d-ccf8-4492-8f63-7464dcbbbc5d") });
+                values: new object[] { new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002"), "Anyád", new Guid("c81efe43-7df1-416f-b55a-b5107c5e8549") });
 
             migrationBuilder.InsertData(
                 table: "EvenSchedules",
                 columns: new[] { "Id", "Description", "EventId", "From", "ServiceId", "ServicePlaceId", "To" },
-                values: new object[] { new Guid("8ad60121-eb20-4fc1-83e3-450050b8a83d"), "Shazam bemutató", new Guid("ecefdaf5-957d-433d-965b-21909f6ccd10"), new DateTime(2019, 3, 31, 16, 24, 58, 819, DateTimeKind.Local), new Guid("f266bf2d-ccf8-4492-8f63-7464dcbbbc5d"), new Guid("9636bf29-fff0-4807-96de-6c749d26b05b"), new DateTime(2019, 3, 31, 18, 24, 58, 848, DateTimeKind.Local) });
+                values: new object[] { new Guid("5b64e934-7747-4129-947b-828e4a5779df"), "Shazam bemutató", new Guid("b0ae14c8-0170-4b1a-9110-0d0e2114c6a6"), new DateTime(2019, 4, 9, 18, 38, 44, 862, DateTimeKind.Local), new Guid("c81efe43-7df1-416f-b55a-b5107c5e8549"), new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002"), new DateTime(2019, 4, 9, 20, 38, 44, 865, DateTimeKind.Local) });
 
             migrationBuilder.InsertData(
                 table: "ServicePlacePositions",
                 columns: new[] { "Id", "Name", "ServicePlaceId" },
                 values: new object[,]
                 {
-                    { new Guid("1be8dd7c-8777-4aa2-8b02-cde1e9b75885"), "I1", new Guid("9636bf29-fff0-4807-96de-6c749d26b05b") },
-                    { new Guid("e2f78159-df61-4b0b-a02f-acca3d6815be"), "I2", new Guid("9636bf29-fff0-4807-96de-6c749d26b05b") },
-                    { new Guid("7b0caa09-8063-4839-ae17-d4f5d2068f49"), "I3", new Guid("9636bf29-fff0-4807-96de-6c749d26b05b") },
-                    { new Guid("bf13a42c-89c4-4d97-9c11-929277d19342"), "I4", new Guid("9636bf29-fff0-4807-96de-6c749d26b05b") }
+                    { new Guid("241f9628-8874-425a-bd27-f23ae92d0794"), "I1", new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002") },
+                    { new Guid("6103ab17-1999-4e68-856a-9ed8bed44d98"), "I2", new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002") },
+                    { new Guid("48737fe2-167d-4875-af1c-41905bfa2c39"), "I3", new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002") },
+                    { new Guid("9564f10f-e7fc-4c80-9728-9c50da80323e"), "I4", new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002") }
                 });
 
             migrationBuilder.CreateIndex(
@@ -525,6 +578,11 @@ namespace DAL.Migrations
                 column: "ServicePlaceId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Events_ImageId",
+                table: "Events",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Events_UserId",
                 table: "Events",
                 column: "UserId");
@@ -555,9 +613,19 @@ namespace DAL.Migrations
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Services_ImageId",
+                table: "Services",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Services_TypeId",
                 table: "Services",
                 column: "TypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServiceTypes_ImageId",
+                table: "ServiceTypes",
+                column: "ImageId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -615,6 +683,9 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "ServiceTypes");
+
+            migrationBuilder.DropTable(
+                name: "Images");
         }
     }
 }

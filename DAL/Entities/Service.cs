@@ -19,9 +19,12 @@ namespace DAL.Entities
         [Required]
         [StringLength(300)]
         public string Street { get; set; }
+        
         [Required]
         public Guid TypeId { get; set; }
         public ServiceType Type { get; set; }
+        public Guid? ImageId { get; set; }
+        public Image Image { get; set; }
         public ICollection<ServicePlace> Places { get; set; }
         public ICollection<ServiceEvent> ServiceEvents { get; set; }
     }

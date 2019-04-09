@@ -10,5 +10,6 @@ namespace BLL.Services
     public interface IEventService
     {
         Task<List<Event>> GetEventsAsync(EventSearchParameter searchParameter);
+        byte[] GetEventImage(Guid eventId);
     }
 }

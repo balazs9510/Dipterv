@@ -9,13 +9,15 @@ namespace DAL.Entities
         public Guid Id { get; set; }
         [StringLength(500)]
         public string Description { get; set; }
-        public string EventImage { get; set; }
+        
         [Required]
         [StringLength(250)]
         public string Name { get; set; }
         [Required]
         public string UserId { get; set; }
         public User User { get; set; }
+        public Guid ImageId { get; set; }
+        public Image Image { get; set; }
         public List<ServiceEvent> ServiceEvents { get; set; }
         public List<EvenSchedule> EvenSchedules { get; set; }
     }
