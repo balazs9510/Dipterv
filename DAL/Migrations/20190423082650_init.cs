@@ -272,11 +272,18 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
-                    ServiceId = table.Column<Guid>(nullable: false)
+                    ServiceId = table.Column<Guid>(nullable: false),
+                    LayoutImageId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ServicePlaces", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ServicePlaces_Images_LayoutImageId",
+                        column: x => x.LayoutImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ServicePlaces_Services_ServiceId",
                         column: x => x.ServiceId,
@@ -433,20 +440,20 @@ namespace DAL.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "0fe4169b-aca1-4418-8089-ed17c5ad8b29", "admin", "admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "a4732752-a4e8-4dd0-a5f8-b520ff0a7d02", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "fc239f1a-2280-4d55-bd24-14c91fb31419", "admin@admin.hu", true, false, null, "admin@admin.hu", "admin", "AQAAAAEAACcQAAAAEKzONXXUKX8rrMGUG63472fs2RzRO00B6V9ZraC3sXZrzXFlSD85ldiQEZxym64fJQ==", null, false, "", false, "admin" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "9e642be5-8d92-4b14-8397-7c29f4194de1", "admin@admin.hu", true, false, null, "admin@admin.hu", "admin", "AQAAAAEAACcQAAAAEDDU75dr919rxbZmBumhxtY1ZW++5BvyJJY9KtY/1nVD6TadDTaXH3NKbnyR6SFvmQ==", null, false, "", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Images",
                 columns: new[] { "Id", "Content", "Extension", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("d75b4eb8-7bd5-4ac7-8b33-0a999347b881"), null, "jpg", "Shazam.jpg" },
-                    { new Guid("4abbe9a2-316b-4bda-bdf7-1f7eebc86ba0"), null, "jpg", "Negyszogletu.jpg" }
+                    { new Guid("fbc46f23-6780-4084-a996-33ee563dfe19"), null, "jpg", "Shazam.jpg" },
+                    { new Guid("3e9aa31d-37c6-45c4-b6c9-4fc793df9740"), null, "jpg", "Negyszogletu.jpg" }
                 });
 
             migrationBuilder.InsertData(
@@ -454,8 +461,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "ImageId", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("79c61293-825d-4f62-8a92-e1bbe107e1e9"), null, "Mozi" },
-                    { new Guid("20c73139-a4ad-466f-949f-e03db03e23bc"), null, "Színház" }
+                    { new Guid("5bb6d28c-122c-4de6-8fe9-b7e994a01beb"), null, "Mozi" },
+                    { new Guid("17d5da61-4c53-4d74-b14a-655a1f9f6f5f"), null, "Színház" }
                 });
 
             migrationBuilder.InsertData(
@@ -468,8 +475,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "Description", "ImageId", "Name", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("b0ae14c8-0170-4b1a-9110-0d0e2114c6a6"), null, new Guid("d75b4eb8-7bd5-4ac7-8b33-0a999347b881"), "Shazam!", "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
-                    { new Guid("9ff6d57f-9892-4310-8325-da990f864cd8"), null, new Guid("4abbe9a2-316b-4bda-bdf7-1f7eebc86ba0"), "Négyszögletű Kerek Erdő", "a18be9c0-aa65-4af8-bd17-00bd9344e575" }
+                    { new Guid("fc3d3845-9e94-4672-945c-12f070de4c35"), null, new Guid("fbc46f23-6780-4084-a996-33ee563dfe19"), "Shazam!", "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
+                    { new Guid("c36d4669-1a8a-4bd3-99fa-1d15101ad67c"), null, new Guid("3e9aa31d-37c6-45c4-b6c9-4fc793df9740"), "Négyszögletű Kerek Erdő", "a18be9c0-aa65-4af8-bd17-00bd9344e575" }
                 });
 
             migrationBuilder.InsertData(
@@ -477,9 +484,9 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "City", "Description", "ImageId", "Name", "Street", "TypeId" },
                 values: new object[,]
                 {
-                    { new Guid("c81efe43-7df1-416f-b55a-b5107c5e8549"), "Budapest", "Allee Cinema City mozi", null, "Allee CC", "Október huszonharmadika u. 8-10", new Guid("79c61293-825d-4f62-8a92-e1bbe107e1e9") },
-                    { new Guid("7d869ffd-29ba-477c-9f1b-2b04ebac1bc0"), "Pécs", "Pécs Cinema City mozi", null, "Pécs Plaza CC", "Megyeri út 76.", new Guid("79c61293-825d-4f62-8a92-e1bbe107e1e9") },
-                    { new Guid("ad9cc55d-628b-40af-8de5-ff6bc96905d8"), "Budapest", null, null, "Madách Színház", "Erzsébet krt. 29-33.", new Guid("20c73139-a4ad-466f-949f-e03db03e23bc") }
+                    { new Guid("f760356c-da89-4064-a6bf-65b04fdcbdfd"), "Budapest", "Allee Cinema City mozi", null, "Allee CC", "Október huszonharmadika u. 8-10", new Guid("5bb6d28c-122c-4de6-8fe9-b7e994a01beb") },
+                    { new Guid("91a6f2ff-9514-4745-bd16-84f39faa1021"), "Pécs", "Pécs Cinema City mozi", null, "Pécs Plaza CC", "Megyeri út 76.", new Guid("5bb6d28c-122c-4de6-8fe9-b7e994a01beb") },
+                    { new Guid("7ce7df2e-d035-40d6-b5f7-a04de6e51092"), "Budapest", null, null, "Madách Színház", "Erzsébet krt. 29-33.", new Guid("17d5da61-4c53-4d74-b14a-655a1f9f6f5f") }
                 });
 
             migrationBuilder.InsertData(
@@ -487,30 +494,30 @@ namespace DAL.Migrations
                 columns: new[] { "EventId", "ServiceId" },
                 values: new object[,]
                 {
-                    { new Guid("b0ae14c8-0170-4b1a-9110-0d0e2114c6a6"), new Guid("c81efe43-7df1-416f-b55a-b5107c5e8549") },
-                    { new Guid("b0ae14c8-0170-4b1a-9110-0d0e2114c6a6"), new Guid("7d869ffd-29ba-477c-9f1b-2b04ebac1bc0") },
-                    { new Guid("9ff6d57f-9892-4310-8325-da990f864cd8"), new Guid("ad9cc55d-628b-40af-8de5-ff6bc96905d8") }
+                    { new Guid("fc3d3845-9e94-4672-945c-12f070de4c35"), new Guid("f760356c-da89-4064-a6bf-65b04fdcbdfd") },
+                    { new Guid("fc3d3845-9e94-4672-945c-12f070de4c35"), new Guid("91a6f2ff-9514-4745-bd16-84f39faa1021") },
+                    { new Guid("c36d4669-1a8a-4bd3-99fa-1d15101ad67c"), new Guid("7ce7df2e-d035-40d6-b5f7-a04de6e51092") }
                 });
 
             migrationBuilder.InsertData(
                 table: "ServicePlaces",
-                columns: new[] { "Id", "Name", "ServiceId" },
-                values: new object[] { new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002"), "Anyád", new Guid("c81efe43-7df1-416f-b55a-b5107c5e8549") });
+                columns: new[] { "Id", "LayoutImageId", "Name", "ServiceId" },
+                values: new object[] { new Guid("af9a038d-4e2b-41af-8b92-b39902cad66e"), null, "Anyád", new Guid("f760356c-da89-4064-a6bf-65b04fdcbdfd") });
 
             migrationBuilder.InsertData(
                 table: "EvenSchedules",
                 columns: new[] { "Id", "Description", "EventId", "From", "ServiceId", "ServicePlaceId", "To" },
-                values: new object[] { new Guid("5b64e934-7747-4129-947b-828e4a5779df"), "Shazam bemutató", new Guid("b0ae14c8-0170-4b1a-9110-0d0e2114c6a6"), new DateTime(2019, 4, 9, 18, 38, 44, 862, DateTimeKind.Local), new Guid("c81efe43-7df1-416f-b55a-b5107c5e8549"), new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002"), new DateTime(2019, 4, 9, 20, 38, 44, 865, DateTimeKind.Local) });
+                values: new object[] { new Guid("7c5ad244-bcc8-498b-8dcc-16107532573e"), "Shazam bemutató", new Guid("fc3d3845-9e94-4672-945c-12f070de4c35"), new DateTime(2019, 4, 23, 10, 26, 49, 825, DateTimeKind.Local), new Guid("f760356c-da89-4064-a6bf-65b04fdcbdfd"), new Guid("af9a038d-4e2b-41af-8b92-b39902cad66e"), new DateTime(2019, 4, 23, 12, 26, 49, 829, DateTimeKind.Local) });
 
             migrationBuilder.InsertData(
                 table: "ServicePlacePositions",
                 columns: new[] { "Id", "Name", "ServicePlaceId" },
                 values: new object[,]
                 {
-                    { new Guid("241f9628-8874-425a-bd27-f23ae92d0794"), "I1", new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002") },
-                    { new Guid("6103ab17-1999-4e68-856a-9ed8bed44d98"), "I2", new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002") },
-                    { new Guid("48737fe2-167d-4875-af1c-41905bfa2c39"), "I3", new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002") },
-                    { new Guid("9564f10f-e7fc-4c80-9728-9c50da80323e"), "I4", new Guid("0572d7fd-1bf0-441b-8d90-e41a14d46002") }
+                    { new Guid("04faa239-1355-40ce-9369-05b9f8ff4bce"), "I1", new Guid("af9a038d-4e2b-41af-8b92-b39902cad66e") },
+                    { new Guid("f33a6d2b-8e76-4215-af72-678c5049dca7"), "I2", new Guid("af9a038d-4e2b-41af-8b92-b39902cad66e") },
+                    { new Guid("92197a7e-197b-40dd-9cad-299a6ba54034"), "I3", new Guid("af9a038d-4e2b-41af-8b92-b39902cad66e") },
+                    { new Guid("93545c62-ff98-47d7-ab84-5ca0f8eb9870"), "I4", new Guid("af9a038d-4e2b-41af-8b92-b39902cad66e") }
                 });
 
             migrationBuilder.CreateIndex(
@@ -606,6 +613,11 @@ namespace DAL.Migrations
                 name: "IX_ServicePlacePositions_ServicePlaceId",
                 table: "ServicePlacePositions",
                 column: "ServicePlaceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServicePlaces_LayoutImageId",
+                table: "ServicePlaces",
+                column: "LayoutImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServicePlaces_ServiceId",

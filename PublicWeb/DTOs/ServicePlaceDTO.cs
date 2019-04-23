@@ -10,6 +10,7 @@ namespace PublicWeb.DTOs
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid ServiceId { get; set; }
+        public string LayoutImage { get; set; }
         public List<ServicePlacePositionDTO> Layout { get; set; }
     }
 }

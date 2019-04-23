@@ -20,3 +20,13 @@ td:not(.booking) .position:hover {
 td.active .position:hover {
     color: purple;
 }
+
+#svg-holder /deep/ .active{
+  fill: green !important;
+}
+#svg-holder /deep/ .pending{
+  fill: yellow !important;
+}
+#svg-holder /deep/ .booked{
+  fill: red !important;
+}

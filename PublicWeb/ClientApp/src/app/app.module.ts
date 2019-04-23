@@ -30,6 +30,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadComponent } from './load/load.component';
 import { EventComponent } from './event/event.component';
 import { MatSelectModule } from '@angular/material/select';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { MatSelectModule } from '@angular/material/select';
     ServiceTypeListComponent,
     EventListComponent,
     LoadComponent,
-    EventComponent
+    EventComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -62,6 +64,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
     NgxPaginationModule,
     RouterModule.forRoot([
+      { path: 'test', component: TestComponent, pathMatch: 'full' },
       { path: '', component: ServiceTypeListComponent, pathMatch: 'full' },
       { path: 'event-schedule', component: EventScheduleComponent },
       { path: 'event-schedule/:id', component: EventScheduleComponent, pathMatch: 'full' },

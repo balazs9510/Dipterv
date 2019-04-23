@@ -7,8 +7,10 @@ using PublicWeb.DTOs;
 using PublicWeb.DTOs.JSON;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace PublicWeb.Controllers
 {
@@ -25,7 +27,8 @@ namespace PublicWeb.Controllers
             _bookingService = bookingService;
             _mapper = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<ServicePlaceDTO, ServicePlace>();
+                cfg.CreateMap<ServicePlaceDTO, ServicePlace>()
+                    .ForMember(x => x.LayoutImage, opt => opt.MapFrom(src => string.Empty));
                 cfg.CreateMap<EventScheduleDTO, EvenSchedule>();
                 cfg.CreateMap<PendingBooking, PendingBookingDTO>()
                     .ForMember(x => x.Positions, opt => opt.MapFrom(src => src.PendingBookingPositions.Select(y => y.ServicePlacePosition)));
@@ -63,6 +66,8 @@ namespace PublicWeb.Controllers
                         .Select(x => _mapper.Map<ServicePlacePosition, ServicePlacePositionDTO>(x.ServicePlacePosition)).ToList();
                 }
                 esDto.ServicePlace.Layout = esDto.ServicePlace.Layout.OrderBy(x => x.Name).ToList();
+                var image = XDocument.Load(new MemoryStream(eventSchedule.ServicePlace.LayoutImage.Content));
+                esDto.ServicePlace.LayoutImage = image.Root.ToString();
                 result.Result = esDto;
                 result.Success = true;
             }
