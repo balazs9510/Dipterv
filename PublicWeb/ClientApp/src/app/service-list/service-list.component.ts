@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 import { Service } from '../models/service';
 import { ServiceSearchParamter } from '../models/search-paramters/service-search-paramter';
+import { HtmlHelperService } from '../services/html-helper.service';
 
 @Component({
   selector: 'app-service-list',
@@ -13,41 +14,42 @@ export class ServiceListComponent implements OnInit {
 
   services: Service[];
   serviceTypeName: string;
-  page: number = 1;
+  page = 1;
   serviceSearchParameter: ServiceSearchParamter = {
-    name: "",
-    serviceTypeId: "",
-    city: ""
+    name: '',
+    serviceTypeId: '',
+    city: ''
   };
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private serviceService: ServiceService) { }
+    private serviceService: ServiceService,
+    private htmlHelper: HtmlHelperService) { }
 
   ngOnInit() {
     this.serviceSearchParameter.serviceTypeId = this.route.snapshot.paramMap.get('id');
     this.serviceTypeName = this.route.snapshot.paramMap.get('name');
+    this.htmlHelper.showLoader();
     this.serviceService.getServices(this.serviceSearchParameter).subscribe(result => {
       if (!result.success) {
-        //TODO
+        this.htmlHelper.showErrorMessage('Hiba a szolgáltatások betöltése során.');
       }
       this.services = result.result;
-      console.log(result.result);
+      this.htmlHelper.hideLoader();
     }, error => {
-      //TODO
-      console.error(error);
+      this.htmlHelper.showErrorMessage('Hiba a szolgáltatások betöltése során.');
     });
   }
-  onSearch(){
+  onSearch() {
+    this.htmlHelper.showLoader();
     this.serviceService.getServices(this.serviceSearchParameter).subscribe(result => {
       if (!result.success) {
-        //TODO
+        this.htmlHelper.showErrorMessage('Hiba a szolgáltatások betöltése során.');
       }
       this.services = result.result;
-      console.log(result.result);
+      this.htmlHelper.hideLoader();
     }, error => {
-      //TODO
-      console.error(error);
+      this.htmlHelper.showErrorMessage('Hiba a szolgáltatások betöltése során.');
     });
   }
 

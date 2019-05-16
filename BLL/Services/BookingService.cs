@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLL.Exceptions;
+using DAL;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 

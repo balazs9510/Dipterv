@@ -7,7 +7,7 @@ namespace DAL.Entities
 {
     public class Booking
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public DateTime Date { get; set; }
         [Required]

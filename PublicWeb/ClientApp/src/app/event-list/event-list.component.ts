@@ -5,26 +5,26 @@ import { EventService } from '../services/event.service';
 import { EventSearchParameter } from '../models/search-paramters/event-search-paramter';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormControl } from '@angular/forms';
-import { BaseComponent } from '../base/base.component';
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Image } from '../models/image';
-
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-date';
+declare var $: any;
 @Component({
   selector: 'app-event-list',
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.css']
 })
 export class EventListComponent implements OnInit {
-  loading: boolean = false;
+  loading = false;
   events: MyEvent[];
-  date = new FormControl();
+  date: NgbDate;
   selectedEvent: MyEvent;
   searchParameter: EventSearchParameter = {
-    ServiceId: "",
+    ServiceId: '',
     BeginDate: null,
-    Name: ""
-  }
+    Name: ''
+  };
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -37,15 +37,18 @@ export class EventListComponent implements OnInit {
   }
   onSearch() {
     this.loading = true;
-    this.searchParameter.BeginDate = this.date.value;
+    if (this.date != null)
+      this.searchParameter.BeginDate = new Date(this.date.year, this.date.month, this.date.day)
+    else
+      this.searchParameter.BeginDate = null;
     this.eventService.getEvents(this.searchParameter).subscribe(result => {
       if (!result.success) {
         //TODO
       }
       this.events = result.result;
-      for(let i = 0; i < this.events.length; i++){
-        let item = this.events[i];
-        this.createImageFromBlob(item.image);
+      for (let i = 0; i < this.events.length; i++) {
+        const item = this.events[i];
+        //this.createImageFromBlob(item.image);
       }
       console.log(result.result);
       console.log(this.events);
@@ -55,24 +58,18 @@ export class EventListComponent implements OnInit {
       console.error(error);
     });
   }
-  createImageFromBlob(image: Image) {
-    let reader = new FileReader();
-    reader.addEventListener("load", () => {
-      image.display = reader.result;
-    }, false);
-    if (image) {
-       let blob = new Blob([image.content], { type : `image/jpeg`});
-       reader.readAsDataURL(blob);
-    }
- }
+  // createImageFromBlob(image: Image) {
+  //   let reader = new FileReader();
+  //   reader.addEventListener("load", () => {
+  //     image.display = reader.result;
+  //   }, false);
+  //   if (image) {
+  //     let blob = new Blob([image.content], { type: `image/jpeg` });
+  //     reader.readAsDataURL(blob);
+  //   }
+  // }
   onEventSelect(selected: MyEvent) {
     console.log(selected);
     this.selectedEvent = selected;
-  }
-  onLoading(event) {
-    if (event)
-      this.loading = true;
-    else
-      this.loading = false;
   }
 }

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL;
 using DAL.Entities;
+using DAL.SeedServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,7 +39,9 @@ namespace PrivateWeb
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=BookingSystem;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<BookingSystemDbContext>
-                (options => options.UseSqlServer(connection));
+                (options => options.UseSqlServer(connection))
+                .AddTransient<ISeedService,SeedService>()
+                .AddTransient<IImageSeedService, ImageSeedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

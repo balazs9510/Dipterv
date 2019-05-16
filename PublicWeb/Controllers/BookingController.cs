@@ -2,11 +2,13 @@
 using BLL.Exceptions;
 using BLL.Services;
 using DAL.Entities;
+using EASendMail;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using PublicWeb.DTOs;
 using PublicWeb.DTOs.JSON;
 using PublicWeb.Hubs;
+using shortid;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ namespace PublicWeb.Controllers
     public class BookingController : ControllerBase
     {
         private readonly IHubContext<BookingHub, IBookingHub> _hubContext;
-
+        private const string CHARACTERS = "qwertzuiopasdfghjkklyxcvbnm0123456789";
         private readonly IBookingService _service;
         private readonly IMapper _mapper;
         public BookingController(IBookingService service, IHubContext<BookingHub, IBookingHub> hubContext)
@@ -42,8 +44,9 @@ namespace PublicWeb.Controllers
                     .ForMember(x => x.BookingPositions,
                                opt => opt.MapFrom(
                                    src => src.Positions.Select(
-                                       y => new BookingPosition { BookingId = src.Id.Value, ServicePlacePositionId = y.Id })));
+                                       y => new BookingPosition { BookingId = src.Id, ServicePlacePositionId = y.Id })));
             }).CreateMapper();
+            
         }
 
         [HttpPost]
@@ -85,10 +88,11 @@ namespace PublicWeb.Controllers
             var result = new JsonResultBase();
             try
             {
+                ShortId.SetCharacters(CHARACTERS);
                 var pendingBooking = await _service.GetPendingBookingByClientIdAsync(booking.ClientId);
                 var entity = new Booking
                 {
-                    Id = Guid.NewGuid(),
+                    Id = ShortId.Generate(8).ToUpper(),
                     Date = DateTime.Now,
                     Email = booking.Email,
                     Name = booking.Name,
@@ -106,6 +110,18 @@ namespace PublicWeb.Controllers
                 entity = await _service.CreateBookingAsync(entity);
                 await _hubContext.Clients.All.RecieveNewBooking(_mapper.Map<Booking, BookingDTO>(entity));
                 result.Success = true;
+                SmtpMail oMail = new SmtpMail("TryIt");
+                SmtpClient oSmtp = new SmtpClient();
+                oMail.From = "95berta.balazs@gmail.com";
+                oMail.To = booking.Email;
+                oMail.Subject = "Sikeres foglalás";
+                oMail.TextBody = $"Köszönjük a foglalásod. Az azonosító: {entity.Id}.";
+                SmtpServer oServer = new SmtpServer("smtp.gmail.com");
+                oServer.Port = 587;
+                oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+                oServer.User = "95berta.balazs@gmail.com";
+                oServer.Password = "";
+                oSmtp.SendMail(oServer, oMail);
             }
             catch (BookingException)
             {

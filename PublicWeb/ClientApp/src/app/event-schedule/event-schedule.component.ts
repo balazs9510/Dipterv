@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { EventSchedule } from '../models/event-schedule';
 import { EventScheduleService } from '../services/event-schedule.service';
 import { Location } from '@angular/common';
-import { BaseComponent } from '../base/base.component';
 import { MatDialog } from '@angular/material';
 import { ServicePlacePosition } from '../models/service-place-position';
 import { BookingService } from '../services/booking.service';

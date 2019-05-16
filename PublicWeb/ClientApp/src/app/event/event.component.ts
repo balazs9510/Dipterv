@@ -14,7 +14,7 @@ import { ServiceService } from '../services/service.service';
 })
 export class EventComponent implements OnChanges {
   @Input() public event: Event;
-  @Output() load = new EventEmitter<boolean>();
+  @Input() public serviceId: string;
   eventDateGroup: EventScheduleDateGroup[];
   eventServiceList: Service[];
   constructor(
@@ -25,15 +25,24 @@ export class EventComponent implements OnChanges {
   ) { }
 
   ngOnChanges() {
-    console.log(this.event);
-    this.load.emit(true);
+    if (this.serviceId != null) {
+      this.eventScheduleService.getEventDateGroups(this.event.id, this.serviceId).subscribe(result => {
+        if (!result.success) {
+          //TODO
+          this.eventDateGroup = null;
+        }
+        this.eventDateGroup = result.result;
+      }, error => {
+        //TODO
+        this.eventDateGroup = null;
+        console.error(error);
+      });
+    }
     this.serviceService.getServicesOfEvent(this.event.id).subscribe(result => {
       if (!result.success) {
         //TODO
       }
       this.eventServiceList = result.result;
-      console.log(result.result);
-      this.load.emit(false);
     }, error => {
       //TODO
       console.error(error);
@@ -42,15 +51,12 @@ export class EventComponent implements OnChanges {
   }
   onServiceChanged(event){
     let serviceId = event.value;
-    this.load.emit(true);
     this.eventScheduleService.getEventDateGroups(this.event.id, serviceId).subscribe(result => {
       if (!result.success) {
         //TODO
         this.eventDateGroup = null;
       }
       this.eventDateGroup = result.result;
-      console.log(result.result);
-      this.load.emit(false);
     }, error => {
       //TODO
       this.eventDateGroup = null;

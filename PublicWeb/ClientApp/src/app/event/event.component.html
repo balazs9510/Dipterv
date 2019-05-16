@@ -1,11 +1,11 @@
 <div class="container mt-3">
   <div class="row mb-3">
     <div class="col-md-3">
-        <img class="img-responsive" src="{{event.eventImage}}" alt="" width="200">
+      <img src="/api/image/{{event.image.id}}" alt="{{event.name}}" width="200">
     </div>
-    <div class="col-md-3">
+    <div class="col-md-9">
         <h2>{{event.name}}</h2>
-        <h3>{{event.description}}</h3>
+        <label>{{event.description}}</label>
     </div>
   </div>
   

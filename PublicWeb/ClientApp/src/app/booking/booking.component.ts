@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CreateBooking } from '../models/create-booking';
 import { BookingService } from '../services/booking.service';
-import { BaseComponent } from '../base/base.component';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -11,7 +10,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./booking.component.css']
 })
 export class BookingComponent {
-  model : CreateBooking;
+  model: CreateBooking;
   submitted = false;
   constructor(private route: ActivatedRoute,
     public dialog: MatDialog,

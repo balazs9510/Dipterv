@@ -3,13 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{79530E9B-A3F1-4F53-B344-F7211C5F19AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{79530E9B-A3F1-4F53-B344-F7211C5F19AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{0B0773F4-1C96-4D9A-9911-EA2638981BCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{0B0773F4-1C96-4D9A-9911-EA2638981BCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrivateWeb", "PrivateWeb\PrivateWeb.csproj", "{674D00B7-419D-479F-BC1E-8C34EB6C870C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrivateWeb", "PrivateWeb\PrivateWeb.csproj", "{674D00B7-419D-479F-BC1E-8C34EB6C870C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PublicWeb", "PublicWeb\PublicWeb.csproj", "{3D86F72D-00A7-4B68-9A2B-D43C2E7EEDA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PublicWeb", "PublicWeb\PublicWeb.csproj", "{3D86F72D-00A7-4B68-9A2B-D43C2E7EEDA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{05CDBD17-46C7-4F41-96A4-32F85E69D3A6}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Desktop\School\Dipterv\Diplomaterv.docx = ..\..\..\..\Desktop\School\Dipterv\Diplomaterv.docx
+		..\..\..\..\Desktop\School\Dipterv\Diplomaterv.pdf = ..\..\..\..\Desktop\School\Dipterv\Diplomaterv.pdf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

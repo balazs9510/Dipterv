@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -11,7 +12,6 @@ import { EventScheduleComponent } from './event-schedule/event-schedule.componen
 import { EventScheduleService } from './services/event-schedule.service';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule, MatFormFieldModule, MatNativeDateModule } from '@angular/material';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { BaseComponent } from './base/base.component';
 import { BookingService } from './services/booking.service';
 import { ServiceService } from './services/service.service';
 import { BookingComponent } from './booking/booking.component';
@@ -27,10 +27,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoadComponent } from './load/load.component';
 import { EventComponent } from './event/event.component';
 import { MatSelectModule } from '@angular/material/select';
 import { TestComponent } from './test/test.component';
+import { HtmlHelperService } from './services/html-helper.service';
 
 @NgModule({
   declarations: [
@@ -38,12 +38,10 @@ import { TestComponent } from './test/test.component';
     NavMenuComponent,
     HomeComponent,
     EventScheduleComponent,
-    BaseComponent,
     BookingComponent,
     ServiceListComponent,
     ServiceTypeListComponent,
     EventListComponent,
-    LoadComponent,
     EventComponent,
     TestComponent
   ],
@@ -57,6 +55,8 @@ import { TestComponent } from './test/test.component';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatButtonModule,
+    NgbModule.forRoot(),
+    NgbDatepickerModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -83,7 +83,8 @@ import { TestComponent } from './test/test.component';
     EventScheduleService,
     BookingService,
     ServiceService,
-    EventService
+    EventService,
+    HtmlHelperService
   ],
   bootstrap: [AppComponent]
 })

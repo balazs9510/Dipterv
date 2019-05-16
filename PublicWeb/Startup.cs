@@ -1,5 +1,7 @@
 using BLL.Services;
+using DAL;
 using DAL.Entities;
+using DAL.SeedServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -34,11 +36,13 @@ namespace PublicWeb
             services.AddSignalR();
             var connection = @"Server=(localdb)\mssqllocaldb;Database=BookingSystem;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<BookingSystemDbContext>
-                (options => options.UseSqlServer(connection));
+                (options => options.UseSqlServer(connection))
+                .AddTransient<ISeedService, SeedService>();
             services.AddTransient<IEventScheduleService, EventScheduleService>();
             services.AddTransient<IBookingService, BookingService>();
             services.AddTransient<IServiceService, ServiceService>();
             services.AddTransient<IEventService, EventService>();
+            services.AddTransient<IImageService, ImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

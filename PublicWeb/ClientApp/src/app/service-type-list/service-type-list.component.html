@@ -1,8 +1,9 @@
 <div class="row justify-content-center text-center mt-3">
-  <div class="col-lg-3  mb-3 grow" *ngFor="let type of serviceTypes" [routerLink]="['/service', type.name,type.id]">
-    <img class="img-responsive" src="https://via.placeholder.com/200x300" alt="">
-    <div class="centered">
-      <label>{{type.name}}</label>
+
+  <div class="col-lg-3  mb-3 grow box" *ngFor="let type of serviceTypes" [routerLink]="['/service', type.name,type.id]">
+    <img src="/api/image/{{type.image.id}}" alt="{{type.name}}">
+    <div class="text">
+      <h3>{{type.name}}</h3>
     </div>
   </div>
 </div>

@@ -26,6 +26,7 @@ namespace PublicWeb.Controllers
             {
                 cfg.CreateMap<ServiceTypeDTO, ServiceType>();
                 cfg.CreateMap<Service, ServiceDTO>();
+                cfg.CreateMap<Image, ImageDTO>();
             }).CreateMapper();
         }
         [HttpGet]

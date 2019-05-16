@@ -9,5 +9,6 @@ namespace PublicWeb.DTOs
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public ImageDTO Image { get; set; }
     }
 }

@@ -1,0 +1,22 @@
+<svg width="305" height="83" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="#fff" id="canvas_background" height="85" width="307" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect stroke="#000" id="svg_1" height="81.000004" width="303.000009" y="0.750001" x="0.75" stroke-width="1.5" fill="#fff"/>
+  <ellipse class="bookable" data-position-id="BEE08999-8585-4561-8BFC-E5D050C64F32" ry="36.5" rx="36.5" id="svg_2" cy="40.250002" cx="39.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <ellipse class="bookable" data-position-id="F26730FC-986B-4255-8AAF-E97B0B147C4D" ry="36.5" rx="36.5" id="svg_3" cy="40.250002" cx="114.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <ellipse class="bookable" data-position-id="71022DC9-4E62-470B-97A9-98BD8D04657E" ry="36.5" rx="36.5" id="svg_4" cy="41.250002" cx="188.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <ellipse class="bookable" data-position-id="B6B432C0-810C-4289-9560-2CAEB6476D07" ry="36.5" rx="36.5" id="svg_5" cy="41.250002" cx="265.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_6" y="46.750002" x="27.75" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">A1</text>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_7" y="47.750002" x="100.75" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">A2</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_8" y="50.750002" x="173.75" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">A3</text>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_9" y="50.750002" x="253.75" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">A4</text>
+ </g>
+</svg>

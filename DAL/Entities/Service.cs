@@ -27,5 +27,6 @@ namespace DAL.Entities
         public Image Image { get; set; }
         public ICollection<ServicePlace> Places { get; set; }
         public ICollection<ServiceEvent> ServiceEvents { get; set; }
+        public ICollection<EvenSchedule> EvenSchedules { get; set; }
     }
 }

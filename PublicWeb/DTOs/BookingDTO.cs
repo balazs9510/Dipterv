@@ -8,7 +8,7 @@ namespace PublicWeb.DTOs
 {
     public class BookingDTO
     {
-        public Guid? Id { get; set; }
+        public string Id { get; set; }
         public DateTime Date { get; set; }
         [Required]
         public Guid ScheduleId { get; set; }

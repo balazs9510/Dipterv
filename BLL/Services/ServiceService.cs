@@ -1,4 +1,5 @@
 ﻿using BLL.SearchParamters;
+using DAL;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,12 +19,15 @@ namespace BLL.Services
 
         public async Task<List<Service>> GetServiceOfEventAsync(Guid eventId)
         {
-            return await _ctx.Services.Include(x => x.ServiceEvents).Where(x => x.ServiceEvents.Any(y => y.EventId == eventId)).ToListAsync();
+            return await _ctx.Services
+                .Include(x => x.ServiceEvents)
+                .Where(x => x.ServiceEvents.Any(y => y.EventId == eventId))
+                .ToListAsync();
         }
 
         public async Task<List<Service>> GetServicesAsync(ServiceSearchParameter searchParameter)
         {
-            IQueryable<Service> q = _ctx.Services;
+            IQueryable<Service> q = _ctx.Services.Include(x => x.Image);
             if (searchParameter.ServiceTypeId.HasValue)
                 q = q.Where(x => x.TypeId == searchParameter.ServiceTypeId.Value);
             if (!string.IsNullOrEmpty(searchParameter.Name))
@@ -36,7 +40,9 @@ namespace BLL.Services
 
         public async Task<List<ServiceType>> GetServiceTypesAsync()
         {
-            return await _ctx.ServiceTypes.ToListAsync();
+            return await _ctx.ServiceTypes
+                .Include(x => x.Image)
+                .ToListAsync();
         }
     }
 }

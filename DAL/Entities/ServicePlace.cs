@@ -16,5 +16,6 @@ namespace DAL.Entities
         public Guid? LayoutImageId { get; set; }
         public Image LayoutImage { get; set; }
         public ICollection<ServicePlacePosition> Layout { get; set; }
+        public ICollection<EvenSchedule> EvenSchedules { get; set; }
     }
 }
