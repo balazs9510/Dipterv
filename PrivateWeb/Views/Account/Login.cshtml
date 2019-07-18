@@ -1,0 +1,22 @@
+﻿@model LoginViewModel
+<h1>Bejelentkezés</h1>
+<div class="row">
+    <form method="post" class="col-md-6">
+        <div class="form-group">
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+        </div>
+        <div class="form-check">
+            <input asp-for="KeepMeSignedIn" class="form-check-input" />
+            <label asp-for="KeepMeSignedIn"></label>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Bejelentkezés</button>
+        </div>
+    </form>
+    <div asp-validation-summary="All" class="col-md-6 text-danger"></div>
+</div>

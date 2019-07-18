@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DAL;
+﻿using DAL;
 using DAL.Entities;
 using DAL.SeedServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,13 +32,22 @@ namespace PrivateWeb
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddIdentity<User, IdentityRole>()
+             // services.AddDefaultIdentity<IdentityUser>()
+             .AddEntityFrameworkStores<BookingSystemDbContext>()
+             .AddDefaultTokenProviders();
+
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=BookingSystem;Trusted_Connection=True;ConnectRetryCount=0";
+
             services.AddDbContext<BookingSystemDbContext>
                 (options => options.UseSqlServer(connection))
-                .AddTransient<ISeedService,SeedService>()
+                .AddTransient<ISeedService, SeedService>()
                 .AddTransient<IImageSeedService, ImageSeedService>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +64,7 @@ namespace PrivateWeb
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

@@ -17,9 +17,9 @@ namespace PrivateWeb.Hosting
             {
                 var serviceProvider = scope.ServiceProvider;
                 var context = serviceProvider.GetRequiredService<TContext>();
-                context.Database.Migrate();
-                var imageSeedSevice = serviceProvider.GetRequiredService<IImageSeedService>();
-                await imageSeedSevice.SeedImagesAsync();
+                //context.Database.Migrate();
+                ///var imageSeedSevice = serviceProvider.GetRequiredService<IImageSeedService>();
+                //await imageSeedSevice.SeedImagesAsync();
             }
             return host;
         }

@@ -13,6 +13,9 @@ namespace DAL.Entities
         [Required]
         public Guid ServiceId { get; set; }
         public Service Service { get; set; }
+        public string UserId { get; set; }
+        public User User { get; set; }
+
         public Guid? LayoutImageId { get; set; }
         public Image LayoutImage { get; set; }
         public ICollection<ServicePlacePosition> Layout { get; set; }

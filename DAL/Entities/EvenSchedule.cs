@@ -23,6 +23,9 @@ namespace DAL.Entities
         [Required]
         public Guid ServicePlaceId { get; set; }
         public ServicePlace ServicePlace { get; set; }
+        public string UserId { get; set; }
+        public User User { get; set; }
+
         public ICollection<Booking> Bookings { get; set; }
         public ICollection<PendingBooking> PendingBookings { get; set; }
     }

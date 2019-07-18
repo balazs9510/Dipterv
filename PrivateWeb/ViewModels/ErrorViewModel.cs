@@ -1,6 +1,6 @@
 using System;
 
-namespace PrivateWeb.Models
+namespace PrivateWeb.ViewModels
 {
     public class ErrorViewModel
     {
