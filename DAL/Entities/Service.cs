@@ -10,23 +10,28 @@ namespace DAL.Entities
         public Guid Id { get; set; }
 
         [StringLength(500)]
+        [Display(Name = "Leírás")]
         public string Description { get; set; }
 
         [Required]
         [StringLength(250)]
+        [Display(Name = "Név")]
         public string Name { get; set; }
 
         [Required]
         [StringLength(250)]
+        [Display(Name = "Város")]
         public string City { get; set; }
 
         [Required]
         [StringLength(300)]
+        [Display(Name = "Utca")]
         public string Street { get; set; }      
         
         [Required]
         public Guid TypeId { get; set; }
 
+        [Display(Name = "Típus")]
         public ServiceType Type { get; set; }
 
         public Guid? ImageId { get; set; }
