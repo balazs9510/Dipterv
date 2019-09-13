@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using PrivateWeb.Helpers;
 using System.Threading.Tasks;
 
 namespace PrivateWeb
@@ -8,6 +9,7 @@ namespace PrivateWeb
     {
         public static void Main(string[] args)
         {
+            MapperHelper.InitializeMapper();
             CreateWebHostBuilder(args).Build().Run();
         }
 

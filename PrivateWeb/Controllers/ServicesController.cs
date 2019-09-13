@@ -1,61 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using DAL;
 using DAL.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PrivateWeb.Resources.Controllers;
+using PrivateWeb.ViewModels;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PrivateWeb.Controllers
 {
     [Authorize]
-    public class ServicesController : Controller
+    public class ServicesController : BaseController
     {
-        private readonly BookingSystemDbContext _context;
-        private readonly UserManager<User> _userManager;
+        private readonly ILogger _logger;
 
-        public ServicesController(BookingSystemDbContext context, UserManager<User> userManager)
+        public ServicesController(BookingSystemDbContext context, UserManager<User> userManager, ILogger<ServicesController> logger)
+            : base(context, userManager)
         {
-            _context = context;
-            _userManager = userManager;
+            _logger = logger;
         }
 
         // GET: Services
         public async Task<IActionResult> Index()
         {
-            var bookingSystemDbContext = _context.Services.Include(s => s.Image).Include(s => s.Type);
-            return View(await bookingSystemDbContext.ToListAsync());
-        }
-
-        // GET: Services/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                var bookingSystemDbContext = _context
+                    .Services
+                    .Include(s => s.Type)
+                    .Where(x => x.UserId == GetCurrentUserId());
+                return View(await bookingSystemDbContext.ToListAsync());
 
-            var service = await _context.Services
-                .Include(s => s.Image)
-                .Include(s => s.Type)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (service == null)
+            }
+            catch (Exception e)
             {
-                return NotFound();
+                _logger.LogError(e.Message, CommonC.ErrorLoad);
+                ViewBag.ErrorMessage = CommonC.ErrorLoad;
             }
-
-            return View(service);
+            return View();
         }
 
         // GET: Services/Create
         public IActionResult Create()
         {
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id");
-            ViewData["TypeId"] = new SelectList(_context.ServiceTypes, "Id", "Name");
+            try
+            {
+                ViewData["TypeId"] = new SelectList(_context.ServiceTypes, "Id", "Name");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, CommonC.ErrorLoad);
+                ViewBag.ErrorMessage = CommonC.ErrorLoad;
+            }
+
             return View();
         }
 
@@ -64,18 +68,43 @@ namespace PrivateWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,Name,City,Street,TypeId,ImageId")] Service service)
+        public async Task<IActionResult> Create(ServiceViewModel serviceViewModel)
         {
             if (ModelState.IsValid)
             {
-                service.Id = Guid.NewGuid();
-                _context.Add(service);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    var service = Mapper.Map<ServiceViewModel, Service>(serviceViewModel);
+                    service.Id = Guid.NewGuid();
+                    service.UserId = GetCurrentUserId();
+                    if (serviceViewModel.Image != null)
+                    {
+                        var image = new Image
+                        {
+                            Id = Guid.NewGuid(),
+                            Extension = System.IO.Path.GetExtension(serviceViewModel.Image.FileName),
+                            Name = serviceViewModel.Image.FileName
+                        };
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await serviceViewModel.Image.CopyToAsync(memoryStream);
+                            image.Content = memoryStream.ToArray();
+                        }
+                        service.ImageId = image.Id;
+                        _context.Add(image);
+                    }
+                    _context.Add(service);
+
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e.Message, CommonC.ErrorCreate);
+                    ViewBag.ErrorMessage = CommonC.ErrorCreate;
+                }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", service.ImageId);
-            ViewData["TypeId"] = new SelectList(_context.ServiceTypes, "Id", "Name", service.TypeId);
-            return View(service);
+            return View(serviceViewModel);
         }
 
         // GET: Services/Edit/5
@@ -85,15 +114,32 @@ namespace PrivateWeb.Controllers
             {
                 return NotFound();
             }
-
-            var service = await _context.Services.FindAsync(id);
-            if (service == null)
+            var serviceViewModel = new ServiceViewModel();
+            try
             {
-                return NotFound();
+                var service = await _context.Services.FindAsync(id);
+                serviceViewModel = Mapper.Map<Service, ServiceViewModel>(service);
+                if (service == null)
+                {
+                    return NotFound();
+                }
             }
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", service.ImageId);
-            ViewData["TypeId"] = new SelectList(_context.ServiceTypes, "Id", "Name", service.TypeId);
-            return View(service);
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, CommonC.ErrorEdit);
+                ViewBag.ErrorMessage = CommonC.ErrorEdit;
+            }
+            try
+            {
+                ViewData["TypeId"] = new SelectList(_context.ServiceTypes, "Id", "Name", serviceViewModel.TypeId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, CommonC.ErrorLoad);
+                ViewBag.ErrorMessage = CommonC.ErrorLoad;
+            }
+
+            return View(serviceViewModel);
         }
 
         // POST: Services/Edit/5
@@ -101,9 +147,9 @@ namespace PrivateWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Description,Name,City,Street,TypeId,ImageId")] Service service)
+        public async Task<IActionResult> Edit(Guid id, ServiceViewModel serviceViewModel)
         {
-            if (id != service.Id)
+            if (id != serviceViewModel.Id)
             {
                 return NotFound();
             }
@@ -112,12 +158,13 @@ namespace PrivateWeb.Controllers
             {
                 try
                 {
+                    var service = Mapper.Map<ServiceViewModel, Service>(serviceViewModel);
                     _context.Update(service);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ServiceExists(service.Id))
+                    if (!ServiceExists(serviceViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -128,9 +175,8 @@ namespace PrivateWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", service.ImageId);
-            ViewData["TypeId"] = new SelectList(_context.ServiceTypes, "Id", "Name", service.TypeId);
-            return View(service);
+            ViewData["TypeId"] = new SelectList(_context.ServiceTypes, "Id", "Name", serviceViewModel.TypeId);
+            return View(serviceViewModel);
         }
 
         // GET: Services/Delete/5
@@ -140,27 +186,42 @@ namespace PrivateWeb.Controllers
             {
                 return NotFound();
             }
-
-            var service = await _context.Services
+            var service = new Service();
+            try
+            {
+                service = await _context.Services
                 .Include(s => s.Image)
                 .Include(s => s.Type)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (service == null)
-            {
-                return NotFound();
+                if (service == null)
+                {
+                    return NotFound();
+                }
             }
-
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, CommonC.ErrorLoad);
+                ViewBag.ErrorMessage = CommonC.ErrorLoad;
+            }
             return View(service);
         }
 
         // POST: Services/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var service = await _context.Services.FindAsync(id);
-            _context.Services.Remove(service);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var service = await _context.Services.FindAsync(id);
+                _context.Services.Remove(service);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, CommonC.ErrorDelete);
+                ViewBag.ErrorMessage = CommonC.ErrorDelete;
+            }
             return RedirectToAction(nameof(Index));
         }
 

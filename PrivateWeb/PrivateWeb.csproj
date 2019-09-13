@@ -21,6 +21,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\Controllers\CommonC.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CommonC.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Controllers\CommonC.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommonC.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="AppData\DefaultImages\alle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

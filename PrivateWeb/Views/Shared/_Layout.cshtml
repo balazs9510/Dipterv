@@ -23,6 +23,21 @@
 
     <div class="container body-content">
         @RenderBody()
+        <div class="modal fade right" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModal" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Hiba</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="error-text"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Bezár</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <hr />
         <footer>
             <p>&copy; 2019 - Adminisztráció</p>
@@ -49,7 +64,16 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
+    <script>
+        $(() => {
+            let errorMsg = '@Html.Raw(ViewBag.ErrorMessage)';
+            if (errorMsg) {
+                $('#errorModal .error-text').html(errorMsg);
+                $('#errorModal').modal('show');
+            }
+        })
+    </script>
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>
