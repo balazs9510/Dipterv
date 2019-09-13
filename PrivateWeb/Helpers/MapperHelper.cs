@@ -13,7 +13,15 @@ namespace PrivateWeb.Helpers
                 cfg.CreateMap<Service, ServiceViewModel>()
                     .ForMember(dest => dest.Image, opt => opt.Ignore());
                 cfg.CreateMap<ServiceViewModel, Service>()
+                    .ForMember(dest => dest.Image, opt => opt.Ignore())
+                    .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+                cfg.CreateMap<Event, EventViewModel>()
                     .ForMember(dest => dest.Image, opt => opt.Ignore());
+                cfg.CreateMap<EventViewModel, Event>()
+                    .ForMember(dest => dest.Image, opt => opt.Ignore())
+                    .ForMember(dest => dest.Id, opt => opt.Ignore());
+                ;
             });
         }
 

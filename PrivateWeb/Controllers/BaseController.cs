@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PrivateWeb.Controllers
@@ -24,10 +25,27 @@ namespace PrivateWeb.Controllers
         {
             return await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
         }
+
         protected string GetCurrentUserId()
         {
             var user = GetCurrentUser().Result;
             return user.Id;
         }
+
+        //protected void AddModelErrors()
+        //{
+        //    var errorStringBuilder = new StringBuilder();
+        //    if (!ModelState.IsValid)
+        //    {
+        //        foreach (var value in ModelState.Values)
+        //        {
+        //            foreach (var error in value.Errors)
+        //            {
+        //                errorStringBuilder.AppendLine(error.ErrorMessage);
+        //            }
+        //        }
+        //        ModelState.AddModelError("error", errorStringBuilder.ToString());
+        //    }
+        //}
     }
 }

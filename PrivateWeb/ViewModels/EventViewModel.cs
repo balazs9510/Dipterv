@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 
 namespace PrivateWeb.ViewModels
 {
-    public class ServiceViewModel
+    public class EventViewModel
     {
         public Guid Id { get; set; }
-        [Display(Name = "Leírás")]
+        [StringLength(500)]
+        [Display(Name = "Részletek")]
         public string Description { get; set; }
+
+        [Required]
+        [StringLength(250)]
         [Display(Name = "Név")]
         public string Name { get; set; }
-        [Display(Name = "Város")]
-        public string City { get; set; }
-        [Display(Name = "Utca")]
-        public string Street { get; set; }
-        [Display(Name = "Típus")]
-        public Guid TypeId { get; set; }
+
         [Display(Name = "Kép")]
         public IFormFile Image { get; set; }
+
         public string UserId { get; set; }
     }
 }

@@ -8,10 +8,12 @@ namespace DAL.Entities
     {
         public Guid Id { get; set; }
         [StringLength(500)]
+        [Display(Name = "Leírás")]
         public string Description { get; set; }
         
         [Required]
         [StringLength(250)]
+        [Display(Name = "Név")]
         public string Name { get; set; }
         [Required]
         public string UserId { get; set; }

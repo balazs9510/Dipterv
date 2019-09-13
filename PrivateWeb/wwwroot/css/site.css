@@ -41,3 +41,14 @@ body {
     justify-content: center;
     align-items: center;
 }
+table {
+    table-layout: fixed;
+}
+td {
+    word-wrap: break-word
+}
+table tr td:last-child {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end
+}

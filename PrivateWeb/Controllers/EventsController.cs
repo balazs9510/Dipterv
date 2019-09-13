@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using DAL;
 using DAL.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PrivateWeb.Resources.Controllers;
@@ -16,26 +14,24 @@ using System.Threading.Tasks;
 
 namespace PrivateWeb.Controllers
 {
-    [Authorize]
-    public class ServicesController : BaseController
+    public class EventsController : BaseController
     {
         private readonly ILogger _logger;
 
-        public ServicesController(BookingSystemDbContext context, UserManager<User> userManager, ILogger<ServicesController> logger)
+        public EventsController(BookingSystemDbContext context, UserManager<User> userManager, ILogger<EventsController> logger)
             : base(context, userManager)
         {
             _logger = logger;
         }
 
-        // GET: Services
         public async Task<IActionResult> Index()
         {
             try
             {
                 var bookingSystemDbContext = _context
-                    .Services
-                    .Include(s => s.Type)
-                    .Where(x => x.UserId == GetCurrentUserId());
+                    .Events
+                    .Where(x => x.UserId == GetCurrentUserId())
+                    .OrderBy(x => x.Name);
                 return View(await bookingSystemDbContext.ToListAsync());
 
             }
@@ -47,102 +43,113 @@ namespace PrivateWeb.Controllers
             return View();
         }
 
-        // GET: Services/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Details(Guid? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
             try
             {
-                ViewData["TypeId"] = new SelectList(_context.ServiceTypes, "Id", "Name");
+                var xevent = await _context.Events
+                    .Include(x => x.Image)
+                    .Include(x => x.User)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (xevent == null)
+                {
+                    return NotFound();
+                }
+                return View(xevent);
             }
             catch (Exception e)
             {
                 _logger.LogError(e.Message, CommonC.ErrorLoad);
                 TempData["ErrorMessage"] = CommonC.ErrorLoad;
             }
+            return RedirectToAction("Index");
+        }
 
+        public IActionResult Create()
+        {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ServiceViewModel serviceViewModel)
+        public async Task<IActionResult> Create(EventViewModel eventViewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var service = Mapper.Map<ServiceViewModel, Service>(serviceViewModel);
-                    service.Id = Guid.NewGuid();
-                    service.UserId = GetCurrentUserId();
-                    if (serviceViewModel.Image != null)
+                    var xevent = Mapper.Map<EventViewModel, Event>(eventViewModel);
+                    xevent.Id = Guid.NewGuid();
+                    xevent.UserId = GetCurrentUserId();
+                    if (eventViewModel.Image == null)
                     {
-                        var image = new Image
-                        {
-                            Id = Guid.NewGuid(),
-                            Extension = System.IO.Path.GetExtension(serviceViewModel.Image.FileName),
-                            Name = serviceViewModel.Image.FileName
-                        };
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            await serviceViewModel.Image.CopyToAsync(memoryStream);
-                            image.Content = memoryStream.ToArray();
-                        }
-                        service.ImageId = image.Id;
-                        _context.Add(image);
+                        ModelState.AddModelError("Image", "Kötelező képet feltölteni.");
+                        return View(eventViewModel);
                     }
-                    _context.Add(service);
+                    var image = new Image
+                    {
+                        Id = Guid.NewGuid(),
+                        Extension = System.IO.Path.GetExtension(eventViewModel.Image.FileName),
+                        Name = eventViewModel.Image.FileName
+                    };
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await eventViewModel.Image.CopyToAsync(memoryStream);
+                        image.Content = memoryStream.ToArray();
+                    }
+                    xevent.ImageId = image.Id;
+                    _context.Add(image);
 
+                    _context.Add(xevent);
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError(e.Message, CommonC.ErrorCreate);
-                    TempData["ErrorMessage"] = CommonC.ErrorCreate;
+                    _logger.LogError(e.Message, CommonC.ErrorLoad);
+                    TempData["ErrorMessage"] = CommonC.ErrorLoad;
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(serviceViewModel);
+            return View(eventViewModel);
         }
 
-        // GET: Services/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var serviceViewModel = new ServiceViewModel();
+            var eventViewModel = new EventViewModel();
+
             try
             {
-                var service = await _context.Services.FindAsync(id);
-                serviceViewModel = Mapper.Map<Service, ServiceViewModel>(service);
-                if (service == null)
+
+
+                var xevent = await _context.Events.FindAsync(id);
+                if (xevent == null)
                 {
                     return NotFound();
                 }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.Message, CommonC.ErrorEdit);
-                TempData["ErrorMessage"] = CommonC.ErrorEdit;
-            }
-            try
-            {
-                ViewData["TypeId"] = new SelectList(_context.ServiceTypes, "Id", "Name", serviceViewModel.TypeId);
+                eventViewModel = Mapper.Map<Event, EventViewModel>(xevent);
             }
             catch (Exception e)
             {
                 _logger.LogError(e.Message, CommonC.ErrorLoad);
                 TempData["ErrorMessage"] = CommonC.ErrorLoad;
             }
-
-            return View(serviceViewModel);
+            return View(eventViewModel);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, ServiceViewModel serviceViewModel)
+        public async Task<IActionResult> Edit(Guid id, EventViewModel eventViewModel)
         {
-            if (id != serviceViewModel.Id)
+            if (id != eventViewModel.Id)
             {
                 return NotFound();
             }
@@ -151,15 +158,15 @@ namespace PrivateWeb.Controllers
             {
                 try
                 {
-                    var service = await _context.Services
-                       .FirstOrDefaultAsync(m => m.Id == id);
-                    service = Mapper.Map(serviceViewModel, service);
-                    _context.Update(service);
+                    var xevent = await _context.Events
+                        .FirstOrDefaultAsync(m => m.Id == id);
+                    xevent = Mapper.Map(eventViewModel, xevent);
+                    _context.Update(xevent);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ServiceExists(serviceViewModel.Id))
+                    if (!EventExists(eventViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -170,8 +177,7 @@ namespace PrivateWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TypeId"] = new SelectList(_context.ServiceTypes, "Id", "Name", serviceViewModel.TypeId);
-            return View(serviceViewModel);
+            return View(eventViewModel);
         }
 
         public async Task<IActionResult> Delete(Guid? id)
@@ -180,14 +186,12 @@ namespace PrivateWeb.Controllers
             {
                 return NotFound();
             }
-            var service = new Service();
+            var xevent = new Event();
             try
             {
-                service = await _context.Services
-                .Include(s => s.Image)
-                .Include(s => s.Type)
-                .FirstOrDefaultAsync(m => m.Id == id);
-                if (service == null)
+                xevent = await _context.Events
+                        .FirstOrDefaultAsync(m => m.Id == id);
+                if (xevent == null)
                 {
                     return NotFound();
                 }
@@ -197,18 +201,18 @@ namespace PrivateWeb.Controllers
                 _logger.LogError(e.Message, CommonC.ErrorLoad);
                 TempData["ErrorMessage"] = CommonC.ErrorLoad;
             }
-            return View(service);
+
+            return View(xevent);
         }
 
-        // POST: Services/Delete/5
         [HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             try
             {
-                var service = await _context.Services.FindAsync(id);
-                _context.Services.Remove(service);
+                var xevent = await _context.Events.FindAsync(id);
+                _context.Events.Remove(xevent);
                 await _context.SaveChangesAsync();
             }
             catch (Exception e)
@@ -219,9 +223,9 @@ namespace PrivateWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ServiceExists(Guid id)
+        private bool EventExists(Guid id)
         {
-            return _context.Services.Any(e => e.Id == id);
+            return _context.Events.Any(e => e.Id == id);
         }
     }
 }
