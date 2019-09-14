@@ -9,9 +9,12 @@ namespace DAL.Entities
         public Guid Id { get; set; }
         [Required]
         [StringLength(200)]
+        [Display(Name = "Név")]
         public string Name { get; set; }
         [Required]
+        [Display(Name = "Szolgáltatás")]
         public Guid ServiceId { get; set; }
+        [Display(Name = "Szolgáltatás")]
         public Service Service { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }

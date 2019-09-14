@@ -1,0 +1,32 @@
+﻿@model DAL.Entities.ServicePlace
+
+@{
+    ViewData["Title"] = "Törlés";
+}
+
+<h2>Törlés</h2>
+
+<h3>Biztos benne, hogy törli az adott elemet?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Service)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Service.Name)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Törlés" class="btn btn-default" /> |
+        <a asp-action="Index">Vissza</a>
+    </form>
+</div>

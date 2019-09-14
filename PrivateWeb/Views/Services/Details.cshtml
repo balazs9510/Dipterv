@@ -1,54 +1,89 @@
 ﻿@model DAL.Entities.Service
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Részletek";
+    var serviceEvent = Model.ServiceEvents.FirstOrDefault();
 }
 
-<h2>Details</h2>
+<h2>Részletek</h2>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.City)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.City)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Street)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Street)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Type.Name)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <img class="img-responsive" src="data:image/@(Model.Image.Extension);base64,@Convert.ToBase64String(Model.Image.Content)" />
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Szerkesztés</a> |
+    <a asp-action="Index">Vissza</a>
+</div>
 
-<div>
-    <h4>Service</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Street)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Street)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Type.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Image.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<h3>Szolgáltatás eseményei</h3>
+@if (serviceEvent != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Esemény neve
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ServiceEvents)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Event.Name)
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="ServiceEvents" asp-route-serviceId="@item.ServiceId" asp-route-eventId="@item.EventId">Törlés</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <p>Nincs jelenleg esemény felvéve.</p>
+}
+
+<p>
+    <a asp-action="Create" asp-controller="ServiceEvents" asp-route-serviceId="@Model.Id" class="btn btn-success">Új esemény hozzáadása</a>
+</p>

@@ -21,6 +21,7 @@ namespace DAL
         public DbSet<ServiceType> ServiceTypes { get; set; }
         public DbSet<PendingBookingPosition> PendingBookingPositions { get; set; }
         public DbSet<BookingPosition> BookingPositions { get; set; }
+        public DbSet<ServiceEvent> ServiceEvents { get; set; }
         public BookingSystemDbContext(DbContextOptions<BookingSystemDbContext> options, ISeedService seedService)
             : base(options) => _seedService = seedService;
         protected override void OnModelCreating(ModelBuilder builder)

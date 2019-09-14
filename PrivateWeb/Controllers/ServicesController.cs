@@ -27,7 +27,6 @@ namespace PrivateWeb.Controllers
             _logger = logger;
         }
 
-        // GET: Services
         public async Task<IActionResult> Index()
         {
             try
@@ -47,7 +46,6 @@ namespace PrivateWeb.Controllers
             return View();
         }
 
-        // GET: Services/Create
         public IActionResult Create()
         {
             try
@@ -104,7 +102,6 @@ namespace PrivateWeb.Controllers
             return View(serviceViewModel);
         }
 
-        // GET: Services/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -174,6 +171,36 @@ namespace PrivateWeb.Controllers
             return View(serviceViewModel);
         }
 
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                var service = await _context.Services
+                    .Include(x => x.Image)
+                    .Include(x => x.Type)
+                    .Include(x => x.ServiceEvents)
+                        .ThenInclude(x => x.Event)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (service == null)
+                {
+                    return NotFound();
+                }
+                return View(service);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, CommonC.ErrorLoad);
+                TempData["ErrorMessage"] = CommonC.ErrorLoad;
+            }
+            return RedirectToAction("Index");
+        }
+
+
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -200,9 +227,8 @@ namespace PrivateWeb.Controllers
             return View(service);
         }
 
-        // POST: Services/Delete/5
         [HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             try

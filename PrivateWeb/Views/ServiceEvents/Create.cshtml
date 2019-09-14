@@ -1,0 +1,27 @@
+﻿@model ServiceEventViewModel
+@{
+    ViewData["Title"] = "Hozzáadás";
+}
+
+<h2>Esemény hozzáadása</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ServiceId" />
+            <div class="form-group">
+                <label asp-for="EventId" class="control-label"></label>
+                <select asp-for="EventId" class="form-control" asp-items="ViewBag.EventId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Hozzáadás" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Details" asp-controller="Services" asp-route-id="@Model.ServiceId">Vissza</a>
+</div>
+
