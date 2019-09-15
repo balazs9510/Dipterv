@@ -16,6 +16,14 @@ namespace PrivateWeb.Controllers
         protected readonly BookingSystemDbContext _context;
         protected readonly UserManager<User> _userManager;
 
+        public string CurrentUserId
+        {
+            get
+            {
+                return GetCurrentUserId();
+            }
+        }
+
         public BaseController(BookingSystemDbContext context, UserManager<User> userManager)
         {
             _context = context;

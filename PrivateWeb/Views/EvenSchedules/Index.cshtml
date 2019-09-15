@@ -1,0 +1,68 @@
+﻿@model IEnumerable<DAL.Entities.EvenSchedule>
+
+@{
+    ViewData["Title"] = "Esemény ütemezések";
+    var eventGroup = Model.GroupBy(x => x.Event);
+}
+
+<h2>Esemény ütemezések</h2>
+
+<p>
+    <a asp-action="Create">Új ütemezés felvétele</a>
+</p>
+@if(eventGroup.Count() == 0)
+{
+    <p>Nincs ütemezés </p>
+}
+@foreach (var xevent in eventGroup)
+{
+    <h3>@xevent.Key.Name</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.From)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.To)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Service)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ServicePlace)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in xevent)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.From)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.To)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Service.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ServicePlace.Name)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Szerkesztés</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Törlés</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

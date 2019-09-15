@@ -29,7 +29,9 @@ namespace PrivateWeb.Helpers
                     .ForMember(dest => dest.LayoutImage, opt => opt.Ignore())
                     .ForMember(dest => dest.Id, opt => opt.Ignore());
 
-                cfg.CreateMap<ServiceEvent, ServiceEventViewModel>();
+                cfg.CreateMap<ServiceEvent, ServiceEventViewModel>()
+                    .ForMember(x => x.EvenSchedule, opt => opt.Ignore())
+                    .ForMember(dest => dest.EventName, opt => opt.MapFrom(x => x.Event.Name));
                 cfg.CreateMap<ServiceEventViewModel, ServiceEvent>();
             });
         }

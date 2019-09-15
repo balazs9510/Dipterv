@@ -110,8 +110,8 @@ namespace PrivateWeb.Controllers
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError(e.Message, CommonC.ErrorLoad);
-                    TempData["ErrorMessage"] = CommonC.ErrorLoad;
+                    _logger.LogError(e.Message, CommonC.ErrorCreate);
+                    TempData["ErrorMessage"] = CommonC.ErrorCreate;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -174,6 +174,11 @@ namespace PrivateWeb.Controllers
                     {
                         throw;
                     }
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e.Message, CommonC.ErrorEdit);
+                    TempData["ErrorMessage"] = CommonC.ErrorEdit;
                 }
                 return RedirectToAction(nameof(Index));
             }

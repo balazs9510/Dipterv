@@ -1,0 +1,65 @@
+﻿@model ServiceEventViewModel
+@{
+    ViewData["Title"] = "Esemény ütemezések";
+}
+<h3>
+    @Model.EventName
+</h3>
+@if (Model.EvenSchedule == null || Model.EvenSchedule.Count == 0)
+{
+    <p>
+        Nincs ütemezés az eseményhez
+    </p>
+
+}
+else
+{
+    var firstEvenSchedule = Model.EvenSchedule.First();
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => firstEvenSchedule.From)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => firstEvenSchedule.To)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => firstEvenSchedule.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => firstEvenSchedule.ServicePlace)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var eventSchedule in Model.EvenSchedule)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => eventSchedule.From)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => eventSchedule.To)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => eventSchedule.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => eventSchedule.ServicePlace.Name)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="EvenSchedules" asp-route-id="@eventSchedule.Id">Szerkesztés</a> |
+                        <a asp-action="Delete"  asp-controller="EvenSchedules" asp-route-id="@eventSchedule.Id">Törlés</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<p>
+    <a asp-action="Create" class="btn-success btn" asp-controller="EvenSchedules" asp-route-serviceId="@Model.ServiceId" asp-route-eventId="@Model.EventId">
+        Új ütemezés felvétele
+    </a>
+</p>

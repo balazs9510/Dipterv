@@ -67,6 +67,35 @@ namespace PrivateWeb.Controllers
             return View(serviceEventViewModel);
         }
 
+        public async Task<IActionResult> Details(Guid? serviceId, Guid? eventId)
+        {
+            if (serviceId == null || eventId == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                var serviceEvent = await _context.ServiceEvents
+                    .Include(x => x.Event)
+                    .FirstOrDefaultAsync(x => x.EventId == eventId.Value && x.ServiceId == serviceId.Value);
+                if (serviceEvent == null)
+                {
+                    return NotFound();
+                }
+                var vm = new ServiceEventViewModel();
+                vm = Mapper.Map(serviceEvent, vm);
+                vm.EvenSchedule = await _context.EvenSchedules
+                    .Include(x => x.ServicePlace)
+                    .Where(x => x.EventId == vm.EventId && x.ServiceId == vm.ServiceId && x.UserId == GetCurrentUserId()).ToListAsync();
+                return View(vm);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, CommonC.ErrorLoad);
+                TempData["ErrorMessage"] = CommonC.ErrorLoad;
+            }
+            return RedirectToAction("Details", "Services", new { @id = serviceId });
+        }
         public async Task<IActionResult> Delete(Guid serviceId, Guid eventId)
         {
             try

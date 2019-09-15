@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,5 +16,8 @@ namespace PrivateWeb.ViewModels
         [Required]
         [Display(Name = "Esemény")]
         public Guid EventId { get; set; }
+
+        public string EventName { get; set; }
+        public List<EvenSchedule> EvenSchedule { get; set; }
     }
 }
