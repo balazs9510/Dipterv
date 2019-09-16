@@ -1,0 +1,25 @@
+.box {
+  position: relative;
+  display: inline-block;
+  /* Make the width of box same as image */
+}
+
+.box .text {
+  background-color: black;
+  position: absolute;
+  z-index: 999;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 70%;
+  /* Adjust this value to move the positioned div up and down */
+  text-align: center;
+  width: 60%;
+  color: white
+  /* Set the width of the positioned div */
+}
+.box img {
+  width: 200px;
+  height: 300px;
+  object-fit: contain;
+}

@@ -1,0 +1,17 @@
+img {
+  height: 200px;
+  width: auto;
+}
+
+button.calendar, button.calendar:active {
+  width: 2.75rem;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCS…nlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=) !important;
+  background-repeat: no-repeat;
+  background-size: 23px;
+  background-position: center;
+}
+
+input.calendar-input {
+  background: url('../../assets/system-icon.png') no-repeat scroll 15px 15px;
+  padding-left: 30px;
+}

@@ -1,5 +1,4 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
 .ng-valid[required], .ng-valid.required {
   border-left: 5px solid #42A948;
   /* green */
@@ -14,10 +13,27 @@
   transition: all .2s ease-in-out;
 }
 
-  .grow:hover {
-    transform: scale(1.1);
-  }
+.grow:hover {
+  transform: scale(1.1);
+}
 
 .pager /deep/ .ngx-pagination .current {
   background: #28a745 !important;
+}
+
+body {
+  background-color: #E8EAF6!important;
+}
+
+/* .container {
+  background-color: #C5CAE9!important;
+}
+
+h1, h2, h3, h4, h5, h6 , label, p, span, button{
+  color: #1A237E!important;
+} */
+.container {
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px!important;
 }

@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { JsonResult } from '../models/JsonResult';
 import { ServiceType } from '../models/service-type';
 import { HttpClient } from '@angular/common/http';
@@ -22,5 +22,8 @@ export class ServiceService {
   }
   getServicesOfEvent(id: string): Observable<JsonResult<Service[]>> {
     return this.httpClient.get<JsonResult<Service[]>>(this.url + `api/Service/GetServiceOfEvent?eventId=${id}`);
+  }
+  getTopFive(): Observable<JsonResult<Service[]>> {
+    return this.httpClient.get<JsonResult<Service[]>>(this.url + `api/Service/GetTopFive`);
   }
 }

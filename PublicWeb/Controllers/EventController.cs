@@ -59,5 +59,22 @@ namespace PublicWeb.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetTopFive()
+        {
+            var result = new JsonResult<List<EventDTO>>();
+            try
+            {
+                result.Result = (await _service.GetTopAsync(5)).Select(x => _mapper.Map<Event, EventDTO>(x)).ToList();
+                result.Success = true;
+            }
+            catch
+            {
+                result.Message = "Váratlan hiba az események letöltése során.";
+            }
+            return Ok(result);
+        }
     }
 }

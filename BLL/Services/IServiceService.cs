@@ -12,5 +12,6 @@ namespace BLL.Services
         Task<List<ServiceType>> GetServiceTypesAsync();
         Task<List<Service>> GetServicesAsync(ServiceSearchParameter searchParameter);
         Task<List<Service>> GetServiceOfEventAsync(Guid eventId);
+        Task<List<Service>> GetTopAsync(int take);
     }
 }

@@ -76,5 +76,23 @@ namespace PublicWeb.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetTopFive()
+        {
+            var result = new JsonResult<List<ServiceDTO>>();
+            try
+            {
+                result.Result = (await _service.GetTopAsync(5)).Select(x => _mapper.Map<Service, ServiceDTO>(x)).ToList();
+                result.Success = true;
+            }
+            catch
+            {
+                result.Message = "Váratlan hiba a szolgáltatások letöltése során.";
+            }
+            return Ok(result);
+        }
+
     }
 }

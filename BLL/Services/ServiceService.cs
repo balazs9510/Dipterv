@@ -44,5 +44,10 @@ namespace BLL.Services
                 .Include(x => x.Image)
                 .ToListAsync();
         }
+
+        public async Task<List<Service>> GetTopAsync(int take)
+        {
+            return await _ctx.Services.Include(x => x.Image).Take(take).ToListAsync();
+        }
     }
 }

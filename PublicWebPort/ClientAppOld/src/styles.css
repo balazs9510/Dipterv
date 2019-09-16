@@ -1,0 +1,23 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.ng-valid[required], .ng-valid.required {
+  border-left: 5px solid #42A948;
+  /* green */
+}
+
+.ng-invalid:not(form) {
+  border-left: 5px solid #a94442;
+  /* red */
+}
+
+.grow {
+  transition: all .2s ease-in-out;
+}
+
+  .grow:hover {
+    transform: scale(1.1);
+  }
+
+.pager /deep/ .ngx-pagination .current {
+  background: #28a745 !important;
+}

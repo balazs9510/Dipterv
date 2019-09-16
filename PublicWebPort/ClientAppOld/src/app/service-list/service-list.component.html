@@ -1,0 +1,34 @@
+<div class="container mt-3">
+  <h2>
+    Szolgáltatások
+    <span *ngIf="serviceTypeName">> {{serviceTypeName}}</span>
+  </h2>
+  <form #searchForm="ngForm" (ngSubmit)="onSearch()">
+    <div class="form-row">
+      <div class=" form-group col-lg-3">
+        <label for="name">Szolgáltatás neve</label>
+        <input type="text" name="name" id="name" class="form-control" [(ngModel)]="serviceSearchParameter.name" />
+      </div>
+      <div class=" form-group col-lg-3">
+        <label for="city">Város</label>
+        <input type="text" name="city" id="city" class="form-control" [(ngModel)]="serviceSearchParameter.city" />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success">Keresés</button>
+  </form>
+  <div class="row text-center mt-5">
+    <div class="col-lg-3  mb-3 grow box" *ngFor="let service of services | paginate: { itemsPerPage: 8, currentPage: page }" [routerLink]="['/event-list', service.id]">
+      <img src="/api/image/{{service.image.id}}" alt="">
+      <div class="text">
+        <span class="mb-0" style="font-size: 16px;">{{service.name}}</span>
+        <span class="adress">{{service.city}},{{service.street}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-end" *ngIf="services.length > 0">
+    <div class="col-lg-6 justify-content-end">
+      <pagination-controls (pageChange)="page = $event" previousLabel="Előző" nextLabel="Következő" class="pager">
+      </pagination-controls>
+    </div>
+  </div>
+</div>

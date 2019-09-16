@@ -2,3 +2,14 @@
     color: #0ab94d;
     font-weight: 600;
 }
+.navbar{
+    background-color: #1A237E;
+    color: white;
+}
+.navbar  a {
+    color: white!important;
+    font-weight: 600;
+}
+.navbar .nav-item a:hover {
+    border-bottom: 2px white solid;
+}

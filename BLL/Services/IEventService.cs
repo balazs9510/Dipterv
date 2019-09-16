@@ -11,5 +11,6 @@ namespace BLL.Services
     {
         Task<List<Event>> GetEventsAsync(EventSearchParameter searchParameter);
         byte[] GetEventImage(Guid eventId);
+        Task<List<Event>> GetTopAsync(int take);
     }
 }
