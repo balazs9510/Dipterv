@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CreateBooking } from '../models/create-booking';
-import { BookingService } from '../services/booking.service';
+import { CreateBooking } from '../../models/create-booking';
+import { BookingService } from '../../services/booking.service';
 import { MatDialog } from '@angular/material';
 
 @Component({

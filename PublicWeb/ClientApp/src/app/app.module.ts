@@ -1,24 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { EventScheduleComponent } from './event-schedule/event-schedule.component';
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { HomeComponent } from './components/home/home.component';
+import { EventScheduleComponent } from './components/event-schedule/event-schedule.component';
 import { EventScheduleService } from './services/event-schedule.service';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule, MatFormFieldModule, MatNativeDateModule } from '@angular/material';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { BookingService } from './services/booking.service';
 import { ServiceService } from './services/service.service';
-import { BookingComponent } from './booking/booking.component';
-import { ServiceListComponent } from './service-list/service-list.component';
-import { ServiceTypeListComponent } from './service-type-list/service-type-list.component';
+import { BookingComponent } from './components/booking/booking.component';
+import { ServiceListPageComponent } from './components/service-list-page/service-list-page.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { EventListComponent } from './event-list/event-list.component';
+import { EventListPageComponent } from './components/event-list-page/event-list-page.component';
 import { EventService } from './services/event.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material';
@@ -27,10 +26,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EventComponent } from './event/event.component';
+import { EventComponent } from './components/event/event.component';
 import { MatSelectModule } from '@angular/material/select';
-import { TestComponent } from './test/test.component';
+import { TestComponent } from './components/test/test.component';
 import { HtmlHelperService } from './services/html-helper.service';
+import { LoaderComponent } from './components/loader/loader.component';
+import { LoaderService } from './services/loader.service';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 @NgModule({
   declarations: [
@@ -39,11 +41,11 @@ import { HtmlHelperService } from './services/html-helper.service';
     HomeComponent,
     EventScheduleComponent,
     BookingComponent,
-    ServiceListComponent,
-    ServiceTypeListComponent,
-    EventListComponent,
+    ServiceListPageComponent,
+    EventListPageComponent,
     EventComponent,
-    TestComponent
+    TestComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -64,15 +66,14 @@ import { HtmlHelperService } from './services/html-helper.service';
     MatSelectModule,
     NgxPaginationModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: HomeComponent },
       { path: 'test', component: TestComponent, pathMatch: 'full' },
-      { path: 'service-list', component: ServiceTypeListComponent, pathMatch: 'full' },
       { path: 'event-schedule', component: EventScheduleComponent },
       { path: 'event-schedule/:id', component: EventScheduleComponent, pathMatch: 'full' },
-      { path: 'event-list', component: EventListComponent },
-      { path: 'event-list/:id', component: EventListComponent, pathMatch: 'full' },
-      { path: 'service', component: ServiceListComponent },
-      { path: 'service/:name/:id', component: ServiceListComponent, pathMatch: 'full' },
+      { path: 'event-list', component: EventListPageComponent },
+      { path: 'event-list/:id', component: EventListPageComponent, pathMatch: 'full' },
+      { path: 'service-list', component: ServiceListPageComponent },
+      { path: 'service/:name/:id', component: ServiceListPageComponent, pathMatch: 'full' },
       { path: 'booking/:id', component: BookingComponent }
     ])
   ],
@@ -85,7 +86,9 @@ import { HtmlHelperService } from './services/html-helper.service';
     BookingService,
     ServiceService,
     EventService,
-    HtmlHelperService
+    HtmlHelperService,
+    LoaderService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

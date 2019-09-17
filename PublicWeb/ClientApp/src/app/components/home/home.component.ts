@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventService } from '../services/event.service';
-import { Event as MyEvent } from '../models/event';
-import { Service } from '../models/service';
-import { ServiceService } from '../services/service.service';
+import { EventService } from '../../services/event.service';
+import { Event as MyEvent } from '../../models/event';
+import { Service } from '../../models/service';
+import { ServiceService } from '../../services/service.service';
 @Component({
   selector: 'app-home',
   styleUrls: ['./home.component.css'],

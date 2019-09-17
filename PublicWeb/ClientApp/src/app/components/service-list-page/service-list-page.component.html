@@ -1,0 +1,46 @@
+<div class="container mt-3">
+  <h2>
+    Szolgáltatások
+  </h2>
+  <form #searchForm="ngForm" (ngSubmit)="onSearch()">
+    <div class="form-row">
+      <div class=" form-group col-lg-3">
+        <label for="name">Szolgáltatás neve</label>
+        <input type="text" name="name" id="name" class="form-control" [(ngModel)]="serviceSearchParameter.name" />
+      </div>
+      <div class=" form-group col-lg-3">
+        <label for="city">Város</label>
+        <input type="text" name="city" id="city" class="form-control" [(ngModel)]="serviceSearchParameter.city" />
+      </div>
+      <div class=" form-group col-lg-3">
+        <label for="serviceTypeId">Típus</label>
+        <select class="form-control" name="serviceTypeId" [(ngModel)]="serviceSearchParameter.serviceTypeId">
+          <option selected value="">Összes</option>
+          <option *ngFor="let stype of serviceTypes" value="{{stype.id}}">{{stype.name}}</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success">Keresés</button>
+  </form>
+  <div class="row text-center mt-5" *ngIf="services.length > 0">
+    <div class="col-lg-3  mb-3" *ngFor="let service of services | paginate: { itemsPerPage: 8, currentPage: page }"
+      [routerLink]="['/event-list', service.id]">
+      <!-- <img src="/api/image/{{service.image.id}}" alt="">
+      <div class="text">
+        <span class="mb-0" style="font-size: 16px;">{{service.name}}</span>
+        <span class="adress">{{service.city}},{{service.street}}</span>
+      </div> -->
+      <div class="card grow">
+        <img class="card-img-top" src="/api/image/{{service.image.id}}" alt="Esemény kép">
+        <div class="card-body">
+          <h4 class="card-title">{{service.name}}</h4>
+          <p class="card-text">{{service.city}}, {{service.street}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="services.length > 0">
+    <pagination-controls (pageChange)="page = $event" previousLabel="Előző" nextLabel="Következő" class="pager">
+    </pagination-controls>
+  </div>
+</div>

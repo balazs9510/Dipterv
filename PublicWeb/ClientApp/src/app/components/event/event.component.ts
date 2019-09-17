@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventService } from '../services/event.service';
-import { EventScheduleDateGroup } from '../models/eventschedule-dategroup';
-import { EventScheduleService } from '../services/event-schedule.service';
-import { Event } from '../models/event';
-import { Service } from '../models/service';
-import { ServiceService } from '../services/service.service';
+import { EventService } from '../../services/event.service';
+import { EventScheduleDateGroup } from '../../models/eventschedule-dategroup';
+import { EventScheduleService } from '../../services/event-schedule.service';
+import { Event } from '../../models/event';
+import { Service } from '../../models/service';
+import { ServiceService } from '../../services/service.service';
 
 @Component({
   selector: 'app-event',

@@ -13,6 +13,8 @@
   transition: all .2s ease-in-out;
 }
 
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 .grow:hover {
   transform: scale(1.1);
 }

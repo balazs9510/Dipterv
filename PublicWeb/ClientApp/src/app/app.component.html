@@ -2,12 +2,7 @@
 <div class='container-fluid'>
   <router-outlet></router-outlet>
 </div>
-<div id="overlay">
-  <div class="d-flex justify-content-center align-items-center" style="height: 100%">
-    <mat-spinner></mat-spinner>
-  </div>
-</div>
-<!-- Modal -->
+<app-loader></app-loader>
 <div class="modal fade right" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModal"
   aria-hidden="true">
   <div class="modal-dialog" role="document">

@@ -12,6 +12,6 @@ button.calendar, button.calendar:active {
 }
 
 input.calendar-input {
-  background: url('../../assets/system-icon.png') no-repeat scroll 15px 15px;
+  background: url('../../../assets/system-icon.png') no-repeat scroll 15px 15px;
   padding-left: 30px;
 }
