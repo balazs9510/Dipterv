@@ -12,6 +12,7 @@ import * as signalR from '@aspnet/signalr';
 import { Booking } from '../../models/booking';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { HtmlHelperService } from '../../services/html-helper.service';
 declare var $: any;
 @Component({
   selector: 'app-event-schedule',
@@ -22,19 +23,17 @@ export class EventScheduleComponent implements AfterViewInit, OnInit {
   schedule: EventSchedule;
   selectedPositions: ServicePlacePosition[];
   baseUrl: string;
-  loading = false;
   servicePlaceSvg: SafeHtml;
   positionName: string;
   errorMessage: string;
   constructor(
     private sanitizer: DomSanitizer,
-    public dialog: MatDialog,
     private bookingService: BookingService,
     private scheduleService: EventScheduleService,
+    private htmlHelper: HtmlHelperService,
     @Inject('BASE_URL') baseUrl: string,
     private route: ActivatedRoute,
-    private router: Router,
-    private location: Location) {
+    private router: Router) {
     this.selectedPositions = [];
     this.baseUrl = baseUrl;
   }
@@ -43,7 +42,7 @@ export class EventScheduleComponent implements AfterViewInit, OnInit {
     const connection = new signalR.HubConnectionBuilder()
       .withUrl(`${this.baseUrl}bookingHub`)
       .build();
-    connection.start().catch(err => /*document.write(err)*/ console.log(err));
+    connection.start().catch(err => this.htmlHelper.showErrorMessage('Hiba a kapcsolat felépítése során.<br>Kérem próbálja újra!'));
     connection.on('RecieveNewPendingBooking', (pendingBooking: PendingBooking) => {
       this.schedule.pendingBookings.push(pendingBooking);
       $(`#svg-holder`).html(this.colorSVGElements($(`#svg-holder`)));
@@ -52,21 +51,18 @@ export class EventScheduleComponent implements AfterViewInit, OnInit {
       this.schedule.bookings.push(booking);
       $(`#svg-holder`).html(this.colorSVGElements($(`#svg-holder`)));
     });
-    this.loading = true;
   }
   ngAfterViewInit() {
     const id = this.route.snapshot.paramMap.get('id');
     this.scheduleService.getSchedule(id).subscribe(result => {
       if (!result.success) {
-        //todo
+        this.htmlHelper.showErrorMessage(result.message);
       }
-      this.loading = false;
       this.schedule = result.result;
       const coloredSVG = this.colorSVGElements(this.schedule.servicePlace.layoutImage);
       this.servicePlaceSvg = this.sanitizer.bypassSecurityTrustHtml(coloredSVG);
     }, error => {
-      //todo
-      console.error(error);
+      this.htmlHelper.showErrorMessage('Hiba a kapcsolat felépítése során.<br>Kérem próbálja újra!');
     });
   }
   onServicePlacePositionClick(e) {
@@ -74,7 +70,7 @@ export class EventScheduleComponent implements AfterViewInit, OnInit {
     if (!element.hasClass('bookable')) {
       return;
     } else {
-      const positionId = element.data('position-id').toLowerCase();
+      const positionId = element.data('position-id');
       this.createSelection(positionId);
     }
   }
@@ -88,25 +84,23 @@ export class EventScheduleComponent implements AfterViewInit, OnInit {
     const containedElement = this.selectedPositions.find(x => x.id == positionId);
     if (containedElement) {
       this.selectedPositions = this.selectedPositions.filter(x => x.id != positionId);
-      $(`#svg-holder [data-position-id="${positionId.toUpperCase()}"]`).removeClass('active');
+      $(`#svg-holder [data-position-id="${positionId}"]`).removeClass('active');
     } else {
       const position = this.schedule.servicePlace.layout.filter(x => x.id == positionId)[0];
       this.selectedPositions.push(position);
-      $(`#svg-holder [data-position-id="${positionId.toUpperCase()}"]`).addClass('active');
+      $(`#svg-holder [data-position-id="${positionId}"]`).addClass('active');
     }
   }
   private createPendingBooking() {
-    this.loading = true;
     const pBooking = { eventScheduleId: this.schedule.id, positions: this.selectedPositions } as PendingBooking;
     this.bookingService.createPendingBooking(pBooking).subscribe(res => {
       if (res.success) {
         this.router.navigate(['/booking', res.result]);
       } else {
-        //todo
+        this.htmlHelper.showErrorMessage(res.message);
       }
     }, error => {
-      //todo
-      console.error(error);
+      this.htmlHelper.showErrorMessage('Hiba a foglalás rögzítése során.');
     });
   }
   private containsPending(positionId): boolean {
@@ -130,21 +124,30 @@ export class EventScheduleComponent implements AfterViewInit, OnInit {
   }
   private colorSVGElements(element) {
     const el = $(element).clone();
+    if(parseInt(el.attr('height'))){
+      let oldWidth = el.attr('width');
+      let oldHeight = parseInt(el.attr('height'));
+      el.attr('width', '100%');
+      el.removeAttr('height');
+      el.attr('preserveAspectRatio', 'xMidYMid meet');
+      el.attr('viewBox', `0 0 ${oldWidth} ${oldHeight + 20}`);
+    }
+    
     $(el).find('.bookable').removeClass('active');
     $(el).find('.booked').removeClass('booked');
     $(el).find('.pending').removeClass('pending');
     const currentTime = new Date();
     this.selectedPositions.forEach(element => {
-      $(el).find(`[data-position-id="${element.id.toUpperCase()}"]`).addClass('active');
+      $(el).find(`[data-position-id="${element.id}"]`).addClass('active');
     });
     this.schedule.bookings.forEach(element => {
       element.positions.forEach(pos => {
-        $(el).find(`[data-position-id="${pos.id.toUpperCase()}"]`).addClass('booked');
+        $(el).find(`[data-position-id="${pos.id}"]`).addClass('booked');
       });
     });
     this.schedule.pendingBookings.filter(x => new Date(x.expirationDate) > currentTime).forEach(element => {
       element.positions.forEach(pos => {
-        $(el).find(`[data-position-id="${pos.id.toUpperCase()}"]`).addClass('pending');
+        $(el).find(`[data-position-id="${pos.id}"]`).addClass('pending');
       });
     });
     return $(el)[0].outerHTML;

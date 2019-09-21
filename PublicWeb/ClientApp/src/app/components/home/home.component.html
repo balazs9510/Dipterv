@@ -1,145 +1,145 @@
 <div class="container mt-3">
-  <h2>
-    Üdvözöljük foglalási oldalunkon!
-  </h2>
-  <p>Máris megkezdheti a böngészést a számos programunk között.</p>
-  <hr>
-  <h3>Kiemelt eseményeink</h3>
-  <ngb-carousel *ngIf="events; else eventsLoadingBlock">
-    <ng-template ngbSlide>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card grow">
-            <img class="card-img-top" src="/api/event/geteventimage/?eventId={{events[0].id}}" alt="Esemény kép">
-            <div class="card-body">
-              <h4 class="card-title">{{events[0].name}}</h4>
-              <!-- <p class="card-text">{{events[0].description}}</p> -->
+    <h2>
+        Üdvözöljük foglalási oldalunkon!
+    </h2>
+    <p>Máris megkezdheti a böngészést a számos programunk között.</p>
+    <hr>
+    <h3>Kiemelt eseményeink</h3>
+    <ngb-carousel *ngIf="events; else eventsLoadingBlock">
+        <ng-template ngbSlide>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card grow" [routerLink]="[ '/event', events[0].id ]">
+                        <img class="card-img-top" src="/api/event/geteventimage/?eventId={{events[0].id}}" alt="Esemény kép">
+                        <div class="card-body">
+                            <h4 class="card-title">{{events[0].name}}</h4>
+                            <!-- <p class="card-text">{{events[0].description}}</p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card grow" [routerLink]="[ '/event', events[1].id ]">
+                        <img class="card-img-top" src="/api/event/geteventimage/?eventId={{events[1].id}}" alt="Esemény kép">
+                        <div class="card-body">
+                            <h4 class="card-title">{{events[1].name}}</h4>
+                            <!-- <p class="card-text">{{events[1].description}}</p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card grow" [routerLink]="[ '/event', events[2].id ]">
+                        <img class="card-img-top" src="/api/event/geteventimage/?eventId={{events[2].id}}" alt="Esemény kép">
+                        <div class="card-body">
+                            <h4 class="card-title">{{events[2].name}}</h4>
+                            <!-- <p class="card-text">{{events[2].description}}</p> -->
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card grow">
-            <img class="card-img-top" src="/api/event/geteventimage/?eventId={{events[1].id}}" alt="Esemény kép">
-            <div class="card-body">
-              <h4 class="card-title">{{events[1].name}}</h4>
-              <!-- <p class="card-text">{{events[1].description}}</p> -->
+        </ng-template>
+        <ng-template ngbSlide>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card grow" [routerLink]="[ '/event', events[3].id ]">
+                        <img class="card-img-top" src="/api/event/geteventimage/?eventId={{events[3].id}}" alt="Esemény kép">
+                        <div class="card-body">
+                            <h4 class="card-title">{{events[3].name}}</h4>
+                            <!-- <p class="card-text">{{events[3].description}}</p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card grow" [routerLink]="[ '/event', events[4].id ]">
+                        <img class="card-img-top" src="/api/event/geteventimage/?eventId={{events[4].id}}" alt="Esemény kép">
+                        <div class="card-body">
+                            <h4 class="card-title">{{events[4].name}}</h4>
+                            <!-- <p class="card-text">{{events[4].description}}</p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <a [routerLink]='["/event-list"]'>
+                        <div class="card grow">
+                            <img class="card-img-top" src="../../assets/search-icon.png" alt="Esemény kép">
+                            <div class="card-body">
+                                <h4 class="card-title">További eseményeink</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card grow">
-            <img class="card-img-top" src="/api/event/geteventimage/?eventId={{events[2].id}}" alt="Esemény kép">
-            <div class="card-body">
-              <h4 class="card-title">{{events[2].name}}</h4>
-              <!-- <p class="card-text">{{events[2].description}}</p> -->
-            </div>
-          </div>
-        </div>
-      </div>
+        </ng-template>
+    </ngb-carousel>
+    <ng-template #eventsLoadingBlock>
+        <h6>Események letöltése folyamatban...</h6>
     </ng-template>
-    <ng-template ngbSlide>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card grow">
-            <img class="card-img-top" src="/api/event/geteventimage/?eventId={{events[3].id}}" alt="Esemény kép">
-            <div class="card-body">
-              <h4 class="card-title">{{events[3].name}}</h4>
-              <!-- <p class="card-text">{{events[3].description}}</p> -->
+    <h3>Kiemelt helyszíneink</h3>
+    <ngb-carousel *ngIf="services; else serviceLoadingBlock">
+        <ng-template ngbSlide>
+            <div class="row">
+                <div class="col-md-4" [routerLink]="[ '/event-list', services[0].id ]">
+                    <div class="card grow">
+                        <img class="card-img-top" src="/api/image/{{services[0].image.id}}" alt="Esemény kép">
+                        <div class="card-body">
+                            <h4 class="card-title">{{services[0].name}}</h4>
+                            <!-- <p class="card-text">{{events[0].description}}</p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" [routerLink]="[ '/event-list', services[1].id ]">
+                    <div class="card grow">
+                        <img class="card-img-top" src="/api/image/{{services[1].image.id}}" alt="Esemény kép">
+                        <div class="card-body">
+                            <h4 class="card-title">{{services[1].name}}</h4>
+                            <!-- <p class="card-text">{{events[1].description}}</p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card grow" [routerLink]="[ '/event-list', services[2].id ]">
+                        <img class="card-img-top" src="/api/image/{{services[2].image.id}}" alt="Esemény kép">
+                        <div class="card-body">
+                            <h4 class="card-title">{{services[2].name}}</h4>
+                            <!-- <p class="card-text">{{events[2].description}}</p> -->
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card grow">
-            <img class="card-img-top" src="/api/event/geteventimage/?eventId={{events[4].id}}" alt="Esemény kép">
-            <div class="card-body">
-              <h4 class="card-title">{{events[4].name}}</h4>
-              <!-- <p class="card-text">{{events[4].description}}</p> -->
+        </ng-template>
+        <ng-template ngbSlide>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card grow" [routerLink]="[ '/event-list', services[3].id ]">
+                        <img class="card-img-top" src="/api/image/{{services[3].image.id}}" alt="Esemény kép">
+                        <div class="card-body">
+                            <h4 class="card-title">{{services[3].name}}</h4>
+                            <!-- <p class="card-text">{{events[3].description}}</p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card grow" [routerLink]="[ '/event-list', services[4].id ]">
+                        <img class="card-img-top" src="/api/image/{{services[4].image.id}}" alt="Esemény kép">
+                        <div class="card-body">
+                            <h4 class="card-title">{{services[4].name}}</h4>
+                            <!-- <p class="card-text">{{events[4].description}}</p> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <a [routerLink]='["/service-list"]'>
+                        <div class="card grow">
+                            <img class="card-img-top" src="../../assets/search-icon.png" alt="Esemény kép">
+                            <div class="card-body">
+                                <h4 class="card-title">További helyszíneink</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <a [routerLink]='["/event-list"]'>
-            <div class="card grow">
-              <img class="card-img-top" src="../../assets/search-icon.png" alt="Esemény kép">
-              <div class="card-body">
-                <h4 class="card-title">További eseményeink</h4>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
+        </ng-template>
+    </ngb-carousel>
+    <ng-template #serviceLoadingBlock>
+        <h6>Helyszínek letöltése folyamatban...</h6>
     </ng-template>
-  </ngb-carousel>
-  <ng-template #eventsLoadingBlock>
-    <h6>Események letöltése folyamatban...</h6>
-  </ng-template>
-  <h3>Kiemelt helyszíneink</h3>
-  <ngb-carousel *ngIf="services; else serviceLoadingBlock">
-    <ng-template ngbSlide>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card grow">
-            <img class="card-img-top" src="/api/image/{{services[0].image.id}}" alt="Esemény kép">
-            <div class="card-body">
-              <h4 class="card-title">{{services[0].name}}</h4>
-              <!-- <p class="card-text">{{events[0].description}}</p> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card grow">
-            <img class="card-img-top" src="/api/image/{{services[1].image.id}}" alt="Esemény kép">
-            <div class="card-body">
-              <h4 class="card-title">{{services[1].name}}</h4>
-              <!-- <p class="card-text">{{events[1].description}}</p> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card grow">
-            <img class="card-img-top" src="/api/image/{{services[2].image.id}}" alt="Esemény kép">
-            <div class="card-body">
-              <h4 class="card-title">{{services[2].name}}</h4>
-              <!-- <p class="card-text">{{events[2].description}}</p> -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-    <ng-template ngbSlide>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card grow">
-            <img class="card-img-top" src="/api/image/{{services[3].image.id}}" alt="Esemény kép">
-            <div class="card-body">
-              <h4 class="card-title">{{services[3].name}}</h4>
-              <!-- <p class="card-text">{{events[3].description}}</p> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card grow">
-            <img class="card-img-top" src="/api/image/{{services[4].image.id}}" alt="Esemény kép">
-            <div class="card-body">
-              <h4 class="card-title">{{services[4].name}}</h4>
-              <!-- <p class="card-text">{{events[4].description}}</p> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <a [routerLink]='["/service-list"]'>
-            <div class="card grow">
-              <img class="card-img-top" src="../../assets/search-icon.png" alt="Esemény kép">
-              <div class="card-body">
-                <h4 class="card-title">További helyszíneink</h4>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </ng-template>
-  </ngb-carousel>
-  <ng-template #serviceLoadingBlock>
-    <h6>Helyszínek letöltése folyamatban...</h6>
-  </ng-template>
 </div>

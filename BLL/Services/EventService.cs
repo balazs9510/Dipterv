@@ -36,6 +36,12 @@ namespace BLL.Services
                 q = q.Where(x => x.EvenSchedules.Any(y => y.From >= searchParameter.BeginDate));
             return await q.ToListAsync();
         }
+        public async Task<Event> GetEventAsync(Guid id)
+        {
+            return await _ctx.Events
+                .Include(x => x.Image)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
         public async Task<List<Event>> GetTopAsync(int take)
         {
             return await _ctx.Events.Include(x => x.Image).Take(take).ToListAsync();

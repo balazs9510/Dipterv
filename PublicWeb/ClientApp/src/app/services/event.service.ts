@@ -20,4 +20,7 @@ export class EventService {
   getTopFive(): Observable<JsonResult<Event[]>> {
     return this.httpClient.get<JsonResult<Event[]>>(this.url + `api/Event/GetTopFive`);
   }
+  getEvent(id: string): Observable<JsonResult<Event>> {
+    return this.httpClient.get<JsonResult<Event>>(this.url + `api/Event/${id}`);
+  }
 }

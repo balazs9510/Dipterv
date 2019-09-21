@@ -15,7 +15,6 @@ namespace DAL.Entities
         [Required]
         public Guid EvenScheduleId { get; set; }
         public EvenSchedule Schedule { get; set; }
-        public Guid ClientId { get; set; }
         public ICollection<PendingBookingPosition> PendingBookingPositions { get; set; }
         [NotMapped]
         public bool Expired

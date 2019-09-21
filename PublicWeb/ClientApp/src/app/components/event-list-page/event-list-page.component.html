@@ -1,45 +1,35 @@
 <div class="container mt-3" *ngIf="!selectedEvent">
-  <h2>
-    Események
-    <span *ngIf="serviceName">> {{serviceName}}</span>
-  </h2>
-  <form #searchForm="ngForm" (ngSubmit)="onSearch()">
-    <div class="form-row">
-      <div class=" form-group col-lg-3">
-        <label for="name">Szolgáltatás neve</label>
-        <input type="text" name="name" id="name" class="form-control" [(ngModel)]="searchParameter.name" />
-      </div>
-      <div class=" form-group col-lg-3">
-        <label for="name">Kezdési dátum</label>
-        <input type="text" ngbDatepicker #d="ngbDatepicker"name ="begindate" class="form-control" (click)="d.toggle()"
-               placeholder="yyyy-mm-dd"
-                [(ngModel)]="date" />
-      </div>
-    </div>
-    <button type="submit" class="btn btn-success">Keresés</button>
-  </form>
-  <div class="row text-center mt-5">
-    <ng-container *ngIf="events.length > 0; then gridDisplay; else noitem">
-    </ng-container>
-    <ng-template #gridDisplay>
-      <div class="col-lg-3  mb-3 grow" *ngFor="let myevent of events | paginate: { itemsPerPage: 8, currentPage: page }"
-           (click)="onEventSelect(myevent)">
-        <img class="img-responsive" src="/api/event/geteventimage/?eventId={{myevent.id}}" alt="">
-        <div class="centered">
-          <label class="mb-0">{{myevent.name}}</label>
+    <h2>
+        Események
+    </h2>
+    <form #searchForm="ngForm" (ngSubmit)="onSearch()">
+        <div class="form-row">
+            <div class=" form-group col-lg-3">
+                <label for="name">Esemény neve</label>
+                <input type="text" name="name" id="name" class="form-control" [(ngModel)]="searchParameter.name" />
+            </div>
+            <div class=" form-group col-lg-3">
+                <label for="name">Kezdési dátum</label>
+                <input type="text" ngbDatepicker #d="ngbDatepicker" name="date" class="form-control" (click)="d.toggle()" placeholder="yyyy-mm-dd" [(ngModel)]="date" />
+            </div>
         </div>
-      </div>
-    </ng-template>
-   
-    <ng-template #noitem>
-      <h3>Sajnos egy elem se található.</h3>
-    </ng-template>
-  </div>
-  <div class="row justify-content-end" *ngIf="events.length > 0">
-    <div class="col-lg-6 justify-content-end">
-      <pagination-controls (pageChange)="page = $event" previousLabel="Előző" nextLabel="Következő" class="pager">
-      </pagination-controls>
+        <button type="submit" class="btn btn-success">Keresés</button>
+    </form>
+    <div class="row text-center mt-5" *ngIf="events.length > 0; else noItemBlock">
+        <div class="col-lg-3  mb-3" *ngFor="let myevent of events | paginate: { itemsPerPage: 8, currentPage: page }">
+            <div class="card grow" [routerLink]="[ '/event', myevent.id ]">
+                <img class="card-img-top" src="/api/image/{{myevent.image.id}}" alt="Esemény kép">
+                <div class="card-body">
+                    <h4 class="card-title">{{myevent.name}}</h4>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+    <div *ngIf="events.length > 0">
+        <pagination-controls (pageChange)="page = $event" previousLabel="Előző" nextLabel="Következő" class="pager">
+        </pagination-controls>
+    </div>
+    <ng-template #noItemBlock>
+        <h4>Nincs a keresésnek megfelelő elem.</h4>
+    </ng-template>
 </div>
-<app-event *ngIf="selectedEvent" [event]="selectedEvent" (load)="onLoading($event)" [serviceId]="searchParameter.ServiceId"></app-event>

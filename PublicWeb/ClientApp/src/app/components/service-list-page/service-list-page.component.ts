@@ -12,7 +12,6 @@ import { ServiceType } from '../../models/service-type';
   styleUrls: ['./service-list-page.component.css']
 })
 export class ServiceListPageComponent implements OnInit {
-
   services: Service[];
   page = 1;
   serviceSearchParameter: ServiceSearchParamter;

@@ -9,7 +9,7 @@ namespace PublicWeb.DTOs
     public class CreateBookingDTO
     {
         [Required]
-        public Guid ClientId { get; set; }
+        public Guid PendingBookingId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

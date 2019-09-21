@@ -1,9 +1,18 @@
 img {
-  height: 200px;
-  width: auto;
+    object-fit: scale-down;
+    max-height: 215px;
 }
 
-button.calendar, button.calendar:active {
+.card {
+    height: 300px
+}
+
+.card-text {
+    font-size: 14px;
+}
+
+
+/* button.calendar, button.calendar:active {
   width: 2.75rem;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCS…nlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=) !important;
   background-repeat: no-repeat;
@@ -14,4 +23,4 @@ button.calendar, button.calendar:active {
 input.calendar-input {
   background: url('../../../assets/system-icon.png') no-repeat scroll 15px 15px;
   padding-left: 30px;
-}
+} */

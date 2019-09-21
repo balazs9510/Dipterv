@@ -19,15 +19,9 @@ namespace PublicWeb.Controllers
     public class EventController : ControllerBase
     {
         private readonly IEventService _service;
-        private readonly IMapper _mapper;
         public EventController(IEventService service)
         {
             _service = service;
-            _mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Event, EventDTO>();
-                cfg.CreateMap<Image, ImageDTO>();
-            }).CreateMapper();
         }
         [HttpPost]
         public async Task<IActionResult> GetEvents(EventSearchParameter searchParameter)
@@ -35,7 +29,7 @@ namespace PublicWeb.Controllers
             var result = new JsonResult<List<EventDTO>>();
             try
             {
-                result.Result = (await _service.GetEventsAsync(searchParameter)).Select(x => _mapper.Map<Event, EventDTO>(x)).ToList();
+                result.Result = (await _service.GetEventsAsync(searchParameter)).Select(x => Mapper.Map<Event, EventDTO>(x)).ToList();
                 result.Success = true;
             }
             catch
@@ -44,6 +38,24 @@ namespace PublicWeb.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetEvent(Guid id)
+        {
+            var result = new JsonResult<EventDTO>();
+            try
+            {
+                var xevent = await _service.GetEventAsync(id);
+                result.Result = Mapper.Map<Event, EventDTO>(xevent);
+                result.Success = true;
+            }
+            catch
+            {
+                result.Message = "Váratlan hiba az esemény betöltése során.";
+            }
+            return Ok(result);
+        }
+
         [HttpGet]
         [Route("[action]")]
         public IActionResult GetEventImage(Guid eventId)
@@ -67,7 +79,7 @@ namespace PublicWeb.Controllers
             var result = new JsonResult<List<EventDTO>>();
             try
             {
-                result.Result = (await _service.GetTopAsync(5)).Select(x => _mapper.Map<Event, EventDTO>(x)).ToList();
+                result.Result = (await _service.GetTopAsync(5)).Select(x => Mapper.Map<Event, EventDTO>(x)).ToList();
                 result.Success = true;
             }
             catch

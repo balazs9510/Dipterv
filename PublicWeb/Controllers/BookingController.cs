@@ -58,7 +58,6 @@ namespace PublicWeb.Controllers
             {
                 var entity = pendingBooking.ToEntity();
                 entity.Id = Guid.NewGuid();
-                entity.ClientId = Guid.NewGuid();
                 entity.Date = DateTime.Now;
                 entity.ExpirationDate = DateTime.Now.AddMinutes(2);
                 entity.PendingBookingPositions = pendingBooking.Positions.Select(x => new PendingBookingPosition
@@ -69,7 +68,7 @@ namespace PublicWeb.Controllers
                 entity = await _service.CreatePendingBookingAsync(entity);
                 await _hubContext.Clients.All.RecieveNewPendingBooking(_mapper.Map<PendingBooking, PendingBookingDTO>(entity));
                 result.Success = true;
-                result.Result = entity.ClientId;
+                result.Result = entity.Id;
             }
             catch (BookingException)
             {
@@ -89,7 +88,7 @@ namespace PublicWeb.Controllers
             try
             {
                 ShortId.SetCharacters(CHARACTERS);
-                var pendingBooking = await _service.GetPendingBookingByClientIdAsync(booking.ClientId);
+                var pendingBooking = await _service.GetPendingBookingByClientIdAsync(booking.PendingBookingId);
                 var entity = new Booking
                 {
                     Id = ShortId.Generate(8).ToUpper(),

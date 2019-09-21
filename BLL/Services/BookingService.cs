@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using BLL.Exceptions;
 using DAL;
 using DAL.Entities;
@@ -24,18 +25,23 @@ namespace BLL.Services
 
         public async Task<Booking> CreateBookingAsync(Booking booking)
         {
-            // TODO pendingekre is
-            foreach (var position in booking.BookingPositions)
+            using (var transaction = _context.Database.BeginTransaction())
+            //new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel. ReadCommitted}))
             {
-               if(_context.BookingPositions
-                    .Include(x => x.Booking)
-                    .Any(x => x.Booking.ScheduleId == booking.ScheduleId
-                            && x.ServicePlacePositionId == position.ServicePlacePositionId))
-                    throw new BookingException("Already extists booking for that place.");
+                foreach (var position in booking.BookingPositions)
+                {
+                    if (_context.BookingPositions
+                         .Include(x => x.Booking)
+                         .Any(x => x.Booking.ScheduleId == booking.ScheduleId
+                                 && x.ServicePlacePositionId == position.ServicePlacePositionId))
+                        throw new BookingException("Already extists booking for that place.");
+
+                }
+                _context.BookingPositions.AddRange(booking.BookingPositions);
+                _context.Bookings.Add(booking);
+                await _context.SaveChangesAsync();
+                transaction.Commit();
             }
-            _context.BookingPositions.AddRange(booking.BookingPositions);
-            _context.Bookings.Add(booking);
-            await _context.SaveChangesAsync();
             return await _context.Bookings.Include(x => x.BookingPositions).ThenInclude(x => x.ServicePlacePosition).FirstOrDefaultAsync(x => x.Id == booking.Id);
         }
 
@@ -46,18 +52,22 @@ namespace BLL.Services
 
         public async Task<PendingBooking> CreatePendingBookingAsync(PendingBooking pendingBooking)
         {
-            // TODO foglalásra is
-            foreach (var position in pendingBooking.PendingBookingPositions)
+
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                if (_context.PendingBookingPositions.Include(x => x.PendingBooking)
-                    .Any(x => x.PendingBooking.EvenScheduleId == pendingBooking.EvenScheduleId 
-                         && x.PendingBooking.ExpirationDate > DateTime.Now
-                         && x.ServicePlacePositionId == position.ServicePlacePositionId))
-                    throw new BookingException("Already extists booking for that place.");
+                foreach (var position in pendingBooking.PendingBookingPositions)
+                {
+                    if (_context.PendingBookingPositions.Include(x => x.PendingBooking)
+                        .Any(x => x.PendingBooking.EvenScheduleId == pendingBooking.EvenScheduleId
+                             && x.PendingBooking.ExpirationDate > DateTime.Now
+                             && x.ServicePlacePositionId == position.ServicePlacePositionId))
+                        throw new BookingException("Already extists booking for that place.");
+                }
+                _context.PendingBookingPositions.AddRange(pendingBooking.PendingBookingPositions);
+                _context.PendingBookings.Add(pendingBooking);
+                await _context.SaveChangesAsync();
+                transaction.Commit();
             }
-            _context.PendingBookingPositions.AddRange(pendingBooking.PendingBookingPositions);
-            _context.PendingBookings.Add(pendingBooking);
-            await _context.SaveChangesAsync();
             return await _context.PendingBookings.Include(x => x.PendingBookingPositions).ThenInclude(x => x.ServicePlacePosition).FirstOrDefaultAsync(x => x.Id == pendingBooking.Id);
         }
 
@@ -66,7 +76,7 @@ namespace BLL.Services
             return await _context.PendingBookings
                 .Include(x => x.PendingBookingPositions)
                     .ThenInclude(y => y.ServicePlacePosition)
-                .FirstOrDefaultAsync(x => x.ClientId == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

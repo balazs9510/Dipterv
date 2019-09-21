@@ -3,12 +3,9 @@ import { Event as MyEvent } from '../../models/event';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
 import { EventSearchParameter } from '../../models/search-paramters/event-search-paramter';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { FormControl } from '@angular/forms';
-import { Overlay } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
-import { Image } from '../../models/image';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-date';
+import { HtmlHelperService } from '../../services/html-helper.service';
+
 declare var $: any;
 @Component({
   selector: 'app-event-list',
@@ -16,27 +13,27 @@ declare var $: any;
   styleUrls: ['./event-list-page.component.css']
 })
 export class EventListPageComponent implements OnInit {
-  loading = false;
   events: MyEvent[];
   date: NgbDate;
-  selectedEvent: MyEvent;
   searchParameter: EventSearchParameter = {
     ServiceId: '',
     BeginDate: null,
     Name: ''
   };
+  serviceId = '';
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private eventService: EventService) {
+    private eventService: EventService,
+    private htmlHelper: HtmlHelperService) {
   }
 
   ngOnInit() {
     this.searchParameter.ServiceId = this.route.snapshot.paramMap.get('id');
+    this.serviceId = this.searchParameter.ServiceId;
     this.onSearch();
   }
   onSearch() {
-    this.loading = true;
     if (this.date != null) {
       this.searchParameter.BeginDate = new Date(this.date.year, this.date.month, this.date.day);
     } else {
@@ -44,33 +41,11 @@ export class EventListPageComponent implements OnInit {
     }
     this.eventService.getEvents(this.searchParameter).subscribe(result => {
       if (!result.success) {
-        // TODO
+        this.htmlHelper.showErrorMessage(result.message);
       }
       this.events = result.result;
-      for (let i = 0; i < this.events.length; i++) {
-        const item = this.events[i];
-        // this.createImageFromBlob(item.image);
-      }
-      console.log(result.result);
-      console.log(this.events);
-      this.loading = false;
     }, error => {
-      // TODO
-      console.error(error);
+      this.htmlHelper.showErrorMessage('Hiba az események betöltése során.');
     });
-  }
-  // createImageFromBlob(image: Image) {
-  //   let reader = new FileReader();
-  //   reader.addEventListener("load", () => {
-  //     image.display = reader.result;
-  //   }, false);
-  //   if (image) {
-  //     let blob = new Blob([image.content], { type: `image/jpeg` });
-  //     reader.readAsDataURL(blob);
-  //   }
-  // }
-  onEventSelect(selected: MyEvent) {
-    console.log(selected);
-    this.selectedEvent = selected;
   }
 }

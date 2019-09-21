@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Entities;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PublicWeb.DTOs;
 
 namespace PublicWeb
 {
@@ -14,6 +16,7 @@ namespace PublicWeb
     {
         public static void Main(string[] args)
         {
+            InitializeMapper();
             CreateWebHostBuilder(args).Build().Run();
         }
 
@@ -26,5 +29,14 @@ namespace PublicWeb
                     logging.AddDebug();
                 })
                 .UseStartup<Startup>();
+        private static void InitializeMapper()
+        {
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Event, EventDTO>();
+                cfg.CreateMap<Image, ImageDTO>();
+                cfg.CreateMap<EventScheduleDTO, EvenSchedule>();
+            });
+        }
     }
 }

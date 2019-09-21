@@ -26,13 +26,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EventComponent } from './components/event/event.component';
 import { MatSelectModule } from '@angular/material/select';
 import { TestComponent } from './components/test/test.component';
 import { HtmlHelperService } from './services/html-helper.service';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderService } from './services/loader.service';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { EventPageComponent } from './components/event-page/event-page.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,7 @@ import { LoaderInterceptor } from './interceptors/loader.interceptor';
     BookingComponent,
     ServiceListPageComponent,
     EventListPageComponent,
-    EventComponent,
+    EventPageComponent,
     TestComponent,
     LoaderComponent
   ],
@@ -74,7 +74,9 @@ import { LoaderInterceptor } from './interceptors/loader.interceptor';
       { path: 'event-list/:id', component: EventListPageComponent, pathMatch: 'full' },
       { path: 'service-list', component: ServiceListPageComponent },
       { path: 'service/:name/:id', component: ServiceListPageComponent, pathMatch: 'full' },
-      { path: 'booking/:id', component: BookingComponent }
+      { path: 'booking/:id', component: BookingComponent },
+      { path: 'event/:id/:serviceId', component: EventPageComponent },
+      { path: 'event/:id', component: EventPageComponent }
     ])
   ],
   exports: [
