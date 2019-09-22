@@ -13,7 +13,7 @@ export class BookingService {
     this.url = baseUrl;
     this.httpClient = http;
   }
-  createPendingBooking(pBooking: PendingBooking): Observable<JsonResult<any>> {
+  createPendingBooking(pBooking: PendingBooking): Observable<JsonResult<PendingBooking>> {
     return this.httpClient.post<JsonResult<any>>(this.url + `api/Booking/createPendingBooking`, pBooking);
   }
   createBooking(booking: CreateBooking): Observable<JsonResult<any>>{

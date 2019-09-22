@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, AfterContentInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { EventSchedule } from '../../models/event-schedule';
@@ -19,13 +19,15 @@ declare var $: any;
   templateUrl: './event-schedule.component.html',
   styleUrls: ['./event-schedule.component.css']
 })
-export class EventScheduleComponent implements AfterViewInit, OnInit {
+export class EventScheduleComponent implements AfterViewInit, OnInit, OnDestroy {
+
   schedule: EventSchedule;
   selectedPositions: ServicePlacePosition[];
   baseUrl: string;
   servicePlaceSvg: SafeHtml;
   positionName: string;
   errorMessage: string;
+  intervalId: NodeJS.Timeout;
   constructor(
     private sanitizer: DomSanitizer,
     private bookingService: BookingService,
@@ -45,12 +47,20 @@ export class EventScheduleComponent implements AfterViewInit, OnInit {
     connection.start().catch(err => this.htmlHelper.showErrorMessage('Hiba a kapcsolat felépítése során.<br>Kérem próbálja újra!'));
     connection.on('RecieveNewPendingBooking', (pendingBooking: PendingBooking) => {
       this.schedule.pendingBookings.push(pendingBooking);
-      $(`#svg-holder`).html(this.colorSVGElements($(`#svg-holder`)));
+      const colored = this.colorSVGElements($(`#svg-holder`));
+      $(`#svg-holder`).html($(colored)[0].innerHTML);
     });
     connection.on('RecieveNewBooking', (booking: Booking) => {
       this.schedule.bookings.push(booking);
       $(`#svg-holder`).html(this.colorSVGElements($(`#svg-holder`)));
     });
+    let self = this;
+    this.intervalId = setInterval(function () {
+      self.refreshPendingBooking(self);
+    }, 1000);
+  }
+  ngOnDestroy(): void {
+    clearInterval(this.intervalId);
   }
   ngAfterViewInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -95,7 +105,7 @@ export class EventScheduleComponent implements AfterViewInit, OnInit {
     const pBooking = { eventScheduleId: this.schedule.id, positions: this.selectedPositions } as PendingBooking;
     this.bookingService.createPendingBooking(pBooking).subscribe(res => {
       if (res.success) {
-        this.router.navigate(['/booking', res.result]);
+        this.router.navigateByUrl('/booking', { state: res.result });
       } else {
         this.htmlHelper.showErrorMessage(res.message);
       }
@@ -124,7 +134,7 @@ export class EventScheduleComponent implements AfterViewInit, OnInit {
   }
   private colorSVGElements(element) {
     const el = $(element).clone();
-    if(parseInt(el.attr('height'))){
+    if (parseInt(el.attr('height'))) {
       let oldWidth = el.attr('width');
       let oldHeight = parseInt(el.attr('height'));
       el.attr('width', '100%');
@@ -132,7 +142,7 @@ export class EventScheduleComponent implements AfterViewInit, OnInit {
       el.attr('preserveAspectRatio', 'xMidYMid meet');
       el.attr('viewBox', `0 0 ${oldWidth} ${oldHeight + 20}`);
     }
-    
+
     $(el).find('.bookable').removeClass('active');
     $(el).find('.booked').removeClass('booked');
     $(el).find('.pending').removeClass('pending');
@@ -165,5 +175,20 @@ export class EventScheduleComponent implements AfterViewInit, OnInit {
     }
     this.createSelection(position.id);
     this.positionName = null;
+  }
+  refreshPendingBooking(self) {
+    const el = $(`#svg-holder`).clone();
+    const now = new Date();
+    if (self.schedule && self.schedule.pendingBookings) {
+      self.schedule.pendingBookings.forEach(pb => {
+        if (new Date(pb.expirationDate) <= now) {
+          pb.positions.forEach(pos => {
+            $(el).find(`[data-position-id="${pos.id}"]`).removeClass('pending');
+          });
+        }
+      });
+      $(`#svg-holder`).html($(el)[0].innerHTML);
+    }
+    self.schedule.pendingBookings = self.schedule.pendingBookings.filter(x => new Date(x.expirationDate) > now);
   }
 }

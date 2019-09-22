@@ -53,7 +53,7 @@ namespace PublicWeb.Controllers
         [Route("[action]")]
         public virtual async Task<IActionResult> CreatePendingBooking([FromBody]PendingBookingDTO pendingBooking)
         {
-            var result = new JsonResult<Guid>();
+            var result = new JsonResult<PendingBookingDTO>();
             try
             {
                 var entity = pendingBooking.ToEntity();
@@ -66,9 +66,10 @@ namespace PublicWeb.Controllers
                     ServicePlacePositionId = x.Id
                 }).ToList();
                 entity = await _service.CreatePendingBookingAsync(entity);
-                await _hubContext.Clients.All.RecieveNewPendingBooking(_mapper.Map<PendingBooking, PendingBookingDTO>(entity));
+                var dto = _mapper.Map<PendingBooking, PendingBookingDTO>(entity);
+                await _hubContext.Clients.All.RecieveNewPendingBooking(dto);
                 result.Success = true;
-                result.Result = entity.Id;
+                result.Result = dto;
             }
             catch (BookingException)
             {
@@ -84,14 +85,14 @@ namespace PublicWeb.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CreateBooking(CreateBookingDTO booking)
         {
-            var result = new JsonResultBase();
+            var result = new JsonResult<string>();
             try
             {
                 ShortId.SetCharacters(CHARACTERS);
                 var pendingBooking = await _service.GetPendingBookingByClientIdAsync(booking.PendingBookingId);
                 var entity = new Booking
                 {
-                    Id = ShortId.Generate(8).ToUpper(),
+                    Id = ShortId.Generate(true, false, 8).ToUpper(),
                     Date = DateTime.Now,
                     Email = booking.Email,
                     Name = booking.Name,
@@ -109,6 +110,7 @@ namespace PublicWeb.Controllers
                 entity = await _service.CreateBookingAsync(entity);
                 await _hubContext.Clients.All.RecieveNewBooking(_mapper.Map<Booking, BookingDTO>(entity));
                 result.Success = true;
+                result.Result = entity.Id;
                 SmtpMail oMail = new SmtpMail("TryIt");
                 SmtpClient oSmtp = new SmtpClient();
                 oMail.From = "95berta.balazs@gmail.com";

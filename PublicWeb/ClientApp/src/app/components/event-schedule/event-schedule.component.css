@@ -10,23 +10,40 @@ td.booking {
     background-color: red;
 }
 
-td:not(.booking){
+td:not(.booking) {
     cursor: pointer;
 }
 
 td:not(.booking) .position:hover {
     color: greenyellow;
 }
+
 td.active .position:hover {
     color: purple;
 }
 
-#svg-holder /deep/ .active{
-  fill: green !important;
+#svg-holder /deep/ .active {
+    fill: green !important;
 }
-#svg-holder /deep/ .pending{
-  fill: yellow !important;
+
+#svg-holder /deep/ .pending {
+    fill: yellow !important;
 }
-#svg-holder /deep/ .booked{
-  fill: red !important;
+
+#svg-holder /deep/ .booked {
+    fill: red !important;
+}
+
+#svg-holder {
+    overflow: hidden;
+    height: auto;
+    width: 100%;
+    border: 1px solid grey;
+    border-radius: 5px;
+    box-shadow: 2px 7px 43px -14px rgba(0, 0, 0, 0.71);
+}
+
+text {
+    pointer-events: none;
+    cursor: default;
 }

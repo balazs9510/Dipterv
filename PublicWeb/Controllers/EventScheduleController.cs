@@ -49,7 +49,7 @@ namespace PublicWeb.Controllers
                 if (eventSchedule == null)
                     return BadRequest();
                 var esDto = _mapper.Map<EvenSchedule, EventScheduleDTO>(eventSchedule);
-                foreach (var pBooking in esDto.PendingBookings)
+                foreach (var pBooking in esDto.PendingBookings.Where(x => x.ExpirationDate > DateTime.Now))
                 {
                     pBooking.Positions = eventSchedule
                         .PendingBookings
@@ -65,6 +65,7 @@ namespace PublicWeb.Controllers
                         .BookingPositions
                         .Select(x => _mapper.Map<ServicePlacePosition, ServicePlacePositionDTO>(x.ServicePlacePosition)).ToList();
                 }
+                esDto.PendingBookings = esDto.PendingBookings.Where(x => x.ExpirationDate > DateTime.Now).ToList();
                 esDto.ServicePlace.Layout = esDto.ServicePlace.Layout.OrderBy(x => x.Name).ToList();
                 var image = XDocument.Load(new MemoryStream(eventSchedule.ServicePlace.LayoutImage.Content));
                 esDto.ServicePlace.LayoutImage = image.Root.ToString();

@@ -74,7 +74,7 @@ import { EventPageComponent } from './components/event-page/event-page.component
       { path: 'event-list/:id', component: EventListPageComponent, pathMatch: 'full' },
       { path: 'service-list', component: ServiceListPageComponent },
       { path: 'service/:name/:id', component: ServiceListPageComponent, pathMatch: 'full' },
-      { path: 'booking/:id', component: BookingComponent },
+      { path: 'booking', component: BookingComponent },
       { path: 'event/:id/:serviceId', component: EventPageComponent },
       { path: 'event/:id', component: EventPageComponent }
     ])
