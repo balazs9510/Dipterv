@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PublicWeb", "PublicWeb\Publ
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{05CDBD17-46C7-4F41-96A4-32F85E69D3A6}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\Desktop\School\Dipterv\Diplomaterv.docx = ..\..\..\..\Desktop\School\Dipterv\Diplomaterv.docx
-		..\..\..\..\Desktop\School\Dipterv\Diplomaterv.pdf = ..\..\..\..\Desktop\School\Dipterv\Diplomaterv.pdf
+		..\Desktop\School\Dipterv\Diplomaterv.docx = ..\Desktop\School\Dipterv\Diplomaterv.docx
+		..\Desktop\School\Dipterv\Diplomaterv.pdf = ..\Desktop\School\Dipterv\Diplomaterv.pdf
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{F85C724F-D11B-4D24-9FBF-E156698088E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{3D86F72D-00A7-4B68-9A2B-D43C2E7EEDA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D86F72D-00A7-4B68-9A2B-D43C2E7EEDA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D86F72D-00A7-4B68-9A2B-D43C2E7EEDA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F85C724F-D11B-4D24-9FBF-E156698088E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F85C724F-D11B-4D24-9FBF-E156698088E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F85C724F-D11B-4D24-9FBF-E156698088E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F85C724F-D11B-4D24-9FBF-E156698088E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
