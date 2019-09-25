@@ -28,6 +28,8 @@ namespace Test.Helpers
                     context.Users.AddRange(seedService.Users.Select(x => x.Value));
                     context.Images.AddRange(seedService.Images.Select(x => x.Value));
                     context.Events.AddRange(seedService.Events.Select(x => x.Value));
+                    context.ServiceTypes.AddRange(seedService.ServiceTypes.Select(x => x.Value));
+                    context.Services.AddRange(seedService.Services.Select(x => x.Value));
                     context.SaveChanges();
                 }
             }

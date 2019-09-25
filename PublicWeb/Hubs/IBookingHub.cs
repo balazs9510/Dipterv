@@ -1,4 +1,5 @@
-﻿using PublicWeb.DTOs;
+﻿using Microsoft.AspNetCore.SignalR;
+using PublicWeb.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

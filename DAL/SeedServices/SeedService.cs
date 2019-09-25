@@ -156,6 +156,12 @@ namespace DAL.SeedServices
                 Extension = "svg",
                 Name = "t10.svg"
             },
+            new Image
+            {
+                Id = Guid.Parse("2ECC93E0-08E2-4B00-8197-3FEDE4B3AA4D"),
+                Extension = "svg",
+                Name = "test.png"
+            },
         }.ToDictionary(x => x.Name);
 
         public Dictionary<string, ServiceType> ServiceTypes { get; }

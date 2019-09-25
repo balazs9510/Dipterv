@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Test.Helpers;
 using Xunit;
 
-namespace Test.BLL
+namespace Test.Services
 {
     public class EventServiceTest
     {
