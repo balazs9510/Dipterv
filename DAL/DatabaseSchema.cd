@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DAL.Entities.Booking">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAABAAAAAAAQAAEAAAAABAAAAIAAAIAA=</HashCode>
+      <FileName>Entities\Booking.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Schedule" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DAL.Entities.BookingPosition">
+    <Position X="9" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAABAAAAAAgAAAAgAAAA=</HashCode>
+      <FileName>Entities\BookingPosition.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ServicePlacePosition" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DAL.Entities.EventSchedule">
+    <Position X="6.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgADACAgAAAgAAAAAAAAAAgAAgAIQAAAQAAABAAAAAA=</HashCode>
+      <FileName>Entities\EvenSchedule.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Service" />
+      <Property Name="Event" />
+      <Property Name="ServicePlace" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DAL.Entities.Event">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAACAAgAAAAAAAAAAwAAAAAABEAAAAAAAAAACA=</HashCode>
+      <FileName>Entities\Event.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Entities.Image">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAAAAAAAAAAAAQAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Image.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Entities.PendingBooking">
+    <Position X="9" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAECAAAAAAAAAAAIAAAAAAAAQEAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\PendingBooking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Entities.PendingBookingPosition">
+    <Position X="9" Y="7.5" Width="2" />
+    <AssociationLine Name="PendingBooking" Type="DAL.Entities.PendingBooking">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.418" Y="0.082" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQgAAAAgAAAA=</HashCode>
+      <FileName>Entities\PendingBookingPosition.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PendingBooking" />
+      <Property Name="ServicePlacePosition" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DAL.Entities.Service">
+    <Position X="1.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAACAAgAAAIAAAAAAwAAAAAABEgAUIAAAAAACA=</HashCode>
+      <FileName>Entities\Service.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DAL.Entities.ServiceEvent">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAgAAAAAAAAAAAAAAAAAgAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ServiceEvent.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Event" />
+      <Property Name="Service" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DAL.Entities.ServicePlace">
+    <Position X="3.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADACAACAgAAAAAAAAAAAwAAAAAQAAIAAAAAAACAAA=</HashCode>
+      <FileName>Entities\ServicePlace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Entities.ServicePlacePosition">
+    <Position X="3.75" Y="6.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAECAAAAAAAAAAAAAAAAAAQAAAAIAAAAAAAABAAAIAA=</HashCode>
+      <FileName>Entities\ServicePlacePosition.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ServicePlace" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DAL.Entities.ServiceType">
+    <Position X="1.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAACAAAAAAAAAAAAAAAAAAQAAAAAABEAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ServiceType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAL.Entities.User">
+    <Position X="1.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
