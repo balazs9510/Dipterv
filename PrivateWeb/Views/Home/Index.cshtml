@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Főoldal";
 }
 
 @*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
@@ -60,5 +60,20 @@
     Az alkalmazás használatához mindenképp bejelentkezés szükséges. <a asp-action="Login" asp-controller="Account">Ide kattintva </a> megteheti ezt.
 </p>
 <p>
-    A szolgáltatások kezelését a <a asp-action="Index" asp-controller="Services">szolgáltatások </a>fülön érheti el.
+    A szolgáltatások kezelését a <a asp-action="Index" asp-controller="Services">Szolgáltatások </a>fülön érheti el.
+</p>
+<p>
+    Az események kezelését az <a asp-action="Index" asp-controller="Events">Események </a>fülön érheti el.
+</p>
+<p>
+    A szolgáltatás helyek kezelését a <a asp-action="Index" asp-controller="ServicePlaces">Szolgáltatás helyek  </a>fülön érheti el.
+    A kép feltöltés során a következőkre kell figyelni:
+    <ul>
+        <li>Csak <b>svg</b> formátum a megengedett!</li>
+        <li>Azok a pozíciók lesznek foglalhatóak, amelyek fel vannak annotálva <b>class="bookable"</b> attribútummal.</li>
+        <li>A pozíció nevét a felanottált elem <b>data-name</b> attribútumából veszi.</li>
+    </ul>
+</p>
+<p>
+    Az eseményekhez tartozó ütemezések kezelését az <a asp-action="Index" asp-controller="EvenScheduels">Ütemezések </a>fülön érheti el.
 </p>
