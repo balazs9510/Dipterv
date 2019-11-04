@@ -1,5 +1,7 @@
 ﻿using DAL;
 using DAL.Entities;
+using DAL.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace PrivateWeb.Controllers
 {
+    [Authorize(Roles = Roles.Administrators)]
     public class BaseController : Controller
     {
         protected readonly BookingSystemDbContext _context;

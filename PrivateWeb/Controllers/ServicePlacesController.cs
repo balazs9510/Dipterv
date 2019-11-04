@@ -197,7 +197,13 @@ namespace PrivateWeb.Controllers
         private byte[] ProcessLayoutImage(Stream imageStream, Guid servicePlaceId)
         {
             var xdoc = XDocument.Load(imageStream);
-            foreach (var bookablePosition in xdoc.Descendants().Where(x => x.Attributes().Any(y => y.Name.LocalName.Equals("class") && y.Value.Contains(BOOKABLE))))
+            var bookablePositions = xdoc
+                .Descendants()
+                .Where(x => x
+                    .Attributes()
+                    .Any(y => y.Name.LocalName.Equals("class") 
+                              && y.Value.Contains(BOOKABLE)));
+            foreach (var bookablePosition in bookablePositions)
             {
                 var layoutPosition = new ServicePlacePosition
                 {

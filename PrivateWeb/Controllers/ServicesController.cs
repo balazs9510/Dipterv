@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 
 namespace PrivateWeb.Controllers
 {
-    [Authorize]
     public class ServicesController : BaseController
     {
         private readonly ILogger _logger;
@@ -135,6 +134,7 @@ namespace PrivateWeb.Controllers
 
             return View(serviceViewModel);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, ServiceViewModel serviceViewModel)
