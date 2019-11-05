@@ -10,9 +10,12 @@ using DAL.Entities;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using PrivateWeb.Resources.Controllers;
+using Microsoft.AspNetCore.Authorization;
+using DAL.Users;
 
 namespace PrivateWeb.Controllers
 {
+    [Authorize (Roles = Roles.Administrator)]
     public class EvenSchedulesController : BaseController
     {
         private readonly ILogger _logger;

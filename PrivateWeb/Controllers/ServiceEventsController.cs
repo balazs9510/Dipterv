@@ -12,9 +12,12 @@ using Microsoft.AspNetCore.Identity;
 using PrivateWeb.ViewModels;
 using PrivateWeb.Resources.Controllers;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using DAL.Users;
 
 namespace PrivateWeb.Controllers
 {
+    [Authorize(Roles = Roles.Administrator)]
     public class ServiceEventsController : BaseController
     {
         private readonly ILogger _logger;

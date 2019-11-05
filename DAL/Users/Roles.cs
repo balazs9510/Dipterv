@@ -6,6 +6,7 @@ namespace DAL.Users
 {
     public class Roles
     {
-        public const string Administrators = nameof(Administrators);
+        public const string Administrator = nameof(Administrator);
+        public const string SystemAdmin = nameof(SystemAdmin);
     }
 }

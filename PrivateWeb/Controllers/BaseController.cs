@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PrivateWeb.Controllers
 {
-    [Authorize(Roles = Roles.Administrators)]
+    [Authorize]
     public class BaseController : Controller
     {
         protected readonly BookingSystemDbContext _context;

@@ -9,15 +9,23 @@ namespace DAL.SeedServices
     public class SeedService : ISeedService
     {
         private const string ADMIN_ID = "a18be9c0-aa65-4af8-bd17-00bd9344e575";
-        private const string ROLE_ID = "59317E0A-8F55-46F9-BF5A-A81680A41964";
+        private const string SYS_ADMIN_ID = "4366b4cd-06f4-4d81-aeb5-7cd2d1795743";
+        private const string ADMIN_ROLE_ID = "59317E0A-8F55-46F9-BF5A-A81680A41964";
+        private const string SYS_ADMIN_ROLE_ID = "487bdd19-dc0a-4208-911c-6141988e6b51";
 
         public IDictionary<string, IdentityRole> Roles { get; } = new[]
         {
             new IdentityRole
             {
-                Id = ROLE_ID,
-                Name = DAL.Users.Roles.Administrators,
-                NormalizedName = DAL.Users.Roles.Administrators.ToUpper()
+                Id = ADMIN_ROLE_ID,
+                Name = DAL.Users.Roles.Administrator,
+                NormalizedName = DAL.Users.Roles.Administrator.ToUpper()
+            },
+             new IdentityRole
+            {
+                Id = SYS_ADMIN_ROLE_ID,
+                Name = DAL.Users.Roles.SystemAdmin,
+                NormalizedName = DAL.Users.Roles.SystemAdmin.ToUpper()
             }
         }.ToDictionary(a => a.Name);
 
@@ -38,6 +46,17 @@ namespace DAL.SeedServices
                         EmailConfirmed = true,
                         PasswordHash = hasher.HashPassword(null, "Admin@123"),
                         SecurityStamp = string.Empty
+                    },
+                    new User
+                    {
+                        Id = SYS_ADMIN_ID,
+                        UserName = "sysadmin",
+                        NormalizedUserName = "sysadmin",
+                        Email = "sysadmin@admin.hu",
+                        NormalizedEmail = "sysadmin@admin.hu",
+                        EmailConfirmed = true,
+                        PasswordHash = hasher.HashPassword(null, "Admin@123"),
+                        SecurityStamp = string.Empty
                     }
                 }.ToDictionary(a => a.UserName);
             }
@@ -47,8 +66,13 @@ namespace DAL.SeedServices
         {
             new IdentityUserRole<string>
             {
-                RoleId = ROLE_ID,
+                RoleId = ADMIN_ROLE_ID,
                 UserId = ADMIN_ID
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = SYS_ADMIN_ROLE_ID,
+                UserId = SYS_ADMIN_ID
             }
         };
 

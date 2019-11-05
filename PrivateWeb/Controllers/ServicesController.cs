@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DAL;
 using DAL.Entities;
+using DAL.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace PrivateWeb.Controllers
 {
+    [Authorize(Roles = Roles.Administrator)]
     public class ServicesController : BaseController
     {
         private readonly ILogger _logger;

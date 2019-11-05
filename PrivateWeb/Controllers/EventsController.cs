@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using DAL;
 using DAL.Entities;
+using DAL.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace PrivateWeb.Controllers
 {
+    [Authorize(Roles = Roles.Administrator)]
     public class EventsController : BaseController
     {
         private readonly ILogger _logger;

@@ -16,9 +16,12 @@ using System.IO;
 using System.Xml.Linq;
 using System.Xml;
 using System.Text;
+using DAL.Users;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PrivateWeb.Controllers
 {
+    [Authorize(Roles = Roles.Administrator)]
     public class ServicePlacesController : BaseController
     {
         private const string DATA_NAME = "data-name";
