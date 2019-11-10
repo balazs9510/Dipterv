@@ -4,6 +4,7 @@ import { EventService } from '../../services/event.service';
 import { Event as MyEvent } from '../../models/event';
 import { Service } from '../../models/service';
 import { ServiceService } from '../../services/service.service';
+import { HtmlHelperService } from '../../services/html-helper.service';
 @Component({
   selector: 'app-home',
   styleUrls: ['./home.component.css'],
@@ -15,27 +16,26 @@ export class HomeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private htmlHelper: HtmlHelperService,
     private eventService: EventService, 
     private serviceService: ServiceService) {
   }
   ngOnInit() {
     this.eventService.getTopFive().subscribe(result => {
       if (!result.success) {
-        //TODO
+        this.htmlHelper.showErrorMessage(result.message);
       }
       this.events = result.result;
     }, error => {
-      //TODO
-      console.error(error);
+      this.htmlHelper.showErrorMessage('Hiba az események betöltése során.');
     });
     this.serviceService.getTopFive().subscribe(result => {
       if (!result.success) {
-        //TODO
+        this.htmlHelper.showErrorMessage(result.message);
       }
       this.services = result.result;
     }, error => {
-      //TODO
-      console.error(error);
+      this.htmlHelper.showErrorMessage('Hiba a szolgáltatások betöltése során.');
     });
   }
 }

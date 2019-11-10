@@ -34,7 +34,7 @@ namespace PublicWeb
                 configuration.RootPath = "ClientApp/dist";
             });
             services.AddSignalR();
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=BookingSystem;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = Configuration.GetConnectionString("BookingSystem");
             services.AddDbContext<BookingSystemDbContext>
                 (options => options.UseSqlServer(connection))
                 .AddTransient<ISeedService, SeedService>();
@@ -76,7 +76,7 @@ namespace PublicWeb
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
                 spa.Options.SourcePath = "ClientApp";
-
+                
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
