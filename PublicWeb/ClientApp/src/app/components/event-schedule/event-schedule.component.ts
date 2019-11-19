@@ -8,7 +8,8 @@ import { MatDialog } from '@angular/material';
 import { ServicePlacePosition } from '../../models/service-place-position';
 import { BookingService } from '../../services/booking.service';
 import { PendingBooking } from '../../models/pending-booking';
-import * as signalR from '@aspnet/signalr';
+// import * as signalR from '@aspnet/signalr';
+import * as signalR from '@microsoft/signalr';
 import { Booking } from '../../models/booking';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
@@ -20,7 +21,7 @@ declare var $: any;
   styleUrls: ['./event-schedule.component.css']
 })
 export class EventScheduleComponent implements AfterViewInit, OnInit, OnDestroy {
-
+  id: string;
   schedule: EventSchedule;
   selectedPositions: ServicePlacePosition[];
   baseUrl: string;
@@ -43,14 +44,18 @@ export class EventScheduleComponent implements AfterViewInit, OnInit, OnDestroy 
   ngOnInit() {
     const connection = new signalR.HubConnectionBuilder()
       .withUrl(`${this.baseUrl}bookingHub`)
+      .withAutomaticReconnect()
       .build();
     connection.start().catch(err => this.htmlHelper.showErrorMessage('Hiba a kapcsolat felépítése során.<br>Kérem próbálja újra!'));
+    const eventScheduleId = this.id;
     connection.on('RecieveNewPendingBooking', (pendingBooking: PendingBooking) => {
+      if (pendingBooking.eventScheduleId != eventScheduleId) return;
       this.schedule.pendingBookings.push(pendingBooking);
       const colored = this.colorSVGElements($(`#svg-holder`));
       $(`#svg-holder`).html($(colored)[0].innerHTML);
     });
     connection.on('RecieveNewBooking', (booking: Booking) => {
+      if (booking.scheduleId != eventScheduleId) return;
       this.schedule.bookings.push(booking);
       $(`#svg-holder`).html(this.colorSVGElements($(`#svg-holder`)));
     });
@@ -63,8 +68,8 @@ export class EventScheduleComponent implements AfterViewInit, OnInit, OnDestroy 
     clearInterval(this.intervalId);
   }
   ngAfterViewInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.scheduleService.getSchedule(id).subscribe(result => {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.scheduleService.getSchedule(this.id).subscribe(result => {
       if (!result.success) {
         this.htmlHelper.showErrorMessage(result.message);
       }
