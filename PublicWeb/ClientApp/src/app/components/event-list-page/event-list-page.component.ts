@@ -8,7 +8,7 @@ import { HtmlHelperService } from '../../services/html-helper.service';
 
 declare var $: any;
 @Component({
-  selector: 'app-event-list',
+  selector: 'app-event-list-page',
   templateUrl: './event-list-page.component.html',
   styleUrls: ['./event-list-page.component.css']
 })
