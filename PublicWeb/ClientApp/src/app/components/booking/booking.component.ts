@@ -13,7 +13,7 @@ import { PendingBooking } from '../../models/pending-booking';
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.css']
 })
-export class BookingComponent implements OnDestroy{
+export class BookingComponent implements OnInit, OnDestroy{
 
   model: CreateBooking;
   submitted = false;

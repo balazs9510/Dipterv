@@ -28,7 +28,7 @@
                 {{dateGroup.date | date:'yyyy.MM.dd'}}
               </td>
                 <td>
-                    <a *ngFor="let schedule of dateGroup.eventSchedules" class="mr-1" [routerLink]="['/event-schedule', schedule.id]">{{schedule.from | dateGroup:"HH:mm"}}</a>
+                    <a *ngFor="let schedule of dateGroup.eventSchedules" class="mr-1" [routerLink]="['/event-schedule', schedule.id]">{{schedule.from | date:"HH:mm"}}</a>
                 </td>
             </tr>
         </tbody>

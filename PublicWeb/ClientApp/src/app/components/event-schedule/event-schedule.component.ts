@@ -15,6 +15,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { HtmlHelperService } from '../../services/html-helper.service';
 declare var $: any;
+
 @Component({
   selector: 'app-event-schedule',
   templateUrl: './event-schedule.component.html',
@@ -47,15 +48,14 @@ export class EventScheduleComponent implements AfterViewInit, OnInit, OnDestroy 
       .withAutomaticReconnect()
       .build();
     connection.start().catch(err => this.htmlHelper.showErrorMessage('Hiba a kapcsolat felépítése során.<br>Kérem próbálja újra!'));
-    const eventScheduleId = this.id;
     connection.on('RecieveNewPendingBooking', (pendingBooking: PendingBooking) => {
-      if (pendingBooking.eventScheduleId != eventScheduleId) return;
+      if (pendingBooking.evenScheduleId != this.id) return;
       this.schedule.pendingBookings.push(pendingBooking);
       const colored = this.colorSVGElements($(`#svg-holder`));
       $(`#svg-holder`).html($(colored)[0].innerHTML);
     });
     connection.on('RecieveNewBooking', (booking: Booking) => {
-      if (booking.scheduleId != eventScheduleId) return;
+      if (booking.scheduleId != this.id) return;
       this.schedule.bookings.push(booking);
       $(`#svg-holder`).html(this.colorSVGElements($(`#svg-holder`)));
     });
@@ -96,18 +96,25 @@ export class EventScheduleComponent implements AfterViewInit, OnInit, OnDestroy 
     if (this.containsPending(positionId)) {
       return;
     }
-    const containedElement = this.selectedPositions.find(x => x.id == positionId);
+    const containedElement = this.selectedPositions
+      .find(x => x.id == positionId);
     if (containedElement) {
-      this.selectedPositions = this.selectedPositions.filter(x => x.id != positionId);
-      $(`#svg-holder [data-position-id="${positionId}"]`).removeClass('active');
+      this.selectedPositions =
+        this.selectedPositions
+          .filter(x => x.id != positionId);
+      $(`#svg-holder [data-position-id="${positionId}"]`)
+        .removeClass('active');
     } else {
-      const position = this.schedule.servicePlace.layout.filter(x => x.id == positionId)[0];
+      const position =
+        this.schedule.servicePlace.layout
+          .find(x => x.id == positionId);
       this.selectedPositions.push(position);
-      $(`#svg-holder [data-position-id="${positionId}"]`).addClass('active');
+      $(`#svg-holder [data-position-id="${positionId}"]`)
+        .addClass('active');
     }
   }
   private createPendingBooking() {
-    const pBooking = { eventScheduleId: this.schedule.id, positions: this.selectedPositions } as PendingBooking;
+    const pBooking = { evenScheduleId: this.id, positions: this.selectedPositions } as PendingBooking;
     this.bookingService.createPendingBooking(pBooking).subscribe(res => {
       if (res.success) {
         this.router.navigateByUrl('/booking', { state: res.result });

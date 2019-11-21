@@ -11,14 +11,14 @@ namespace PublicWeb.DTOs
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public Guid EventScheduleId { get; set; }
+        public Guid EvenScheduleId { get; set; }
         public List<ServicePlacePositionDTO> Positions { get; set; }
         public PendingBooking ToEntity(PendingBooking entity = null)
         {
             if (entity == null) entity = new PendingBooking();
             entity.Date = Date;
             entity.ExpirationDate = ExpirationDate;
-            entity.EvenScheduleId = EventScheduleId;
+            entity.EvenScheduleId = EvenScheduleId;
             return entity;
         }
     }
