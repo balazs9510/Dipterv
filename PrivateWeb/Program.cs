@@ -9,20 +9,20 @@ namespace PrivateWeb
 {
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            MapperHelper.InitializeMapper();
-            CreateWebHostBuilder(args).Build().Run();
-        }
-
-        //public static async Task Main(string[] args)
+        //public static void Main(string[] args)
         //{
         //    MapperHelper.InitializeMapper();
-        //    (await CreateWebHostBuilder(args)
-        //        .Build()
-        //        .MigrateDatabase<BookingSystemDbContext>())
-        //        .Run();
+        //    CreateWebHostBuilder(args).Build().Run();
         //}
+
+        public static async Task Main(string[] args)
+        {
+            MapperHelper.InitializeMapper();
+            (await CreateWebHostBuilder(args)
+                .Build()
+                .MigrateDatabase<BookingSystemDbContext>())
+                .Run();
+        }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
