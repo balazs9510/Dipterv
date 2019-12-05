@@ -10,10 +10,16 @@
  <g>
   <title>Layer 1</title>
   <rect stroke="#000" id="svg_1" height="81.000004" width="303.000009" y="0.750001" x="0.75" stroke-width="1.5" fill="#fff"/>
-  <ellipse class="bookable" data-position-id="BEE08999-8585-4561-8BFC-E5D050C64F32" ry="36.5" rx="36.5" id="svg_2" cy="40.250002" cx="39.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
-  <ellipse class="bookable" data-position-id="F26730FC-986B-4255-8AAF-E97B0B147C4D" ry="36.5" rx="36.5" id="svg_3" cy="40.250002" cx="114.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
-  <ellipse class="bookable" data-position-id="71022DC9-4E62-470B-97A9-98BD8D04657E" ry="36.5" rx="36.5" id="svg_4" cy="41.250002" cx="188.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
-  <ellipse class="bookable" data-position-id="B6B432C0-810C-4289-9560-2CAEB6476D07" ry="36.5" rx="36.5" id="svg_5" cy="41.250002" cx="265.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  
+  <ellipse class="bookable" 
+	data-name="A1" data-position-id="bee08999-8585-4561-8bfc-e5d050c64f32" ry="36.5" rx="36.5" id="svg_2" cy="40.250002" cx="39.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <ellipse class="bookable" 
+	data-name="A2" data-position-id="f26730fc-986b-4255-8aaf-e97b0b147c4d" ry="36.5" rx="36.5" id="svg_3" cy="40.250002" cx="114.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <ellipse class="bookable" 
+	data-name="A3" data-position-id="71022dc9-4e62-470b-97a9-98bd8d04657e" ry="36.5" rx="36.5" id="svg_4" cy="41.250002" cx="188.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <ellipse class="bookable" 
+	data-name="A4" data-position-id="b6b432c0-810c-4289-9560-2caeb6476d07" ry="36.5" rx="36.5" id="svg_5" cy="41.250002" cx="265.25" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  
   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_6" y="46.750002" x="27.75" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">A1</text>
   <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_7" y="47.750002" x="100.75" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">A2</text>
   <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_8" y="50.750002" x="173.75" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">A3</text>

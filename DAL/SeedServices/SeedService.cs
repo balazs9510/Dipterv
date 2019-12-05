@@ -174,18 +174,6 @@ namespace DAL.SeedServices
                 Extension = "svg",
                 Name = "t4.svg"
             },
-            new Image
-            {
-                Id = Id(),
-                Extension = "svg",
-                Name = "t10.svg"
-            },
-            new Image
-            {
-                Id = Guid.Parse("2ECC93E0-08E2-4B00-8197-3FEDE4B3AA4D"),
-                Extension = "svg",
-                Name = "test.png"
-            },
         }.ToDictionary(x => x.Name);
 
         public Dictionary<string, ServiceType> ServiceTypes { get; }
@@ -406,137 +394,37 @@ namespace DAL.SeedServices
                 new ServicePlace
                 {
                     Id = Id(),
-                    Name = "4 helyes terem(mom)",
-                    ServiceId = Services["CINEMApink MOM Park"].Id,
-                    LayoutImageId = Images["t4.svg"].Id
-                },
-                new ServicePlace
-                {
-                    Id = Id(),
                     Name = "4 helyes terem(allee)",
                     ServiceId = Services["CinemaCity Alle"].Id,
                     LayoutImageId = Images["t4.svg"].Id
-                },
-                new ServicePlace
-                {
-                    Id = Id(),
-                    Name = "4 helyes terem (madách)",
-                    ServiceId = Services["Madách Színház"].Id,
-                    LayoutImageId = Images["t4.svg"].Id
-                },
-                new ServicePlace
-                {
-                    Id = Id(),
-                    Name = "4 helyes terem (aquaworld)",
-                    ServiceId = Services["Aquaworld Resort Budapest"].Id,
-                    LayoutImageId = Images["t4.svg"].Id
-                },
-                new ServicePlace
-                {
-                    Id = Id(),
-                    Name = "10 helyes terem (groupama)",
-                    ServiceId = Services["Groupama Aréna"].Id,
-                    LayoutImageId = Images["t10.svg"].Id
-                },
+                }
             }.ToDictionary(x => x.Name);
             ServicePlacePositions = new List<ServicePlacePosition>
             {
                 new ServicePlacePosition
                 {
-                    Id = Id(),
-                    Name = "A1",
-                    ServicePlaceId = ServicePlaces["4 helyes terem(mom)"].Id
-                },
-                 new ServicePlacePosition
-                {
-                    Id = Id(),
-                    Name = "A2",
-                    ServicePlaceId = ServicePlaces["4 helyes terem(mom)"].Id
-                },
-                  new ServicePlacePosition
-                {
-                    Id = Id(),
-                    Name = "A3",
-                    ServicePlaceId = ServicePlaces["4 helyes terem(mom)"].Id
-                },
-                   new ServicePlacePosition
-                {
-                    Id = Id(),
-                    Name = "A4",
-                    ServicePlaceId = ServicePlaces["4 helyes terem(mom)"].Id
-                },
-                new ServicePlacePosition
-                {
-                    Id = Id(),
+                    Id = Guid.Parse("BEE08999-8585-4561-8BFC-E5D050C64F32"),
                     Name = "A1",
                     ServicePlaceId = ServicePlaces["4 helyes terem(allee)"].Id
                 },
                 new ServicePlacePosition
                 {
-                    Id = Id(),
+                    Id = Guid.Parse("F26730FC-986B-4255-8AAF-E97B0B147C4D"),
                     Name = "A2",
                     ServicePlaceId = ServicePlaces["4 helyes terem(allee)"].Id
                 },
                 new ServicePlacePosition
                 {
-                    Id = Id(),
+                    Id = Guid.Parse("71022DC9-4E62-470B-97A9-98BD8D04657E"),
                     Name = "A3",
                     ServicePlaceId = ServicePlaces["4 helyes terem(allee)"].Id
                 },
                 new ServicePlacePosition
                 {
-                    Id = Id(),
+                    Id = Guid.Parse("B6B432C0-810C-4289-9560-2CAEB6476D07"),
                     Name = "A4",
                     ServicePlaceId = ServicePlaces["4 helyes terem(allee)"].Id
-                },
-                new ServicePlacePosition
-                {
-                    Id = Id(),
-                    Name = "A1",
-                    ServicePlaceId = ServicePlaces["4 helyes terem (madách)"].Id
-                },
-                new ServicePlacePosition
-                {
-                    Id = Id(),
-                    Name = "A2",
-                    ServicePlaceId = ServicePlaces["4 helyes terem (madách)"].Id
-                },
-                new ServicePlacePosition
-                {
-                    Id = Id(),
-                    Name = "A3",
-                    ServicePlaceId = ServicePlaces["4 helyes terem (madách)"].Id
-                },
-                new ServicePlacePosition
-                {
-                    Id = Id(),
-                    Name = "A4",
-                    ServicePlaceId = ServicePlaces["4 helyes terem (madách)"].Id
-                },
-                new ServicePlacePosition
-                {
-                    Id = Id(),
-                    Name = "A1",
-                    ServicePlaceId = ServicePlaces["4 helyes terem (aquaworld)"].Id
-                },
-                new ServicePlacePosition
-                {
-                    Id = Id(),
-                    Name = "A2",
-                    ServicePlaceId = ServicePlaces["4 helyes terem (aquaworld)"].Id
-                },
-                new ServicePlacePosition
-                {
-                    Id = Id(),
-                    Name = "A3",
-                    ServicePlaceId = ServicePlaces["4 helyes terem (aquaworld)"].Id
-                },
-                new ServicePlacePosition
-                {
-                    Id = Id(),
-                    Name = "A4",
-                    ServicePlaceId = ServicePlaces["4 helyes terem (aquaworld)"].Id
-                },
+                }
             };
             DateTime now = DateTime.Now;
             DateTime now2 = DateTime.Now.AddHours(2);
@@ -561,27 +449,7 @@ namespace DAL.SeedServices
                     Description = string.Empty,
                     From = now2,
                     To = now2.AddHours(2)
-                },
-                new EvenSchedule
-                {
-                    Id = Id(),
-                    EventId = Events["Bosszúállók: Végjáték"].Id,
-                    ServiceId = Services["CinemaCity Alle"].Id,
-                    ServicePlaceId = ServicePlaces["4 helyes terem(mom)"].Id,
-                    Description = string.Empty,
-                    From = now,
-                    To = now2
-                },
-                new EvenSchedule
-                {
-                    Id = Id(),
-                    EventId = Events["Bosszúállók: Végjáték"].Id,
-                    ServiceId = Services["CINEMApink MOM Park"].Id,
-                    ServicePlaceId = ServicePlaces["4 helyes terem(mom)"].Id,
-                    Description = string.Empty,
-                    From = now2,
-                    To = now2.AddHours(2)
-                },
+                }
             };
         }
 

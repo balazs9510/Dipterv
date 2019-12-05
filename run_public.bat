@@ -1,2 +1,0 @@
-cd PublicWeb
-dotnet run

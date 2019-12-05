@@ -189,6 +189,7 @@ export class EventScheduleComponent implements AfterViewInit, OnInit, OnDestroy 
     this.positionName = null;
   }
   refreshPendingBooking(self) {
+    if (!self || !self.schedule || !self.schedule.pendingBookings) return;
     const el = $(`#svg-holder`).clone();
     const now = new Date();
     if (self.schedule && self.schedule.pendingBookings) {

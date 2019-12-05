@@ -91,10 +91,8 @@ namespace DAL.Migrations
                     b.ToTable("EvenSchedules");
 
                     b.HasData(
-                        new { Id = new Guid("bec3e7f2-6e9a-4ba6-93cd-bec1d9696754"), Description = "", EventId = new Guid("623d672a-2b92-4118-94cb-50207b8ef0a1"), From = new DateTime(2019, 11, 5, 11, 56, 37, 1, DateTimeKind.Local), ServiceId = new Guid("4fb05494-28e2-40ba-8b18-4e06f9d29405"), ServicePlaceId = new Guid("c3b851fc-288e-4d2b-9a7d-c8de55828841"), To = new DateTime(2019, 11, 5, 13, 56, 37, 3, DateTimeKind.Local) },
-                        new { Id = new Guid("8a3415de-b1f4-453a-a02e-fd65de022626"), Description = "", EventId = new Guid("623d672a-2b92-4118-94cb-50207b8ef0a1"), From = new DateTime(2019, 11, 5, 13, 56, 37, 3, DateTimeKind.Local), ServiceId = new Guid("4fb05494-28e2-40ba-8b18-4e06f9d29405"), ServicePlaceId = new Guid("c3b851fc-288e-4d2b-9a7d-c8de55828841"), To = new DateTime(2019, 11, 5, 15, 56, 37, 3, DateTimeKind.Local) },
-                        new { Id = new Guid("b1f7ee55-482a-44b1-9dbc-4872529d50d9"), Description = "", EventId = new Guid("623d672a-2b92-4118-94cb-50207b8ef0a1"), From = new DateTime(2019, 11, 5, 11, 56, 37, 1, DateTimeKind.Local), ServiceId = new Guid("4fb05494-28e2-40ba-8b18-4e06f9d29405"), ServicePlaceId = new Guid("b0278747-ff55-417a-9c1f-c9f65a47a3bb"), To = new DateTime(2019, 11, 5, 13, 56, 37, 3, DateTimeKind.Local) },
-                        new { Id = new Guid("1f6008bd-de4e-4f07-9b5a-6ea563701f93"), Description = "", EventId = new Guid("623d672a-2b92-4118-94cb-50207b8ef0a1"), From = new DateTime(2019, 11, 5, 13, 56, 37, 3, DateTimeKind.Local), ServiceId = new Guid("7b466636-5803-4930-b983-ff29cacadefb"), ServicePlaceId = new Guid("b0278747-ff55-417a-9c1f-c9f65a47a3bb"), To = new DateTime(2019, 11, 5, 15, 56, 37, 3, DateTimeKind.Local) }
+                        new { Id = new Guid("817e3e23-75bf-40c9-b9e1-aef15fb3374b"), Description = "", EventId = new Guid("a8bf7e26-8032-4f8d-81b3-1ff33687450e"), From = new DateTime(2019, 12, 5, 14, 40, 21, 925, DateTimeKind.Local), ServiceId = new Guid("509c677e-a9f1-49be-b778-0c2141b083eb"), ServicePlaceId = new Guid("6ded3dfc-82a5-4c21-8440-d47910ba11e8"), To = new DateTime(2019, 12, 5, 16, 40, 21, 928, DateTimeKind.Local) },
+                        new { Id = new Guid("392ba299-50b9-4828-815c-a0fce1269a19"), Description = "", EventId = new Guid("a8bf7e26-8032-4f8d-81b3-1ff33687450e"), From = new DateTime(2019, 12, 5, 16, 40, 21, 928, DateTimeKind.Local), ServiceId = new Guid("509c677e-a9f1-49be-b778-0c2141b083eb"), ServicePlaceId = new Guid("6ded3dfc-82a5-4c21-8440-d47910ba11e8"), To = new DateTime(2019, 12, 5, 18, 40, 21, 928, DateTimeKind.Local) }
                     );
                 });
 
@@ -124,13 +122,13 @@ namespace DAL.Migrations
                     b.ToTable("Events");
 
                     b.HasData(
-                        new { Id = new Guid("623d672a-2b92-4118-94cb-50207b8ef0a1"), Description = "Thanos súlyos tette, amivel elpusztította az univerzum élőlényeinek felét és megtörte a Bosszúállókat, a megmaradt hősöket egy végső összecsapásra készteti a Marvel Studios huszonegy filmet megkoronázó, nagyszabású fináléjában, a Bosszúállók: Végjátékban.", ImageId = new Guid("7d5b9241-f40c-44a0-9ddd-98df4bd59d37"), Name = "Bosszúállók: Végjáték", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
-                        new { Id = new Guid("fa02afcf-289b-446b-ba9d-fe2a0b3b42a6"), Description = "Mindannyiunkban ott bujkál a szuperhős – de van, akiből elő is jön. Billy Batson 14 éves, egy árvaházból kerül nevelőszüleihez, és nem a legnépszerűbb srác az iskolában…de Shazam, az ősöreg, különleges erejű varázsló mégis kiválasztja. Amikor a srác hangosan kimondja: a varázsló nevét, átalakul. Igazi szuperhős válik belőle, annak minden kellékével: testhezálló, köpönyeggel kiegészített ruha, különleges eszközök, rendkívüli erő és meghökkentő képességek.", ImageId = new Guid("9449ce7c-cc01-4998-8f99-0785ef0f6463"), Name = "Shazam!", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
-                        new { Id = new Guid("bf63fd48-d4e3-4f74-8965-bd2a7d5a2629"), Description = "Avagy a játéknak soha nincs vége", ImageId = new Guid("54ee2a0d-e3a2-4359-9737-15f3c2c3bf6e"), Name = "Négyszögletű Kerek Erdő", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
-                        new { Id = new Guid("42fea743-2387-4eff-a88e-f5bd3113ae52"), Description = "FÖRCH MAGYAR KUPA", ImageId = new Guid("080e75ab-16c6-44a2-a841-2e281da58bfe"), Name = "FTC-Telekom : DVTK", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
-                        new { Id = new Guid("5b1fe04f-394d-412b-bfb8-00a25e71872d"), Description = "Egy óra.", ImageId = new Guid("c8ed6b84-5d2c-43dd-a5cf-5be2e7d5f6de"), Name = "Pihentető masszás (1 óra)", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
-                        new { Id = new Guid("ad75b84a-9c74-4258-a20f-a828b788e6c5"), Description = "Másfél óra.", ImageId = new Guid("c8ed6b84-5d2c-43dd-a5cf-5be2e7d5f6de"), Name = "Pihentető masszás (1,5 óra)", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
-                        new { Id = new Guid("97f5504d-cb63-4f09-8f0a-8ec16279ffee"), Description = "Két óra.", ImageId = new Guid("c8ed6b84-5d2c-43dd-a5cf-5be2e7d5f6de"), Name = "Pihentető masszás (2 óra)", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" }
+                        new { Id = new Guid("a8bf7e26-8032-4f8d-81b3-1ff33687450e"), Description = "Thanos súlyos tette, amivel elpusztította az univerzum élőlényeinek felét és megtörte a Bosszúállókat, a megmaradt hősöket egy végső összecsapásra készteti a Marvel Studios huszonegy filmet megkoronázó, nagyszabású fináléjában, a Bosszúállók: Végjátékban.", ImageId = new Guid("6286f9eb-0227-4db6-9a06-08d261095e30"), Name = "Bosszúállók: Végjáték", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
+                        new { Id = new Guid("6c6423ad-6127-4178-b834-b54bb12a67f6"), Description = "Mindannyiunkban ott bujkál a szuperhős – de van, akiből elő is jön. Billy Batson 14 éves, egy árvaházból kerül nevelőszüleihez, és nem a legnépszerűbb srác az iskolában…de Shazam, az ősöreg, különleges erejű varázsló mégis kiválasztja. Amikor a srác hangosan kimondja: a varázsló nevét, átalakul. Igazi szuperhős válik belőle, annak minden kellékével: testhezálló, köpönyeggel kiegészített ruha, különleges eszközök, rendkívüli erő és meghökkentő képességek.", ImageId = new Guid("8acfe208-054e-4f25-8ec8-45f94ae21311"), Name = "Shazam!", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
+                        new { Id = new Guid("bf6ba414-9aeb-4cf5-a8de-0cd3d6bcead1"), Description = "Avagy a játéknak soha nincs vége", ImageId = new Guid("5404aafd-2dd5-4cfc-8196-c7f9de792105"), Name = "Négyszögletű Kerek Erdő", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
+                        new { Id = new Guid("edaf3675-c590-4aa5-a581-7ec9815a5236"), Description = "FÖRCH MAGYAR KUPA", ImageId = new Guid("6595544a-cc08-4cf7-b746-e195d2ac636f"), Name = "FTC-Telekom : DVTK", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
+                        new { Id = new Guid("ee3c856d-a602-47a5-b4b0-dfc3f8e90b90"), Description = "Egy óra.", ImageId = new Guid("fc24a599-e787-4f34-936e-51a3dd5de00d"), Name = "Pihentető masszás (1 óra)", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
+                        new { Id = new Guid("928fbd5d-5a4c-47ab-98d9-c00e6c4a2e2b"), Description = "Másfél óra.", ImageId = new Guid("fc24a599-e787-4f34-936e-51a3dd5de00d"), Name = "Pihentető masszás (1,5 óra)", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" },
+                        new { Id = new Guid("5f9c19a7-0975-4f74-b033-6f09694b56d2"), Description = "Két óra.", ImageId = new Guid("fc24a599-e787-4f34-936e-51a3dd5de00d"), Name = "Pihentető masszás (2 óra)", UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575" }
                     );
                 });
 
@@ -150,24 +148,22 @@ namespace DAL.Migrations
                     b.ToTable("Images");
 
                     b.HasData(
-                        new { Id = new Guid("878806a5-a01e-495a-91ba-9c13c02b0dae"), Extension = "png", Name = "cinema.png" },
-                        new { Id = new Guid("0fd526e9-b232-4b6a-bd07-525b2ac4c24a"), Extension = "png", Name = "theater.png" },
-                        new { Id = new Guid("e486bcea-f414-4c59-be7f-6b44f7c76b16"), Extension = "png", Name = "sport.png" },
-                        new { Id = new Guid("bb04c23a-1a9a-49a3-8268-2fde72b117e0"), Extension = "png", Name = "spa.png" },
-                        new { Id = new Guid("abf1830c-f973-4e34-8545-c9839e09fb69"), Extension = "png", Name = "alle.png" },
-                        new { Id = new Guid("10e451c4-2d06-47e5-a3c2-a7f9188a34de"), Extension = "png", Name = "mom.png" },
-                        new { Id = new Guid("0c24621d-e43e-4adf-a9f3-63673a743c21"), Extension = "png", Name = "groupama.png" },
-                        new { Id = new Guid("2b26e822-14a0-4e2a-88d3-ca06928fc2ab"), Extension = "png", Name = "madach.png" },
-                        new { Id = new Guid("685119e1-3614-4ac0-8918-7dcfbb3a55ad"), Extension = "png", Name = "corvin_duma.png" },
-                        new { Id = new Guid("28c8defb-5bde-4fae-bfc1-668a2e78125a"), Extension = "png", Name = "aquapark.png" },
-                        new { Id = new Guid("7d5b9241-f40c-44a0-9ddd-98df4bd59d37"), Extension = "png", Name = "endgame.png" },
-                        new { Id = new Guid("9449ce7c-cc01-4998-8f99-0785ef0f6463"), Extension = "png", Name = "shazam.png" },
-                        new { Id = new Guid("54ee2a0d-e3a2-4359-9737-15f3c2c3bf6e"), Extension = "png", Name = "negyszogletu.png" },
-                        new { Id = new Guid("080e75ab-16c6-44a2-a841-2e281da58bfe"), Extension = "png", Name = "ftc.png" },
-                        new { Id = new Guid("c8ed6b84-5d2c-43dd-a5cf-5be2e7d5f6de"), Extension = "png", Name = "masszazs.png" },
-                        new { Id = new Guid("96fa095c-2e45-4e27-9c2b-006292f586b6"), Extension = "svg", Name = "t4.svg" },
-                        new { Id = new Guid("a0e1483f-b0ca-4050-845a-c047bec64e0f"), Extension = "svg", Name = "t10.svg" },
-                        new { Id = new Guid("2ecc93e0-08e2-4b00-8197-3fede4b3aa4d"), Extension = "svg", Name = "test.png" }
+                        new { Id = new Guid("34177eb6-e990-4cfa-8aa4-cd55a18f718e"), Extension = "png", Name = "cinema.png" },
+                        new { Id = new Guid("f7b64fe4-cd58-4d4f-becb-cc10fa365cda"), Extension = "png", Name = "theater.png" },
+                        new { Id = new Guid("8dea7035-43f2-4735-a309-a8bc566b0f80"), Extension = "png", Name = "sport.png" },
+                        new { Id = new Guid("61b5792a-a836-46ef-98c9-4d0af8225b52"), Extension = "png", Name = "spa.png" },
+                        new { Id = new Guid("49071411-213e-4822-9d5e-8a0354a762ce"), Extension = "png", Name = "alle.png" },
+                        new { Id = new Guid("973b4b03-f971-4c1b-ba17-edc59f592b00"), Extension = "png", Name = "mom.png" },
+                        new { Id = new Guid("c911afe3-352c-4bd1-89be-3ac23a26a9ea"), Extension = "png", Name = "groupama.png" },
+                        new { Id = new Guid("383d3600-51b8-4b2e-9af6-d6432b95f92f"), Extension = "png", Name = "madach.png" },
+                        new { Id = new Guid("623a2c4d-614d-4bdd-9263-989a68ace1ea"), Extension = "png", Name = "corvin_duma.png" },
+                        new { Id = new Guid("a6980a82-440d-4d0c-a72d-6955ef8830b1"), Extension = "png", Name = "aquapark.png" },
+                        new { Id = new Guid("6286f9eb-0227-4db6-9a06-08d261095e30"), Extension = "png", Name = "endgame.png" },
+                        new { Id = new Guid("8acfe208-054e-4f25-8ec8-45f94ae21311"), Extension = "png", Name = "shazam.png" },
+                        new { Id = new Guid("5404aafd-2dd5-4cfc-8196-c7f9de792105"), Extension = "png", Name = "negyszogletu.png" },
+                        new { Id = new Guid("6595544a-cc08-4cf7-b746-e195d2ac636f"), Extension = "png", Name = "ftc.png" },
+                        new { Id = new Guid("fc24a599-e787-4f34-936e-51a3dd5de00d"), Extension = "png", Name = "masszazs.png" },
+                        new { Id = new Guid("e4033899-118d-4664-b2b3-3c1f019a3820"), Extension = "svg", Name = "t4.svg" }
                     );
                 });
 
@@ -239,12 +235,12 @@ namespace DAL.Migrations
                     b.ToTable("Services");
 
                     b.HasData(
-                        new { Id = new Guid("4fb05494-28e2-40ba-8b18-4e06f9d29405"), City = "Budapest", Description = "A 13 termes Cinema City Allee 2009. óta várja vendégeit a legjobb premier filmekkel - egyik termében kizárólag eredeti nyelvű filmvetítésekkel - az év minden napján. Nyitvatartás: pénztárnyitás az első előadás előtt 30 perccel, pénztár zárás az utolsó előadás kezdete után 15 perccel.", ImageId = new Guid("abf1830c-f973-4e34-8545-c9839e09fb69"), Name = "CinemaCity Alle", Street = "Október huszonharmadika u. 8-10", TypeId = new Guid("5dffc3a8-0121-43c1-8e76-ba8dfd1f2a08") },
-                        new { Id = new Guid("7b466636-5803-4930-b983-ff29cacadefb"), City = "Budapest", Description = "A CINEMApink MOM Park a jelenleg elérhető legjobb képminőséggel, prémium hangrendszerrel, kényelmi extrákkal és a legújabb sikerfilmekkel várja!", ImageId = new Guid("10e451c4-2d06-47e5-a3c2-a7f9188a34de"), Name = "CINEMApink MOM Park", Street = "Alkotás u. 53", TypeId = new Guid("5dffc3a8-0121-43c1-8e76-ba8dfd1f2a08") },
-                        new { Id = new Guid("efe358e2-8cb3-45a3-86d2-d36c27ce68fb"), City = "Budapest", Description = "„BEST OF BUDAPEST & HUNGARY 2017” DÍJAT NYERT A FRADI OTTHONA, A GROUPAMA ARÉNA!", ImageId = new Guid("0c24621d-e43e-4adf-a9f3-63673a743c21"), Name = "Groupama Aréna", Street = "Üllői út 129", TypeId = new Guid("f8dd7270-6a79-46bf-8a9c-ff02a303a7de") },
-                        new { Id = new Guid("f63ecf47-d8ae-45fc-bc82-d9b88f8296f9"), City = "Budapest", Description = "Madách Színház néven több színházi vállalkozás is létrejött századunkban Budapesten. 1919-ben a Zeneakadémia kistermében Madách Színház néven kísérletezett egy társulat, mely zömmel a frontról hazatért, szerződés nélküli színészekből alakult. Alig több mint egy évig működtek, új típusú programmal indultak, legnagyobb sikerük a százas szériát futó Holnap reggel című Karinthy Frigyes dráma előadása.", ImageId = new Guid("2b26e822-14a0-4e2a-88d3-ca06928fc2ab"), Name = "Madách Színház", Street = "Erzsébet krt. 29-33", TypeId = new Guid("dc32d0ae-1a64-4e38-8422-044089e3ef1d") },
-                        new { Id = new Guid("b201616c-0679-4ee1-ab91-6573d9a7af11"), City = "Budapest", Description = "Corvin Dumaszínház", ImageId = new Guid("685119e1-3614-4ac0-8918-7dcfbb3a55ad"), Name = "Corvin Dumaszínház", Street = "Corvin sétány 1 1/b", TypeId = new Guid("dc32d0ae-1a64-4e38-8422-044089e3ef1d") },
-                        new { Id = new Guid("2995c5b6-5e0f-4b9d-bbfb-3a24793bf35a"), City = "Budapest", Description = "Ha többre vágysz egy átlagos pihenésnél... nálunk egyszerre átélheted akár egy kényeztető wellness hétvége minden jótékony hatását vagy gyermekként élvezheted az Aquaworld élményekkel teli világát.", ImageId = new Guid("28c8defb-5bde-4fae-bfc1-668a2e78125a"), Name = "Aquaworld Resort Budapest", Street = "Íves út 16", TypeId = new Guid("ca7eb334-41d3-49e0-8916-549cfcfe2643") }
+                        new { Id = new Guid("509c677e-a9f1-49be-b778-0c2141b083eb"), City = "Budapest", Description = "A 13 termes Cinema City Allee 2009. óta várja vendégeit a legjobb premier filmekkel - egyik termében kizárólag eredeti nyelvű filmvetítésekkel - az év minden napján. Nyitvatartás: pénztárnyitás az első előadás előtt 30 perccel, pénztár zárás az utolsó előadás kezdete után 15 perccel.", ImageId = new Guid("49071411-213e-4822-9d5e-8a0354a762ce"), Name = "CinemaCity Alle", Street = "Október huszonharmadika u. 8-10", TypeId = new Guid("a74aa1d1-1037-4b68-930a-fa34d139461a") },
+                        new { Id = new Guid("cae1e812-907c-479c-8ab5-2bed84d2869d"), City = "Budapest", Description = "A CINEMApink MOM Park a jelenleg elérhető legjobb képminőséggel, prémium hangrendszerrel, kényelmi extrákkal és a legújabb sikerfilmekkel várja!", ImageId = new Guid("973b4b03-f971-4c1b-ba17-edc59f592b00"), Name = "CINEMApink MOM Park", Street = "Alkotás u. 53", TypeId = new Guid("a74aa1d1-1037-4b68-930a-fa34d139461a") },
+                        new { Id = new Guid("8c3b7421-23f1-4537-bc7d-605bfc964c2e"), City = "Budapest", Description = "„BEST OF BUDAPEST & HUNGARY 2017” DÍJAT NYERT A FRADI OTTHONA, A GROUPAMA ARÉNA!", ImageId = new Guid("c911afe3-352c-4bd1-89be-3ac23a26a9ea"), Name = "Groupama Aréna", Street = "Üllői út 129", TypeId = new Guid("07103174-dbdd-4b26-ab03-01f45ab25b19") },
+                        new { Id = new Guid("942809d9-4a6d-4d4f-aed5-894916cf851f"), City = "Budapest", Description = "Madách Színház néven több színházi vállalkozás is létrejött századunkban Budapesten. 1919-ben a Zeneakadémia kistermében Madách Színház néven kísérletezett egy társulat, mely zömmel a frontról hazatért, szerződés nélküli színészekből alakult. Alig több mint egy évig működtek, új típusú programmal indultak, legnagyobb sikerük a százas szériát futó Holnap reggel című Karinthy Frigyes dráma előadása.", ImageId = new Guid("383d3600-51b8-4b2e-9af6-d6432b95f92f"), Name = "Madách Színház", Street = "Erzsébet krt. 29-33", TypeId = new Guid("de721af7-9653-41c2-8eeb-7bce758358d0") },
+                        new { Id = new Guid("bf3f6cad-67a5-43b0-ae18-cb5d96acff7c"), City = "Budapest", Description = "Corvin Dumaszínház", ImageId = new Guid("623a2c4d-614d-4bdd-9263-989a68ace1ea"), Name = "Corvin Dumaszínház", Street = "Corvin sétány 1 1/b", TypeId = new Guid("de721af7-9653-41c2-8eeb-7bce758358d0") },
+                        new { Id = new Guid("e6ef6fbf-652b-492f-b661-d64d28db3091"), City = "Budapest", Description = "Ha többre vágysz egy átlagos pihenésnél... nálunk egyszerre átélheted akár egy kényeztető wellness hétvége minden jótékony hatását vagy gyermekként élvezheted az Aquaworld élményekkel teli világát.", ImageId = new Guid("a6980a82-440d-4d0c-a72d-6955ef8830b1"), Name = "Aquaworld Resort Budapest", Street = "Íves út 16", TypeId = new Guid("e1d8259c-0ef8-4a7a-b97c-5aa277e51955") }
                     );
                 });
 
@@ -261,15 +257,15 @@ namespace DAL.Migrations
                     b.ToTable("ServiceEvents");
 
                     b.HasData(
-                        new { EventId = new Guid("623d672a-2b92-4118-94cb-50207b8ef0a1"), ServiceId = new Guid("4fb05494-28e2-40ba-8b18-4e06f9d29405") },
-                        new { EventId = new Guid("623d672a-2b92-4118-94cb-50207b8ef0a1"), ServiceId = new Guid("7b466636-5803-4930-b983-ff29cacadefb") },
-                        new { EventId = new Guid("fa02afcf-289b-446b-ba9d-fe2a0b3b42a6"), ServiceId = new Guid("4fb05494-28e2-40ba-8b18-4e06f9d29405") },
-                        new { EventId = new Guid("fa02afcf-289b-446b-ba9d-fe2a0b3b42a6"), ServiceId = new Guid("7b466636-5803-4930-b983-ff29cacadefb") },
-                        new { EventId = new Guid("bf63fd48-d4e3-4f74-8965-bd2a7d5a2629"), ServiceId = new Guid("f63ecf47-d8ae-45fc-bc82-d9b88f8296f9") },
-                        new { EventId = new Guid("42fea743-2387-4eff-a88e-f5bd3113ae52"), ServiceId = new Guid("efe358e2-8cb3-45a3-86d2-d36c27ce68fb") },
-                        new { EventId = new Guid("5b1fe04f-394d-412b-bfb8-00a25e71872d"), ServiceId = new Guid("2995c5b6-5e0f-4b9d-bbfb-3a24793bf35a") },
-                        new { EventId = new Guid("ad75b84a-9c74-4258-a20f-a828b788e6c5"), ServiceId = new Guid("2995c5b6-5e0f-4b9d-bbfb-3a24793bf35a") },
-                        new { EventId = new Guid("97f5504d-cb63-4f09-8f0a-8ec16279ffee"), ServiceId = new Guid("2995c5b6-5e0f-4b9d-bbfb-3a24793bf35a") }
+                        new { EventId = new Guid("a8bf7e26-8032-4f8d-81b3-1ff33687450e"), ServiceId = new Guid("509c677e-a9f1-49be-b778-0c2141b083eb") },
+                        new { EventId = new Guid("a8bf7e26-8032-4f8d-81b3-1ff33687450e"), ServiceId = new Guid("cae1e812-907c-479c-8ab5-2bed84d2869d") },
+                        new { EventId = new Guid("6c6423ad-6127-4178-b834-b54bb12a67f6"), ServiceId = new Guid("509c677e-a9f1-49be-b778-0c2141b083eb") },
+                        new { EventId = new Guid("6c6423ad-6127-4178-b834-b54bb12a67f6"), ServiceId = new Guid("cae1e812-907c-479c-8ab5-2bed84d2869d") },
+                        new { EventId = new Guid("bf6ba414-9aeb-4cf5-a8de-0cd3d6bcead1"), ServiceId = new Guid("942809d9-4a6d-4d4f-aed5-894916cf851f") },
+                        new { EventId = new Guid("edaf3675-c590-4aa5-a581-7ec9815a5236"), ServiceId = new Guid("8c3b7421-23f1-4537-bc7d-605bfc964c2e") },
+                        new { EventId = new Guid("ee3c856d-a602-47a5-b4b0-dfc3f8e90b90"), ServiceId = new Guid("e6ef6fbf-652b-492f-b661-d64d28db3091") },
+                        new { EventId = new Guid("928fbd5d-5a4c-47ab-98d9-c00e6c4a2e2b"), ServiceId = new Guid("e6ef6fbf-652b-492f-b661-d64d28db3091") },
+                        new { EventId = new Guid("5f9c19a7-0975-4f74-b033-6f09694b56d2"), ServiceId = new Guid("e6ef6fbf-652b-492f-b661-d64d28db3091") }
                     );
                 });
 
@@ -299,11 +295,7 @@ namespace DAL.Migrations
                     b.ToTable("ServicePlaces");
 
                     b.HasData(
-                        new { Id = new Guid("b0278747-ff55-417a-9c1f-c9f65a47a3bb"), LayoutImageId = new Guid("96fa095c-2e45-4e27-9c2b-006292f586b6"), Name = "4 helyes terem(mom)", ServiceId = new Guid("7b466636-5803-4930-b983-ff29cacadefb") },
-                        new { Id = new Guid("c3b851fc-288e-4d2b-9a7d-c8de55828841"), LayoutImageId = new Guid("96fa095c-2e45-4e27-9c2b-006292f586b6"), Name = "4 helyes terem(allee)", ServiceId = new Guid("4fb05494-28e2-40ba-8b18-4e06f9d29405") },
-                        new { Id = new Guid("93c205fb-9a3e-4790-af9d-fcb21cbbad2a"), LayoutImageId = new Guid("96fa095c-2e45-4e27-9c2b-006292f586b6"), Name = "4 helyes terem (madách)", ServiceId = new Guid("f63ecf47-d8ae-45fc-bc82-d9b88f8296f9") },
-                        new { Id = new Guid("ead5fb76-f359-43fc-8837-f547e8aabb16"), LayoutImageId = new Guid("96fa095c-2e45-4e27-9c2b-006292f586b6"), Name = "4 helyes terem (aquaworld)", ServiceId = new Guid("2995c5b6-5e0f-4b9d-bbfb-3a24793bf35a") },
-                        new { Id = new Guid("e4a8982a-985b-4f9e-b6fc-5430a7d8b9bc"), LayoutImageId = new Guid("a0e1483f-b0ca-4050-845a-c047bec64e0f"), Name = "10 helyes terem (groupama)", ServiceId = new Guid("efe358e2-8cb3-45a3-86d2-d36c27ce68fb") }
+                        new { Id = new Guid("6ded3dfc-82a5-4c21-8440-d47910ba11e8"), LayoutImageId = new Guid("e4033899-118d-4664-b2b3-3c1f019a3820"), Name = "4 helyes terem(allee)", ServiceId = new Guid("509c677e-a9f1-49be-b778-0c2141b083eb") }
                     );
                 });
 
@@ -325,22 +317,10 @@ namespace DAL.Migrations
                     b.ToTable("ServicePlacePositions");
 
                     b.HasData(
-                        new { Id = new Guid("40979da2-a9a9-4c4c-8e45-17377e04195d"), Name = "A1", ServicePlaceId = new Guid("b0278747-ff55-417a-9c1f-c9f65a47a3bb") },
-                        new { Id = new Guid("43272b21-682d-40ff-b0af-d920523c9198"), Name = "A2", ServicePlaceId = new Guid("b0278747-ff55-417a-9c1f-c9f65a47a3bb") },
-                        new { Id = new Guid("154e6e27-4e78-4c25-bece-778e140e40be"), Name = "A3", ServicePlaceId = new Guid("b0278747-ff55-417a-9c1f-c9f65a47a3bb") },
-                        new { Id = new Guid("85396881-fc6a-427a-ae65-bcb2f2215152"), Name = "A4", ServicePlaceId = new Guid("b0278747-ff55-417a-9c1f-c9f65a47a3bb") },
-                        new { Id = new Guid("69102d73-092c-4e5a-9e4c-d84b38bf6187"), Name = "A1", ServicePlaceId = new Guid("c3b851fc-288e-4d2b-9a7d-c8de55828841") },
-                        new { Id = new Guid("587a8ed1-5653-4f47-a82a-0e5f0b59f57b"), Name = "A2", ServicePlaceId = new Guid("c3b851fc-288e-4d2b-9a7d-c8de55828841") },
-                        new { Id = new Guid("44e9eb52-05d6-4d83-9320-0ed6ddd3927b"), Name = "A3", ServicePlaceId = new Guid("c3b851fc-288e-4d2b-9a7d-c8de55828841") },
-                        new { Id = new Guid("4624ca7b-46a5-48e5-847d-832b6ac6dd64"), Name = "A4", ServicePlaceId = new Guid("c3b851fc-288e-4d2b-9a7d-c8de55828841") },
-                        new { Id = new Guid("da6190c7-370d-404e-b77b-f37577db0fb7"), Name = "A1", ServicePlaceId = new Guid("93c205fb-9a3e-4790-af9d-fcb21cbbad2a") },
-                        new { Id = new Guid("ddf113e9-acf7-4059-858b-cc8e1acfd0cc"), Name = "A2", ServicePlaceId = new Guid("93c205fb-9a3e-4790-af9d-fcb21cbbad2a") },
-                        new { Id = new Guid("b88fd568-47c8-405e-9ab2-34dab565b7b9"), Name = "A3", ServicePlaceId = new Guid("93c205fb-9a3e-4790-af9d-fcb21cbbad2a") },
-                        new { Id = new Guid("a55c59bf-d1b9-4804-9d2f-9f3a9d7542b9"), Name = "A4", ServicePlaceId = new Guid("93c205fb-9a3e-4790-af9d-fcb21cbbad2a") },
-                        new { Id = new Guid("e080b7f8-8520-4af3-8f04-b13653bd8a5a"), Name = "A1", ServicePlaceId = new Guid("ead5fb76-f359-43fc-8837-f547e8aabb16") },
-                        new { Id = new Guid("315a5b23-b96c-49c0-8a3b-f8ae06862a36"), Name = "A2", ServicePlaceId = new Guid("ead5fb76-f359-43fc-8837-f547e8aabb16") },
-                        new { Id = new Guid("a351374e-2866-4d4f-9f23-c4779f58fbde"), Name = "A3", ServicePlaceId = new Guid("ead5fb76-f359-43fc-8837-f547e8aabb16") },
-                        new { Id = new Guid("cd0ffde2-6344-4660-9b69-bc3f44c01763"), Name = "A4", ServicePlaceId = new Guid("ead5fb76-f359-43fc-8837-f547e8aabb16") }
+                        new { Id = new Guid("bee08999-8585-4561-8bfc-e5d050c64f32"), Name = "A1", ServicePlaceId = new Guid("6ded3dfc-82a5-4c21-8440-d47910ba11e8") },
+                        new { Id = new Guid("f26730fc-986b-4255-8aaf-e97b0b147c4d"), Name = "A2", ServicePlaceId = new Guid("6ded3dfc-82a5-4c21-8440-d47910ba11e8") },
+                        new { Id = new Guid("71022dc9-4e62-470b-97a9-98bd8d04657e"), Name = "A3", ServicePlaceId = new Guid("6ded3dfc-82a5-4c21-8440-d47910ba11e8") },
+                        new { Id = new Guid("b6b432c0-810c-4289-9560-2caeb6476d07"), Name = "A4", ServicePlaceId = new Guid("6ded3dfc-82a5-4c21-8440-d47910ba11e8") }
                     );
                 });
 
@@ -362,10 +342,10 @@ namespace DAL.Migrations
                     b.ToTable("ServiceTypes");
 
                     b.HasData(
-                        new { Id = new Guid("5dffc3a8-0121-43c1-8e76-ba8dfd1f2a08"), ImageId = new Guid("878806a5-a01e-495a-91ba-9c13c02b0dae"), Name = "Mozik" },
-                        new { Id = new Guid("dc32d0ae-1a64-4e38-8422-044089e3ef1d"), ImageId = new Guid("0fd526e9-b232-4b6a-bd07-525b2ac4c24a"), Name = "Színházak" },
-                        new { Id = new Guid("f8dd7270-6a79-46bf-8a9c-ff02a303a7de"), ImageId = new Guid("e486bcea-f414-4c59-be7f-6b44f7c76b16"), Name = "Sport" },
-                        new { Id = new Guid("ca7eb334-41d3-49e0-8916-549cfcfe2643"), ImageId = new Guid("bb04c23a-1a9a-49a3-8268-2fde72b117e0"), Name = "Szabadidő" }
+                        new { Id = new Guid("a74aa1d1-1037-4b68-930a-fa34d139461a"), ImageId = new Guid("34177eb6-e990-4cfa-8aa4-cd55a18f718e"), Name = "Mozik" },
+                        new { Id = new Guid("de721af7-9653-41c2-8eeb-7bce758358d0"), ImageId = new Guid("f7b64fe4-cd58-4d4f-becb-cc10fa365cda"), Name = "Színházak" },
+                        new { Id = new Guid("07103174-dbdd-4b26-ab03-01f45ab25b19"), ImageId = new Guid("8dea7035-43f2-4735-a309-a8bc566b0f80"), Name = "Sport" },
+                        new { Id = new Guid("e1d8259c-0ef8-4a7a-b97c-5aa277e51955"), ImageId = new Guid("61b5792a-a836-46ef-98c9-4d0af8225b52"), Name = "Szabadidő" }
                     );
                 });
 
@@ -420,8 +400,8 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575", AccessFailedCount = 0, ConcurrencyStamp = "8d6429d0-f8a9-4b5c-835a-f226a816f8ca", Email = "admin@admin.hu", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "admin@admin.hu", NormalizedUserName = "admin", PasswordHash = "AQAAAAEAACcQAAAAEM6ojca5Vkxl8jEO1i+OtZTLtD+Hu6ixFooak1tjvD/xU4pzkfoHFU15Wixau+hZQQ==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "admin" },
-                        new { Id = "4366b4cd-06f4-4d81-aeb5-7cd2d1795743", AccessFailedCount = 0, ConcurrencyStamp = "60021c74-b6d8-46e9-9c85-8b85feebef8f", Email = "sysadmin@admin.hu", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "sysadmin@admin.hu", NormalizedUserName = "sysadmin", PasswordHash = "AQAAAAEAACcQAAAAEDm6GZ2UDjwq9k2ICzYgSAbz6ibZ731JJtASdP4qBMRehtUJgFFYB80ywLa8O4FlEw==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "sysadmin" }
+                        new { Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575", AccessFailedCount = 0, ConcurrencyStamp = "e24300d1-3cfa-4b1d-86dc-ec7b0854741b", Email = "admin@admin.hu", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "admin@admin.hu", NormalizedUserName = "admin", PasswordHash = "AQAAAAEAACcQAAAAECdopTSe+FdnrMB5N8dGDBw+/R/e1xMcqMkXXJ02GU/5HikIaMlDFA3bPK3veDVjwA==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "admin" },
+                        new { Id = "4366b4cd-06f4-4d81-aeb5-7cd2d1795743", AccessFailedCount = 0, ConcurrencyStamp = "69e2da06-e712-4d4c-aa41-b510949bd6b9", Email = "sysadmin@admin.hu", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "sysadmin@admin.hu", NormalizedUserName = "sysadmin", PasswordHash = "AQAAAAEAACcQAAAAEAxy9Qxemjk637qfyYzIwnq2cFE1q4WmDCuTXmwtqUuV2epQii9Q2IWt0jZUJKDa4A==", PhoneNumberConfirmed = false, SecurityStamp = "", TwoFactorEnabled = false, UserName = "sysadmin" }
                     );
                 });
 
@@ -449,8 +429,8 @@ namespace DAL.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "59317E0A-8F55-46F9-BF5A-A81680A41964", ConcurrencyStamp = "454ab521-095f-4feb-981a-72787cae0a4d", Name = "Administrator", NormalizedName = "ADMINISTRATOR" },
-                        new { Id = "487bdd19-dc0a-4208-911c-6141988e6b51", ConcurrencyStamp = "d156f84f-6875-4e95-8d59-6ac545769127", Name = "SystemAdmin", NormalizedName = "SYSTEMADMIN" }
+                        new { Id = "59317E0A-8F55-46F9-BF5A-A81680A41964", ConcurrencyStamp = "a17fe9fd-208a-4509-88ec-cf543683dd84", Name = "Administrator", NormalizedName = "ADMINISTRATOR" },
+                        new { Id = "487bdd19-dc0a-4208-911c-6141988e6b51", ConcurrencyStamp = "fec61269-b058-4025-a9e2-2be6339f99d6", Name = "SystemAdmin", NormalizedName = "SYSTEMADMIN" }
                     );
                 });
 
